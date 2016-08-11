@@ -6,6 +6,7 @@ public class Explode : MonoBehaviour{
     public GameObject bullet;
     public float speed;
     public int numPoints;
+    public float initAngle;
 
     // Use this for initialization
     void Start()

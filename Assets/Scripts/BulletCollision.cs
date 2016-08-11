@@ -23,7 +23,6 @@ public class BulletCollision : MonoBehaviour {
 
         if (other.tag == "bomb")
         {
-            Debug.Log("Another Bomb");
             Destroy(gameObject);
             other.gameObject.GetComponent<Explode>().DoExplode();
         }
