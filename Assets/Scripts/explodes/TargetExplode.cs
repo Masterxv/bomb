@@ -17,6 +17,7 @@ public class TargetExplode : Explode
         }
         for (int pointNum = 1; pointNum < numPoints+1; pointNum++)
         {
+            Debug.Log(pointNum);
             Vector3 targetPosition = allBombSorted[pointNum].transform.position;
             GameObject newBullet = Instantiate(bullet, thisPosition, Quaternion.identity) as GameObject;
             newBullet.GetComponent<BulletMove>().setInitPosition(thisPosition);

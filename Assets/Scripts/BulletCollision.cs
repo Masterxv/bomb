@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BulletCollision : MonoBehaviour {
 
+    private bool collided;
 	// Use this for initialization
 	void Start () {
 
@@ -15,6 +16,11 @@ public class BulletCollision : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if(collided)
+        {
+            return;
+        }
+      
         if (other.tag == "bullet")
         {
             Debug.Log("Another Bullet");
@@ -25,6 +31,7 @@ public class BulletCollision : MonoBehaviour {
         {
             Destroy(gameObject);
             other.gameObject.GetComponent<Explode>().DoExplode();
+            collided = true;
         }
     }
 }
