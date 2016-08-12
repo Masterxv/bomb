@@ -3,7 +3,6 @@ using System.Collections;
 
 public class BulletCollision : MonoBehaviour {
 
-    private bool collided;
 	// Use this for initialization
 	void Start () {
 
@@ -16,22 +15,25 @@ public class BulletCollision : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(collided)
-        {
-            return;
-        }
-      
-        if (other.tag == "bullet")
-        {
-            Debug.Log("Another Bullet");
-            return;
-        }
-
         if (other.tag == "bomb")
         {
-            Destroy(gameObject);
-            other.gameObject.GetComponent<Explode>().DoExplode();
-            collided = true;
+            int bulletDamage = gameObject.GetComponent<Bullet>().damage;
+            int bulletCurrentHealth = gameObject.GetComponent<Bullet>().currentHealth;
+            int bombCurrentHealth = other.gameObject.GetComponent<Explode>().currentHealth;
+
+            // Minus health of bullet and bomb
+            gameObject.GetComponent<Bullet>().currentHealth = bulletCurrentHealth - bombCurrentHealth;
+            other.gameObject.GetComponent<Explode>().currentHealth = bombCurrentHealth - bulletDamage;
+
+            // Destroy object if health <= 0
+            if (gameObject.GetComponent<Bullet>().currentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
+            if (other.gameObject.GetComponent<Explode>().currentHealth <= 0)
+            {
+                other.gameObject.GetComponent<Explode>().DoExplode();
+            }
         }
     }
 }
