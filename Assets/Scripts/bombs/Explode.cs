@@ -13,6 +13,23 @@ public class Explode : MonoBehaviour {
     public int health;
     public int currentHealth;
     public int signRadius;
+    public Vector3 initPosition;
+
+    public Explode() { }
+
+    public Explode(Vector3 initPosition, float radius, float speed, int numPoints, float initAngle, int bulletDamage, int bulletHealth, int health, int currentHealth, int signRadius)
+    {
+        this.initPosition = initPosition;
+        this.radius = radius;
+        this.speed = speed;
+        this.numPoints = numPoints;
+        this.initAngle = initAngle;
+        this.bulletDamage = bulletDamage;
+        this.bulletHealth = bulletHealth;
+        this.health = health;
+        this.currentHealth = currentHealth;
+        this.signRadius = signRadius;
+    }
 
     // Use this for initialization
     public virtual void Start()
