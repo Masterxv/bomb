@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Level {
     public int index;
     public string name;
-    public List<Explode> explodes;
+    public List<BombInfo> bombs;
     public string tutorial;
 
     public Level()
@@ -13,11 +13,11 @@ public class Level {
 
     }
 
-    public Level(int index, string name, List<Explode> explodes, string tutorial)
+    public Level(int index, string name, List<BombInfo> bombs, string tutorial)
     {
         this.index = index;
         this.name = name;
-        this.explodes = explodes;
+        this.bombs = bombs;
         this.tutorial = tutorial;
     }
 }

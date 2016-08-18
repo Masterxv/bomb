@@ -18,7 +18,7 @@ public class BorderCollision : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "bullet")
+        if (other.gameObject.CompareTag("bullet"))
         {
             Destroy(other.gameObject);
         }

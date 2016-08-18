@@ -3,11 +3,6 @@ using System.Collections;
 
 public class NormalExplode : Explode
 {
-    public NormalExplode(Vector3 initPosition, float radius, float speed, int numPoints, float initAngle, int bulletDamage, int bulletHealth, int health, int currentHealth, int signRadius) : base(initPosition,  radius,  speed,  numPoints,  initAngle,  bulletDamage,  bulletHealth,  health,  currentHealth,  signRadius)
-    {
-
-    }
-
     public override void DoExplode()
     {
         Vector3 thisPosition = transform.position;

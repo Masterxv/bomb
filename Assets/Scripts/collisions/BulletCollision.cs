@@ -15,7 +15,7 @@ public class BulletCollision : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "bomb")
+        if (other.gameObject.CompareTag("bomb"))
         {
             int bulletDamage = gameObject.GetComponent<Bullet>().damage;
             int bulletCurrentHealth = gameObject.GetComponent<Bullet>().currentHealth;

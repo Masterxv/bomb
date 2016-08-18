@@ -4,6 +4,7 @@ using System.Collections;
 public class Explode : MonoBehaviour {
     public GameObject bulletPrefab;
     public GameObject signPrefab;
+
     public float radius;
     public float speed;
     public int numPoints;
@@ -15,20 +16,18 @@ public class Explode : MonoBehaviour {
     public int signRadius;
     public Vector3 initPosition;
 
-    public Explode() { }
-
-    public Explode(Vector3 initPosition, float radius, float speed, int numPoints, float initAngle, int bulletDamage, int bulletHealth, int health, int currentHealth, int signRadius)
+    public virtual void setBombData(BombInfo bombInfo)
     {
-        this.initPosition = initPosition;
-        this.radius = radius;
-        this.speed = speed;
-        this.numPoints = numPoints;
-        this.initAngle = initAngle;
-        this.bulletDamage = bulletDamage;
-        this.bulletHealth = bulletHealth;
-        this.health = health;
-        this.currentHealth = currentHealth;
-        this.signRadius = signRadius;
+        radius = bombInfo.radius;
+        speed = bombInfo.speed;
+        numPoints = bombInfo.numPoints;
+        initAngle = bombInfo.initAngle;
+        bulletDamage = bombInfo.bulletDamage;
+        bulletHealth = bombInfo.bulletHealth;
+        health = bombInfo.health;
+        currentHealth = bombInfo.currentHealth;
+        signRadius = bombInfo.signRadius;
+        initPosition = bombInfo.initPosition;
     }
 
     // Use this for initialization

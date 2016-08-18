@@ -3,10 +3,18 @@ using System.Collections;
 
 public class WaveExplode : Explode
 {
-    private GameObject[] signs;
     public int waveWidth;
+
+    private GameObject[] signs;
     private int bulletEachWave;
     private float diffAngleWavePoint;
+
+    public override void setBombData(BombInfo bombInfo)
+    {
+        base.setBombData(bombInfo);
+        waveWidth = bombInfo.waveWidth;
+    }
+
     public override void Start()
     {
         base.Start();
@@ -32,7 +40,6 @@ public class WaveExplode : Explode
         for (int pointNum = 0; pointNum < signs.Length; pointNum++)
         {
             GameObject tmpSign = signs[pointNum];
-            Vector3 tmpSignPosition = tmpSign.transform.position;
             float diffAngle = 360 / Constants.BULLET_WAVE_DECREASE_ANGLE;
             int from = (pointNum - 1)* bulletEachWave / 2;
             int to = pointNum * bulletEachWave / 2;

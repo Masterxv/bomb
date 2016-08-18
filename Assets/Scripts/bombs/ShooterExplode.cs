@@ -4,6 +4,7 @@ using System.Collections;
 public class ShooterExplode : Explode
 {
     private GameObject[] signs;
+
     public override void Start()
     {
         base.Start();
