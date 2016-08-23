@@ -3,17 +3,9 @@ using System.Collections;
 
 public class WaveExplode : Explode
 {
-    public int waveWidth;
-
     private GameObject[] signs;
     private int bulletEachWave;
     private float diffAngleWavePoint;
-
-    public override void setBombData(BombInfo bombInfo)
-    {
-        base.setBombData(bombInfo);
-        waveWidth = bombInfo.waveWidth;
-    }
 
     public override void Start()
     {

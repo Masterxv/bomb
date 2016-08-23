@@ -7,4 +7,7 @@ public class Constants
     public static int BULLET_WAVE_EACH_WIDTH = 4;
     public static int BULLET_WAVE_DECREASE_ANGLE = 150;
     public static int LEVEL_MARGIN = 20;
+    public static int TOTAL_LEVEL = 100;
+
+    public enum BombTypes { normal, shooter,  target, wave };
 }

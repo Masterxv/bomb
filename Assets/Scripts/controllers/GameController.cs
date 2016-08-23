@@ -1,48 +1,65 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     public GameObject normalBomb;
     public GameObject shooterBomb;
     public GameObject targetBomb;
     public GameObject waveBomb;
+    public string levelIndex;
 
-    enum BombTypes { normal, shooter, target, wave };
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         Level level = LevelUtil.getCurrentLevel();
         // Init all bombs in level
-        for (int i=0; i<level.bombs.Count; i++)
+        for (int i = 0; i < level.bombs.Count; i++)
         {
             BombInfo bombInfo = level.bombs[i];
             GameObject bomb = null;
-            switch(bombInfo.type)
+            switch (bombInfo.type)
             {
-                case (int)BombTypes.normal:
-                    bomb = Instantiate(normalBomb, bombInfo.initPosition, Quaternion.identity) as GameObject;
+                case Constants.BombTypes.normal:
+                    bomb = Instantiate(normalBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
                     break;
-                case (int)BombTypes.shooter:
-                    bomb = Instantiate(shooterBomb, bombInfo.initPosition, Quaternion.identity) as GameObject;
+                case Constants.BombTypes.shooter:
+                    bomb = Instantiate(shooterBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
                     break;
-                case (int)BombTypes.target:
-                    bomb = Instantiate(targetBomb, bombInfo.initPosition, Quaternion.identity) as GameObject;
+                case Constants.BombTypes.target:
+                    bomb = Instantiate(targetBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
                     break;
-                case (int)BombTypes.wave:
-                    bomb = Instantiate(waveBomb, bombInfo.initPosition, Quaternion.identity) as GameObject;
+                case Constants.BombTypes.wave:
+                    bomb = Instantiate(waveBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
                     break;
             }
             if (bomb == null)
             {
-                bomb = Instantiate(normalBomb, bombInfo.initPosition, Quaternion.identity) as GameObject;
+                bomb = Instantiate(normalBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
             }
             bomb.GetComponent<Explode>().setBombData(bombInfo);
         }
+
+        // Init tutorials
+        Debug.Log(level.tutorialTitle);
+        if (level.tutorialTitle == "")
+        {
+            GameObject.Find("Tutorial").SetActive(false);
+        }
+        else
+        {
+            GameObject.Find("Tutorial").GetComponentsInChildren<Text>()[0].text = level.tutorialTitle;
+            GameObject.Find("Tutorial").GetComponentsInChildren<Text>()[1].text = level.tutorialContent;
+            GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialImage);
+        }
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

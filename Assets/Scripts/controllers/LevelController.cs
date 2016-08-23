@@ -3,23 +3,25 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class LevelController : MonoBehaviour {
+public class LevelController : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-        LevelUtil.init(); // Init levels data
+    // Use this for initialization
+    void Start()
+    {
+        PlayerDataUtil.SavePlayerDataFirstTime();
         UpgradeUtil.init(); // Get user data
 
-        GameObject levelsCanvas =  GameObject.Find("Levels") as GameObject;
+        GameObject levelsCanvas = GameObject.Find("Levels") as GameObject;
         GameObject levelPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/Level"));
         float levelPrefabWidth = levelPrefab.GetComponent<RectTransform>().sizeDelta.x;
         float levelPrefabHeight = levelPrefab.GetComponent<RectTransform>().sizeDelta.y;
         float xOffset = 0;
         float yOffset = 0;
 
-        for (int i=0; i<LevelUtil.getTotalLevel(); i++)
+        for (int i = 0; i < Constants.TOTAL_LEVEL; i++)
         {
-            Level level = LevelUtil.getLevel(i);
+            int levelIndex = i + 1;
             GameObject levelPrefabClone = Instantiate(levelPrefab);
 
             // Add levelPrefab to levels canvas
@@ -28,12 +30,12 @@ public class LevelController : MonoBehaviour {
             // Set properties for level prefabs children components
             // Set level data and even when click
             Button b = levelPrefabClone.GetComponent<Button>();
-            b.onClick.AddListener(() => GoToLevel(level));
+            b.onClick.AddListener(() => GoToLevel(levelIndex));
 
             // Set level name
-            levelPrefabClone.GetComponentInChildren<Text>().text = level.index + "";
+            levelPrefabClone.GetComponentInChildren<Text>().text = levelIndex + "";
             // Set level position, depend on level index
-            int xChecker = level.index % 5;
+            int xChecker = levelIndex % 5;
             switch (xChecker)
             {
                 case 1:
@@ -53,16 +55,17 @@ public class LevelController : MonoBehaviour {
                     break;
             }
 
-            int yChecker = level.index / 5;
-            if(xChecker == 0)
+            int yChecker = levelIndex / 5;
+            if (xChecker == 0)
             {
-                yOffset = - (yChecker - 1) * (levelPrefabHeight + Constants.LEVEL_MARGIN);
-            } else
+                yOffset = -(yChecker - 1) * (levelPrefabHeight + Constants.LEVEL_MARGIN);
+            }
+            else
             {
                 yOffset = -yChecker * (levelPrefabHeight + Constants.LEVEL_MARGIN);
             }
 
-            levelPrefabClone.transform.position = levelsCanvas.transform.position +  new Vector3(xOffset, yOffset, 0);
+            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset, 0);
             // Set level image, depend on status of level of players
             // Load level sprites
             Sprite level_0_star = Resources.Load<Sprite>("Sprites/levels/level-0-star");
@@ -73,9 +76,9 @@ public class LevelController : MonoBehaviour {
 
             // Get user data
             PlayerData playerData = PlayerDataUtil.LoadPlayerData();
-            int stars = playerData.stars[i];
+            int stars = playerData.stars[levelIndex - 1];
 
-            switch(stars)
+            switch (stars)
             {
                 case -1:
                     levelPrefabClone.GetComponentInChildren<Image>().sprite = level_locked;
@@ -96,8 +99,10 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    void GoToLevel(Level level)
+    void GoToLevel(int levelIndex)
     {
+        // Load level data
+        Level level = LevelUtil.LoadLevelData(levelIndex);
         // Set seleted level data to main scene
         LevelUtil.setCurrentLevel(level);
         // Load scene

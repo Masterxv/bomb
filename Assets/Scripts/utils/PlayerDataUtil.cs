@@ -18,8 +18,18 @@ public class PlayerDataUtil {
     public static PlayerData SavePlayerDataFirstTime()
     {
         PlayerData tmpPlayerData = new PlayerData();
-        tmpPlayerData.levels = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        tmpPlayerData.stars = new int[] { 0, 1, 2, 3, -1, -1, -1, -1, -1, -1 };
+        tmpPlayerData.levels = new int[Constants.TOTAL_LEVEL];
+        tmpPlayerData.stars = new int[Constants.TOTAL_LEVEL];
+        for(int i=0; i<Constants.TOTAL_LEVEL; i++)
+        {
+            tmpPlayerData.levels[i] = i;
+            tmpPlayerData.stars[i] = -1;
+        }
+        tmpPlayerData.stars[0] = 1;
+        tmpPlayerData.stars[1] = 2;
+        tmpPlayerData.stars[2] = 3;
+        tmpPlayerData.stars[3] = 0;
+
         SavePlayerData(tmpPlayerData);
         return tmpPlayerData;
     }

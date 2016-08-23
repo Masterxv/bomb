@@ -1,23 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
 using System.Collections.Generic;
 
+[Serializable]
 public class Level {
     public int index;
-    public string name;
     public List<BombInfo> bombs;
-    public string tutorial;
+    public string tutorialTitle;
+    public string tutorialContent;
+    public string tutorialImage;
 
     public Level()
     {
 
     }
 
-    public Level(int index, string name, List<BombInfo> bombs, string tutorial)
+    public Level(int index,List<BombInfo> bombs, string tutorialTitle, string tutorialContent, string tutorialImage)
     {
         this.index = index;
-        this.name = name;
         this.bombs = bombs;
-        this.tutorial = tutorial;
+        this.tutorialTitle = tutorialTitle;
+        this.tutorialContent = tutorialContent;
+        this.tutorialImage = tutorialImage;
+    }
+
+    public string toString()
+    {
+        return "Level: " + index + ", Tutorial: " + tutorialTitle + "==" + tutorialContent + "==" + tutorialImage + ", Bombs: " + bombs.Count; 
     }
 }
