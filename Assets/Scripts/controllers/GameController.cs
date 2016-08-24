@@ -43,7 +43,6 @@ public class GameController : MonoBehaviour
         }
 
         // Init tutorials
-        Debug.Log(level.tutorialTitle);
         if (level.tutorialTitle == "")
         {
             GameObject.Find("Tutorial").SetActive(false);

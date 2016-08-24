@@ -12,7 +12,9 @@ public class LevelController : MonoBehaviour
         PlayerDataUtil.SavePlayerDataFirstTime();
         UpgradeUtil.init(); // Get user data
 
-        GameObject levelsCanvas = GameObject.Find("Levels") as GameObject;
+        GameObject levelsCanvas = GameObject.Find("LevelCanvas") as GameObject;
+        GameObject levelScrollView = GameObject.Find("LevelScrollView") as GameObject;
+
         GameObject levelPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/Level"));
         float levelPrefabWidth = levelPrefab.GetComponent<RectTransform>().sizeDelta.x;
         float levelPrefabHeight = levelPrefab.GetComponent<RectTransform>().sizeDelta.y;
@@ -65,7 +67,7 @@ public class LevelController : MonoBehaviour
                 yOffset = -yChecker * (levelPrefabHeight + Constants.LEVEL_MARGIN);
             }
 
-            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset, 0);
+            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset + 500, 0);
             // Set level image, depend on status of level of players
             // Load level sprites
             Sprite level_0_star = Resources.Load<Sprite>("Sprites/levels/level-0-star");
