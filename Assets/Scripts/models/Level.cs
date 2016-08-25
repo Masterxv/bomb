@@ -8,26 +8,25 @@ using System.Collections.Generic;
 public class Level {
     public int index;
     public List<BombInfo> bombs;
-    public string tutorialTitle;
     public string tutorialContent;
     public string tutorialImage;
+    public string tutorialTitle = "";
 
     public Level()
     {
 
     }
 
-    public Level(int index,List<BombInfo> bombs, string tutorialTitle, string tutorialContent, string tutorialImage)
+    public Level(int index,List<BombInfo> bombs, string tutorialContent, string tutorialImage)
     {
         this.index = index;
         this.bombs = bombs;
-        this.tutorialTitle = tutorialTitle;
         this.tutorialContent = tutorialContent;
         this.tutorialImage = tutorialImage;
     }
 
     public string toString()
     {
-        return "Level: " + index + ", Tutorial: " + tutorialTitle + "==" + tutorialContent + "==" + tutorialImage + ", Bombs: " + bombs.Count; 
+        return "Level: " + index + ", Tutorial: " + tutorialContent + "==" + tutorialImage + ", Bombs: " + bombs.Count; 
     }
 }

@@ -15,6 +15,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Level level = LevelUtil.getCurrentLevel();
+        if (level == null)
+        {
+            level = LevelUtil.LoadLevelData(1);
+        }
         // Init all bombs in level
         for (int i = 0; i < level.bombs.Count; i++)
         {
@@ -43,14 +47,13 @@ public class GameController : MonoBehaviour
         }
 
         // Init tutorials
-        if (level.tutorialTitle == "")
+        if (level.tutorialContent == "")
         {
             GameObject.Find("Tutorial").SetActive(false);
         }
         else
         {
-            GameObject.Find("Tutorial").GetComponentsInChildren<Text>()[0].text = level.tutorialTitle;
-            GameObject.Find("Tutorial").GetComponentsInChildren<Text>()[1].text = level.tutorialContent;
+            GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = level.tutorialContent;
             GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialImage);
         }
 

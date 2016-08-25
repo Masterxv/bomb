@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-
+    public int yDefaultOffset;
     // Use this for initialization
     void Start()
     {
@@ -36,29 +36,19 @@ public class LevelController : MonoBehaviour
 
             // Set level name
             levelPrefabClone.GetComponentInChildren<Text>().text = levelIndex + "";
-            // Set level position, depend on level index
-            int xChecker = levelIndex % 5;
-            switch (xChecker)
-            {
-                case 1:
-                    xOffset = -2 * (levelPrefabWidth + Constants.LEVEL_MARGIN);
-                    break;
-                case 2:
-                    xOffset = -(levelPrefabWidth + Constants.LEVEL_MARGIN);
-                    break;
-                case 3:
-                    xOffset = 0;
-                    break;
-                case 4:
-                    xOffset = levelPrefabWidth + Constants.LEVEL_MARGIN;
-                    break;
-                case 0:
-                    xOffset = 2 * (levelPrefabWidth + Constants.LEVEL_MARGIN);
-                    break;
-            }
 
-            int yChecker = levelIndex / 5;
-            if (xChecker == 0)
+            // Set level position, depend on level index
+            // Perform xOffset
+            int xChecker = levelIndex % 6;
+            if(xChecker == 0)
+            {
+                xChecker = 6;
+            }
+            xOffset = (xChecker - 3.5f) * (levelPrefabWidth + Constants.LEVEL_MARGIN);
+
+            // Perform y offset
+            int yChecker = levelIndex / 6;
+            if (xChecker == 6)
             {
                 yOffset = -(yChecker - 1) * (levelPrefabHeight + Constants.LEVEL_MARGIN);
             }
@@ -67,7 +57,7 @@ public class LevelController : MonoBehaviour
                 yOffset = -yChecker * (levelPrefabHeight + Constants.LEVEL_MARGIN);
             }
 
-            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset + 500, 0);
+            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset + yDefaultOffset, 0);
             // Set level image, depend on status of level of players
             // Load level sprites
             Sprite level_0_star = Resources.Load<Sprite>("Sprites/levels/level-0-star");

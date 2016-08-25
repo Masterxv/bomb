@@ -13,7 +13,6 @@ public class DesignLevelController : MonoBehaviour
     public GameObject waveBomb;
 
     public int levelIndex;
-    public string tutorialTitle;
     public string tutorialContent;
     public string tutorialImage;
     private Level level;
@@ -24,7 +23,6 @@ public class DesignLevelController : MonoBehaviour
         // Push all data to level
         level = new Level();
         level.index = levelIndex;
-        level.tutorialTitle = tutorialTitle;
         level.tutorialContent = tutorialContent;
         level.tutorialImage = tutorialImage;
 
@@ -76,14 +74,13 @@ public class DesignLevelController : MonoBehaviour
         generateBtn.onClick.AddListener(() => GenerateLevelData());
 
         // Init tutorials
-        if (tutorialTitle == "")
+        if (tutorialContent == "")
         {
             GameObject.Find("Tutorial").SetActive(false);
         }
         else
         {
-            GameObject.Find("Tutorial").GetComponentsInChildren<Text>()[0].text = tutorialTitle;
-            GameObject.Find("Tutorial").GetComponentsInChildren<Text>()[1].text = tutorialContent;
+            GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = tutorialContent;
             GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + tutorialImage);
         }
 
