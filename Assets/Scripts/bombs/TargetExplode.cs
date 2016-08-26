@@ -6,6 +6,8 @@ public class TargetExplode : Explode
 {
     public override void DoExplode()
     {
+        base.DoExplode();
+
         Vector3 thisPosition = transform.position;
         // Find targets
         GameObject [] allBomb = GameObject.FindGameObjectsWithTag("bomb");

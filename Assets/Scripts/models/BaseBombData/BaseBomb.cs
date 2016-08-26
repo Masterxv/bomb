@@ -11,4 +11,5 @@ public class BaseBomb {
     public int currentHealth;
     public int signRadius;
     public int waveWidth;
+    public int valueInCoin;
 }

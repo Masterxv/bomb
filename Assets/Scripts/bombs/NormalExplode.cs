@@ -5,6 +5,8 @@ public class NormalExplode : Explode
 {
     public override void DoExplode()
     {
+        base.DoExplode();
+
         Vector3 thisPosition = transform.position;
         Destroy(gameObject); // Destroy this game object
 
@@ -17,7 +19,7 @@ public class NormalExplode : Explode
             Vector3 targetPosition = new Vector3(x, y, 0) + thisPosition;
 
             GameObject newBullet = Instantiate(bulletPrefab, thisPosition, Quaternion.identity) as GameObject;
-            Vector3 velocity = (targetPosition - thisPosition).normalized*speed;
+            Vector3 velocity = (targetPosition - thisPosition).normalized * speed;
             newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, radius, velocity, bulletDamage, bulletHealth);
         }
     }

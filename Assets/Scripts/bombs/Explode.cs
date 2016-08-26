@@ -18,6 +18,7 @@ public class Explode : MonoBehaviour {
     public int currentHealth;
     public int signRadius;
     public int waveWidth;
+    public int valueInCoin;
 
     public virtual void setBombData(BombInfo bombInfo)
     {
@@ -49,6 +50,7 @@ public class Explode : MonoBehaviour {
         currentHealth = baseBomb.currentHealth;
         signRadius = baseBomb.signRadius;
         waveWidth = baseBomb.waveWidth;
+        valueInCoin = baseBomb.valueInCoin;
     }
 
     // Use this for initialization
@@ -70,6 +72,6 @@ public class Explode : MonoBehaviour {
 
     public virtual void DoExplode()
     {
-
+        CoinUtil.CreateCoins(transform.position, valueInCoin);
     }
 }

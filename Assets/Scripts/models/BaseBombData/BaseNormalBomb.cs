@@ -14,5 +14,6 @@ public class BaseNormalBomb : BaseBomb
         currentHealth = 1;
         signRadius = 0;
         waveWidth = 0;
+        valueInCoin = 5;
     }
 }

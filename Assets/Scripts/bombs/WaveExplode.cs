@@ -26,6 +26,8 @@ public class WaveExplode : Explode
 
     public override void DoExplode()
     {
+        base.DoExplode();
+
         Vector3 thisPosition = transform.position;
         Destroy(gameObject); // Destroy this game object
 
