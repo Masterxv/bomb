@@ -46,7 +46,7 @@ public class ButtonPanelController : MonoBehaviour {
 
     public void ReplayBtnClick()
     {
-        Debug.Log("Replay BTN CLICK");
+        LevelController.GoToLevel(LevelUtil.getCurrentLevel().index);
     }
 
     public void FacebookBtnClick()

@@ -91,7 +91,7 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    void GoToLevel(int levelIndex)
+    public static void GoToLevel(int levelIndex)
     {
         // Load level data
         Level level = LevelUtil.LoadLevelData(levelIndex);
