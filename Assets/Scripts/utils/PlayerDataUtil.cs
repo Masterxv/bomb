@@ -3,38 +3,55 @@ using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class PlayerDataUtil {
+public class PlayerDataUtil
+{
 
     public static PlayerData playerData;
 
-    public static void SavePlayerData(PlayerData data)
+    public static void SavePlayerData()
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.OpenWrite(Application.persistentDataPath + "/playerInfo.dat");
-        bf.Serialize(file, data);
+        bf.Serialize(file, playerData);
         file.Close();
     }
 
-    public static PlayerData SavePlayerDataFirstTime()
+    public static void SavePlayerDataFirstTime()
     {
-        PlayerData tmpPlayerData = new PlayerData();
-        tmpPlayerData.levels = new int[Constants.TOTAL_LEVEL];
-        tmpPlayerData.stars = new int[Constants.TOTAL_LEVEL];
-        for(int i=0; i<Constants.TOTAL_LEVEL; i++)
+        playerData = new PlayerData();
+        playerData.levels = new int[Constants.TOTAL_LEVEL];
+        playerData.stars = new int[Constants.TOTAL_LEVEL];
+        for (int i = 0; i < Constants.TOTAL_LEVEL; i++)
         {
-            tmpPlayerData.levels[i] = i;
-            tmpPlayerData.stars[i] = -1;
+            playerData.levels[i] = i;
+            playerData.stars[i] = -1;
         }
-        tmpPlayerData.stars[0] = 1;
-        tmpPlayerData.stars[1] = 2;
-        tmpPlayerData.stars[2] = 3;
-        tmpPlayerData.stars[3] = 0;
+        playerData.stars[0] = 1;
+        playerData.stars[1] = 2;
+        playerData.stars[2] = 3;
+        playerData.stars[3] = 3;
+        playerData.stars[4] = 3;
+        playerData.stars[5] = 3;
+        playerData.stars[6] = 3;
+        playerData.stars[7] = 3;
+        playerData.stars[8] = 0;
 
-        SavePlayerData(tmpPlayerData);
-        return tmpPlayerData;
+        playerData.normalLevel = 1;
+        playerData.shooterLevel = 1;
+        playerData.waveLevel = 1;
+        playerData.targetLevel = 1;
+
+        playerData.normalExtra = 0;
+        playerData.shooterExtra = 0;
+        playerData.waveExtra = 0;
+        playerData.targetExtra = 0;
+
+        playerData.earnedStars = 21;
+        playerData.spentStars = 0;
+        SavePlayerData();
     }
 
-    public static PlayerData LoadPlayerData()
+    public static void LoadPlayerData()
     {
         if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
         {
@@ -43,8 +60,11 @@ public class PlayerDataUtil {
 
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
-            return data;
+            playerData = data;
         }
-        return SavePlayerDataFirstTime();
+        else
+        {
+            SavePlayerDataFirstTime();
+        }
     }
 }

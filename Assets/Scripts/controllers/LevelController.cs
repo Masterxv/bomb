@@ -9,8 +9,8 @@ public class LevelController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayerDataUtil.SavePlayerDataFirstTime();
-        UpgradeUtil.init(); // Get user data
+        //PlayerDataUtil.SavePlayerDataFirstTime();
+        PlayerDataUtil.LoadPlayerData();
 
         GameObject levelsCanvas = GameObject.Find("LevelCanvas") as GameObject;
         GameObject levelScrollView = GameObject.Find("LevelScrollView") as GameObject;
@@ -67,8 +67,7 @@ public class LevelController : MonoBehaviour
             Sprite level_locked = Resources.Load<Sprite>("Sprites/levels/level-locked");
 
             // Get user data
-            PlayerData playerData = PlayerDataUtil.LoadPlayerData();
-            int stars = playerData.stars[levelIndex - 1];
+            int stars = PlayerDataUtil.playerData.stars[levelIndex - 1];
 
             switch (stars)
             {

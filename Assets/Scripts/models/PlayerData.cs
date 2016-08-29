@@ -16,16 +16,10 @@ public class PlayerData
     public int waveExtra;
     public int targetExtra;
 
+    public int earnedStars;
+    public int spentStars;
+
     public PlayerData()
     {
-        normalLevel = 1;
-        shooterLevel = 1;
-        waveLevel = 1;
-        targetLevel = 1;
-
-        normalExtra = 0;
-        shooterExtra = 0;
-        waveExtra = 0;
-        targetExtra = 0;
     }
 }
