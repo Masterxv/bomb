@@ -30,9 +30,6 @@ public class LevelController : MonoBehaviour
             levelPrefabClone.transform.SetParent(levelsCanvas.transform);
 
             // Set properties for level prefabs children components
-            // Set level data and even when click
-            Button b = levelPrefabClone.GetComponent<Button>();
-            b.onClick.AddListener(() => GoToLevel(levelIndex));
 
             // Set level name
             levelPrefabClone.GetComponentInChildren<Text>().text = levelIndex + "";
@@ -40,7 +37,7 @@ public class LevelController : MonoBehaviour
             // Set level position, depend on level index
             // Perform xOffset
             int xChecker = levelIndex % 6;
-            if(xChecker == 0)
+            if (xChecker == 0)
             {
                 xChecker = 6;
             }
@@ -68,6 +65,18 @@ public class LevelController : MonoBehaviour
 
             // Get user data
             int stars = PlayerDataUtil.playerData.stars[levelIndex - 1];
+
+            // Set level data and even when click
+            Button b = levelPrefabClone.GetComponent<Button>();
+            if (stars == -1)
+            {
+                b.interactable = false;
+            }
+            else
+            {
+                b.onClick.AddListener(() => GoToLevel(levelIndex));
+            }
+
 
             switch (stars)
             {
