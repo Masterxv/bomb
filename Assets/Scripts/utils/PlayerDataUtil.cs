@@ -40,6 +40,7 @@ public class PlayerDataUtil
         playerData.shooterLevel = 1;
         playerData.waveLevel = 1;
         playerData.targetLevel = 1;
+        playerData.goldLevel = 1;
 
         playerData.normalExtra = 0;
         playerData.shooterExtra = 0;
@@ -48,6 +49,10 @@ public class PlayerDataUtil
 
         playerData.earnedStars = 21;
         playerData.spentStars = 0;
+        playerData.starResetedTime = 1;
+
+        playerData.gold = 5000;
+
         SavePlayerData();
     }
 
@@ -66,5 +71,19 @@ public class PlayerDataUtil
         {
             SavePlayerDataFirstTime();
         }
+    }
+
+    public static void ResetStars()
+    {
+        playerData.spentStars = 0;
+        playerData.normalLevel = 1;
+        playerData.shooterLevel = 1;
+        playerData.waveLevel = 1;
+        playerData.targetLevel = 1;
+        playerData.goldLevel = 1;
+
+        playerData.gold -= playerData.starResetedTime * Constants.RESET_STARS_BASE_COST;
+        playerData.starResetedTime++;
+        SavePlayerData();
     }
 }
