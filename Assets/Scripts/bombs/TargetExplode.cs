@@ -4,6 +4,7 @@ using System.Collections;
 
 public class TargetExplode : Explode
 {
+    public GameObject signPrefab;
     public override void DoExplode()
     {
         base.DoExplode();

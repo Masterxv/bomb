@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public GameObject shooterBomb;
     public GameObject targetBomb;
     public GameObject waveBomb;
+    public GameObject acidBomb;
     public string levelIndex;
 
     // Use this for initialization
@@ -37,6 +38,9 @@ public class GameController : MonoBehaviour
                     break;
                 case Constants.BombTypes.wave:
                     bomb = Instantiate(waveBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                    break;
+                case Constants.BombTypes.acid:
+                    bomb = Instantiate(acidBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
                     break;
             }
             if (bomb == null)

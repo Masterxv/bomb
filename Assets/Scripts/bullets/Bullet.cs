@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour {
     public int health { get; set; }
     public int currentHealth { get; set; }
 
-    public void setData(Vector3 initPosition, Vector3 targetPosition, float distance, Vector3 velocity, int damage, int health)
+    public virtual void setData(Vector3 initPosition, Vector3 targetPosition, float distance, Vector3 velocity, int damage, int health)
     {
         this.initPosition = initPosition;
         this.targetPosition = targetPosition;

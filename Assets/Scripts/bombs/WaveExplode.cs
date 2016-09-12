@@ -4,8 +4,18 @@ using System.Collections;
 public class WaveExplode : Explode
 {
     private GameObject[] signs;
+    public GameObject signPrefab;
+    public int signRadius;
+    public int waveWidth;
     private int bulletEachWave;
     private float diffAngleWavePoint;
+
+    public override void setBombData(BombInfo bombInfo)
+    {
+        base.setBombData(bombInfo);
+        signRadius = baseBomb.signRadius;
+        waveWidth = baseBomb.waveWidth;
+    }
 
     public override void Start()
     {

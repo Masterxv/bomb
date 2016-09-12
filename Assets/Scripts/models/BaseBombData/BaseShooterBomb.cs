@@ -12,8 +12,9 @@ public class BaseShooterBomb : BaseBomb
         bulletHealth = 1;
         health = 1;
         currentHealth = 1;
+
         signRadius = 3;
-        waveWidth = 0;
-        valueInCoin = 2;
+
+        valueInCoin = 5;
     }
 }

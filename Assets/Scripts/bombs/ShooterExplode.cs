@@ -4,6 +4,14 @@ using System.Collections;
 public class ShooterExplode : Explode
 {
     private GameObject[] signs;
+    public GameObject signPrefab;
+    public int signRadius;
+
+    public override void setBombData(BombInfo bombInfo)
+    {
+        base.setBombData(bombInfo);
+        signRadius = baseBomb.signRadius;
+    }
 
     public override void Start()
     {

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Explode : MonoBehaviour {
     public GameObject bulletPrefab;
-    public GameObject signPrefab;
 
     public Constants.BombTypes type;
     public Vector3 initPosition;
@@ -16,16 +15,15 @@ public class Explode : MonoBehaviour {
     public int bulletHealth;
     public int health;
     public int currentHealth;
-    public int signRadius;
-    public int waveWidth;
+
     public int valueInCoin;
+    protected BaseBomb baseBomb;
 
     public virtual void setBombData(BombInfo bombInfo)
     {
         type = bombInfo.type;
         initPosition = new Vector3(bombInfo.x, bombInfo.y, bombInfo.z);
         initAngle = bombInfo.initAngle;
-        BaseBomb baseBomb = null;
         switch(type)
         {
             case Constants.BombTypes.normal:
@@ -40,6 +38,9 @@ public class Explode : MonoBehaviour {
             case Constants.BombTypes.wave:
                 baseBomb = new BaseWaveBomb();
                 break;
+            case Constants.BombTypes.acid:
+                baseBomb = new BaseAcidBomb();
+                break;
         }
         radius = baseBomb.radius;
         speed = baseBomb.speed;
@@ -48,8 +49,6 @@ public class Explode : MonoBehaviour {
         bulletHealth = baseBomb.bulletHealth;
         health = baseBomb.health;
         currentHealth = baseBomb.currentHealth;
-        signRadius = baseBomb.signRadius;
-        waveWidth = baseBomb.waveWidth;
         valueInCoin = baseBomb.valueInCoin;
     }
 
@@ -57,6 +56,7 @@ public class Explode : MonoBehaviour {
     public virtual void Start()
     {
         currentHealth = health;
+        baseBomb = null;
     }
 
     // Update is called once per frame
