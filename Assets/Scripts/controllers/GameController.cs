@@ -28,24 +28,24 @@ public class GameController : MonoBehaviour
             switch (bombInfo.type)
             {
                 case Constants.BombTypes.normal:
-                    bomb = Instantiate(normalBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                    bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
                     break;
                 case Constants.BombTypes.shooter:
-                    bomb = Instantiate(shooterBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                    bomb = Instantiate(shooterBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
                     break;
                 case Constants.BombTypes.target:
-                    bomb = Instantiate(targetBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                    bomb = Instantiate(targetBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
                     break;
                 case Constants.BombTypes.wave:
-                    bomb = Instantiate(waveBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                    bomb = Instantiate(waveBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
                     break;
                 case Constants.BombTypes.acid:
-                    bomb = Instantiate(acidBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                    bomb = Instantiate(acidBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
                     break;
             }
             if (bomb == null)
             {
-                bomb = Instantiate(normalBomb, new Vector3(bombInfo.x, bombInfo.y, bombInfo.z), Quaternion.identity) as GameObject;
+                bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
             }
             bomb.GetComponent<Explode>().setBombData(bombInfo);
         }
