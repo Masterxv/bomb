@@ -14,6 +14,7 @@ public class Constants
     public static int WAVE_BOMB_BASE_VALUE = 20; // Gold
 
     public enum BombTypes { normal, shooter, target, wave, acid };
+    public enum MovementTypes { polyline, polygon, circle };
 
     // Level selection scene
     public static int LEVEL_MARGIN = 15;

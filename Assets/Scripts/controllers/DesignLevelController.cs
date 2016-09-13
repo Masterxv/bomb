@@ -36,6 +36,14 @@ public class DesignLevelController : MonoBehaviour
             bombInfo.initPosition.Fill(transform.position);
             bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
             bombInfo.type = bomb.GetComponent<Explode>().type;
+            BombMovement bombMovement = bomb.GetComponent<BombMovement>();
+            MyVector3[] points = new MyVector3[bombMovement.points.Count];
+            for (int j = 0; j < bombMovement.points.Count; j++)
+            {
+                points[j] = new MyVector3();
+                points[j].Fill(bombMovement.points[j]);
+            }
+            bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise);
             level.bombs.Add(bombInfo);
         }
 

@@ -5,18 +5,25 @@ using System.Collections.Generic;
 
 [Serializable]
 public class BombMovementData {
+    public Constants.MovementTypes type;
     public MyVector3[] points;
     public List<float> distances;
     public float radius;
     public float speed;
-    public bool isLoop;
+    public bool isClockwise;
 
-    public BombMovementData(MyVector3[] points, List<float> distances, float radius, float speed, bool isLoop)
+    public BombMovementData()
     {
+
+    }
+
+    public BombMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise)
+    {
+        this.type = type;
         this.points = points;
         this.distances = distances;
         this.radius = radius;
         this.speed = speed;
-        this.isLoop = isLoop;
+        this.isClockwise = isClockwise;
     }
 }

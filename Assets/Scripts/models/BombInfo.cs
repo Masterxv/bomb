@@ -13,7 +13,8 @@ public class BombInfo {
 
     public BombInfo()
     {
-
+        initPosition = new MyVector3();
+        movement = new BombMovementData();
     }
 
     public BombInfo(Constants.BombTypes type, MyVector3 initPosition, float initAngle, BombMovementData movement)
