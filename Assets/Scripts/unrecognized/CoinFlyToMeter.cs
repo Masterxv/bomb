@@ -15,7 +15,7 @@ public class CoinFlyToMeter : MonoBehaviour {
         if(Vector2.Distance(transform.position, coinMeter.transform.position) <= 1)
         {
             Destroy(gameObject);
-            // Add coin to player pocket
+            GameController.UpdateGold();
         }
     }
 }

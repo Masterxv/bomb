@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
         Level level = LevelUtil.getCurrentLevel();
         if (level == null)
         {
@@ -68,6 +69,12 @@ public class GameController : MonoBehaviour
             GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialImage);
         }
 
+        UpdateGold();
+    }
+
+    public static void UpdateGold()
+    {
+        GameObject.Find("CointCount").GetComponent<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
     }
 
     // Update is called once per frame
