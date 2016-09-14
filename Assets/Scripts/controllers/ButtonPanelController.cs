@@ -49,6 +49,11 @@ public class ButtonPanelController : MonoBehaviour {
         LevelController.GoToLevel(LevelUtil.getCurrentLevel().index);
     }
 
+    public void GenerateBtnClick()
+    {
+        SceneManager.LoadScene(4);
+    }
+
     public void FacebookBtnClick()
     {
         Debug.Log("Facebook BTN CLICK");

@@ -28,11 +28,6 @@ public class BombMovement : MonoBehaviour
 
     public void SetMovementData(BombMovementData movement)
     {
-        if (movement == null)
-        {
-            speed = -1;
-            return;
-        }
         type = movement.type;
         for (int i = 0; i < movement.points.Length; i++)
         {
@@ -51,7 +46,7 @@ public class BombMovement : MonoBehaviour
     {
         turnTimes = 0;
         numPoints = points.Count;
-
+        point1 = transform.position;
         if (!isProduction)
         {
             if (point1.x != -1)
@@ -91,10 +86,10 @@ public class BombMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (speed <= 0)
-        {
-            return;
-        }
+        //if (speed <= 0)
+        //{
+        //    return;
+        //}
         if (type == Constants.MovementTypes.circle) // Move in a circle shape
         {
             if (isClockwise)

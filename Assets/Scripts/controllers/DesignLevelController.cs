@@ -13,17 +13,21 @@ public class DesignLevelController : MonoBehaviour
     public GameObject waveBomb;
     public GameObject acidBomb;
 
+
+    private Level level;
     public int levelIndex;
+    public int numberOfClick;
+
     public string tutorialContent;
     public string tutorialImage;
-    private Level level;
 
 
-    void GenerateLevelData()
+    public void GenerateLevelData()
     {
         // Push all data to level
         level = new Level();
         level.index = levelIndex;
+        level.numberOfClick = numberOfClick > 0 ? numberOfClick : 1;
         level.tutorialContent = tutorialContent;
         level.tutorialImage = tutorialImage;
 
@@ -33,17 +37,26 @@ public class DesignLevelController : MonoBehaviour
         {
             GameObject bomb = bombs[i];
             BombInfo bombInfo = new BombInfo();
-            bombInfo.initPosition.Fill(transform.position);
+            bombInfo.initPosition.Fill(bomb.GetComponent<Explode>().initPosition);
             bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
             bombInfo.type = bomb.GetComponent<Explode>().type;
             BombMovement bombMovement = bomb.GetComponent<BombMovement>();
-            MyVector3[] points = new MyVector3[bombMovement.points.Count];
-            for (int j = 0; j < bombMovement.points.Count; j++)
+            if (bombMovement.speed > 0)
             {
-                points[j] = new MyVector3();
-                points[j].Fill(bombMovement.points[j]);
+                MyVector3[] points = new MyVector3[bombMovement.points.Count];
+                for (int j = 0; j < bombMovement.points.Count; j++)
+                {
+                    points[j] = new MyVector3();
+                    points[j].Fill(bombMovement.points[j]);
+                }
+                bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise);
             }
-            bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise);
+            else
+            {
+                Debug.Log("Movement null");
+                bombInfo.movement = null;
+            }
+
             level.bombs.Add(bombInfo);
         }
 
@@ -76,9 +89,16 @@ public class DesignLevelController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GameObject generator = GameObject.Find("Generate");
-        Button generateBtn = generator.GetComponent<Button>();
-        generateBtn.onClick.AddListener(() => GenerateLevelData());
+        //GameObject generator = GameObject.Find("Generate");
+        //Button generateBtn = generator.GetComponent<Button>();
+        //generateBtn.onClick.AddListener(() => GenerateLevelData());
+
+        GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+        for (int i = 0; i < bombs.Length; i++)
+        {
+            GameObject bomb = bombs[i];
+            bomb.GetComponent<Explode>().initPosition = bomb.transform.position;
+        }
 
         // Init tutorials
         if (tutorialContent == "")

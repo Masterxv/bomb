@@ -8,11 +8,12 @@ using System.Collections.Generic;
 public class BombInfo {
     public Constants.BombTypes type;
     public MyVector3 initPosition;
-    public float initAngle = 0;
+    public float initAngle;
     public BombMovementData movement;
 
     public BombInfo()
     {
+        initAngle = 0;
         initPosition = new MyVector3();
         movement = new BombMovementData();
     }

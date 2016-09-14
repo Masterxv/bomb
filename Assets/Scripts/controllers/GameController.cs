@@ -48,7 +48,13 @@ public class GameController : MonoBehaviour
                 bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
             }
             bomb.GetComponent<Explode>().setBombData(bombInfo);
-            bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
+            if(bombInfo.movement == null)
+            {
+                bomb.GetComponent<BombMovement>().enabled = false;
+            } else
+            {
+                bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
+            }
         }
 
         // Init tutorials
