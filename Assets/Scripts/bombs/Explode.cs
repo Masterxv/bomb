@@ -71,7 +71,11 @@ public class Explode : MonoBehaviour
 
     void OnMouseDown()
     {
-        DoExplode();
+        if(GameController.clickedNumber < LevelUtil.getCurrentLevel().numberOfClick)
+        {
+            GameController.clickedNumber++;
+            DoExplode();
+        }
     }
 
     public virtual void DoExplode()

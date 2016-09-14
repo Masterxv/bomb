@@ -11,16 +11,13 @@ public class GameController : MonoBehaviour
     public GameObject waveBomb;
     public GameObject acidBomb;
     public string levelIndex;
+    public static int clickedNumber;
 
     // Use this for initialization
     void Start()
     {
         PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
         Level level = LevelUtil.getCurrentLevel();
-        if (level == null)
-        {
-            level = LevelUtil.LoadLevelData(1);
-        }
         // Init all bombs in level
         for (int i = 0; i < level.bombs.Count; i++)
         {
@@ -80,6 +77,9 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(clickedNumber >= LevelUtil.getCurrentLevel().numberOfClick && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
+        {
+            // End this level, show the result
+        }
     }
 }

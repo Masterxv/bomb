@@ -14,6 +14,10 @@ public class LevelUtil
 
     public static Level getCurrentLevel()
     {
+        if(currentLevel == null)
+        {
+            currentLevel = LoadLevelData(1);
+        }
         return currentLevel;
     }
 
