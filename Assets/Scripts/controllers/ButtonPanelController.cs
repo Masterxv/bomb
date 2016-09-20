@@ -49,6 +49,17 @@ public class ButtonPanelController : MonoBehaviour {
         LevelController.GoToLevel(LevelUtil.getCurrentLevel().index);
     }
 
+    public void NextLevelBtnclick()
+    {
+        if (LevelUtil.getCurrentLevel().index >= Constants.TOTAL_LEVEL)
+        {
+            SceneManager.LoadScene(1);
+        } else
+        {
+            LevelController.GoToLevel(LevelUtil.getCurrentLevel().index + 1);
+        }
+    }
+
     public void GenerateBtnClick()
     {
         SceneManager.LoadScene(4);

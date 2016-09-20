@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: 7ead8ba5dc6d79f4da1cc2f449bde712
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: USD_6x4_0
+    21300002: USD_6x4_1
+    21300004: USD_6x4_2
+    21300006: USD_6x4_3
+    21300008: USD_6x4_4
+    21300010: USD_6x4_5
+    21300012: USD_6x4_6
+    21300014: USD_6x4_7
+    21300016: USD_6x4_8
+    21300018: USD_6x4_9
+    21300020: USD_6x4_10
+    21300022: USD_6x4_11
+    21300024: USD_6x4_12
+    21300026: USD_6x4_13
+    21300028: USD_6x4_14
+    21300030: USD_6x4_15
+    21300032: USD_6x4_16
+    21300034: USD_6x4_17
+    21300036: USD_6x4_18
+    21300038: USD_6x4_19
+    21300040: USD_6x4_20
+    21300042: USD_6x4_21
+    21300044: USD_6x4_22
+    21300046: USD_6x4_23
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -44,11 +68,14 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: USD_6x4_0
+    - serializedVersion: 2
+      name: USD_6x4_0
       rect:
         serializedVersion: 2
         x: 48
@@ -59,7 +86,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_1
       rect:
         serializedVersion: 2
         x: 166
@@ -70,7 +99,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_2
       rect:
         serializedVersion: 2
         x: 285
@@ -81,7 +112,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_3
       rect:
         serializedVersion: 2
         x: 404
@@ -92,7 +125,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_4
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_4
       rect:
         serializedVersion: 2
         x: 524
@@ -103,7 +138,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_5
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_5
       rect:
         serializedVersion: 2
         x: 644
@@ -114,7 +151,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_6
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_6
       rect:
         serializedVersion: 2
         x: 9
@@ -125,7 +164,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_7
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_7
       rect:
         serializedVersion: 2
         x: 132
@@ -136,7 +177,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_8
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_8
       rect:
         serializedVersion: 2
         x: 255
@@ -147,7 +190,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_9
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_9
       rect:
         serializedVersion: 2
         x: 379
@@ -158,7 +203,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_10
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_10
       rect:
         serializedVersion: 2
         x: 504
@@ -169,7 +216,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_11
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_11
       rect:
         serializedVersion: 2
         x: 630
@@ -180,7 +229,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_12
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_12
       rect:
         serializedVersion: 2
         x: 0
@@ -191,7 +242,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_13
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_13
       rect:
         serializedVersion: 2
         x: 127
@@ -202,7 +255,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_14
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_14
       rect:
         serializedVersion: 2
         x: 255
@@ -213,7 +268,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_15
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_15
       rect:
         serializedVersion: 2
         x: 384
@@ -224,7 +281,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_16
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_16
       rect:
         serializedVersion: 2
         x: 513
@@ -235,7 +294,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_17
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_17
       rect:
         serializedVersion: 2
         x: 644
@@ -246,7 +307,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_18
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_18
       rect:
         serializedVersion: 2
         x: 20
@@ -257,7 +320,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_19
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_19
       rect:
         serializedVersion: 2
         x: 152
@@ -268,7 +333,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_20
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_20
       rect:
         serializedVersion: 2
         x: 285
@@ -279,7 +346,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_21
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_21
       rect:
         serializedVersion: 2
         x: 418
@@ -290,7 +359,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_22
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_22
       rect:
         serializedVersion: 2
         x: 552
@@ -301,7 +372,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: USD_6x4_23
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: USD_6x4_23
       rect:
         serializedVersion: 2
         x: 686
@@ -312,6 +385,7 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

@@ -13,6 +13,10 @@ public class Constants
     public static int TARGET_BOMB_BASE_VALUE = 30; // Gold
     public static int WAVE_BOMB_BASE_VALUE = 20; // Gold
 
+    public static int BOMB_REMAIN_1_STAR_THRESHOLD = 10; // Bomb
+    public static int BOMB_REMAIN_2_STAR_THRESHOLD = 3; // Bomb
+    public static int BOMB_REMAIN_3_STAR_THRESHOLD = 0; // Bomb
+
     public enum BombTypes { normal, shooter, target, wave, acid };
     public enum MovementTypes { polyline, polygon, circle };
 

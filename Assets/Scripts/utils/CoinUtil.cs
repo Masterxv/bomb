@@ -6,7 +6,7 @@ public class CoinUtil : MonoBehaviour {
 
     public static void CreateCoin(Vector3 position)
     {
-        GameObject newCoin = Instantiate(coinPrefab, position, Quaternion.identity) as GameObject;
+        Instantiate(coinPrefab, position, Quaternion.identity);
     }
 
     public static void CreateCoins(Vector3 position, int numberOfCoin)

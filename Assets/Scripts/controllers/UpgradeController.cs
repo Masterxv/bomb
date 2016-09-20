@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using System.Collections;
 
 public class UpgradeController : MonoBehaviour
@@ -168,38 +167,32 @@ public class UpgradeController : MonoBehaviour
     public void UpgradeItem(string itemName)
     {
         int level = 0;
-        int maxLevel = 0;
         int baseCost = 0;
 
         switch (itemName)
         {
             case "Normal":
                 level = PlayerDataUtil.playerData.normalLevel;
-                maxLevel = Constants.BOMB_UPGRADE_MAX_LEVEL;
                 baseCost = Constants.NORMAL_BOMB_UPGRADE_BASE_COST;
                 PlayerDataUtil.playerData.normalLevel++;
                 break;
             case "Shooter":
                 level = PlayerDataUtil.playerData.shooterLevel;
-                maxLevel = Constants.BOMB_UPGRADE_MAX_LEVEL;
                 baseCost = Constants.SHOOTER_BOMB_UPGRADE_BASE_COST;
                 PlayerDataUtil.playerData.shooterLevel++;
                 break;
             case "Target":
                 level = PlayerDataUtil.playerData.targetLevel;
-                maxLevel = Constants.BOMB_UPGRADE_MAX_LEVEL;
                 baseCost = Constants.TARGET_BOMB_UPGRADE_BASE_COST;
                 PlayerDataUtil.playerData.targetLevel++;
                 break;
             case "Wave":
                 level = PlayerDataUtil.playerData.waveLevel;
-                maxLevel = Constants.BOMB_UPGRADE_MAX_LEVEL;
                 baseCost = Constants.WAVE_BOMB_UPGRADE_BASE_COST;
                 PlayerDataUtil.playerData.waveLevel++;
                 break;
             case "Gold":
                 level = PlayerDataUtil.playerData.goldLevel;
-                maxLevel = Constants.GOLD_UPGRADE_MAX_LEVEL;
                 baseCost = Constants.GOLD_UPGRADE_BASE_COST;
                 PlayerDataUtil.playerData.goldLevel++;
                 break;

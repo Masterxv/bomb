@@ -18,7 +18,7 @@ public class LevelController : MonoBehaviour
         rt.anchorMax = new Vector2(0.5f, 1f);
         rt.sizeDelta = new Vector2(600, 1000);
         rt.anchoredPosition = new Vector2(0, -rt.sizeDelta.y/2);
-        GameObject levelScrollView = GameObject.Find("LevelScrollView") as GameObject;
+        //GameObject levelScrollView = GameObject.Find("LevelScrollView") as GameObject;
 
         GameObject levelPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/Level"));
         float levelPrefabWidth = levelPrefab.GetComponent<RectTransform>().sizeDelta.x;
@@ -59,7 +59,7 @@ public class LevelController : MonoBehaviour
                 yOffset = -yChecker * (levelPrefabHeight + Constants.LEVEL_MARGIN);
             }
 
-            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset + rt.sizeDelta.y / 4, 0);
+            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset + rt.sizeDelta.y / 3, 0);
             // Set level image, depend on status of level of players
             // Load level sprites
             Sprite level_0_star = Resources.Load<Sprite>("Sprites/levels/level-0-star");

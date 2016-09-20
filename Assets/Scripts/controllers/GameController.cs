@@ -10,12 +10,16 @@ public class GameController : MonoBehaviour
     public GameObject targetBomb;
     public GameObject waveBomb;
     public GameObject acidBomb;
+    
+    public GameObject resultPanel;
+
     public string levelIndex;
     public static int clickedNumber;
 
     // Use this for initialization
     void Start()
     {
+        PlayerDataUtil.SavePlayerDataFirstTime();
         PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
         Level level = LevelUtil.getCurrentLevel();
         // Init all bombs in level
@@ -71,7 +75,7 @@ public class GameController : MonoBehaviour
 
     public static void UpdateGold()
     {
-        GameObject.Find("CointCount").GetComponent<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
+        GameObject.Find("CoinMeterCount").GetComponent<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
     }
 
     // Update is called once per frame
@@ -80,6 +84,40 @@ public class GameController : MonoBehaviour
         if(clickedNumber >= LevelUtil.getCurrentLevel().numberOfClick && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
         {
             // End this level, show the result
+            resultPanel.SetActive(true);
+            int stars = GetStars();
+            Sprite starSprite = Resources.Load<Sprite>("Sprites/stars/star");
+            switch (stars)
+            {
+                case 1:
+                    GameObject.Find("Star1").GetComponent<Image>().sprite = starSprite;
+                    break;
+                case 2:
+                    GameObject.Find("Star1").GetComponent<Image>().sprite = starSprite;
+                    GameObject.Find("Star2").GetComponent<Image>().sprite = starSprite;
+                    break;
+                case 3:
+                    GameObject.Find("Star1").GetComponent<Image>().sprite = starSprite;
+                    GameObject.Find("Star2").GetComponent<Image>().sprite = starSprite;
+                    GameObject.Find("Star3").GetComponent<Image>().sprite = starSprite;
+                    break;
+            }
         }
+    }
+
+    public static int GetStars()
+    {
+        int remainBombs = GameObject.FindGameObjectsWithTag("bomb").Length;
+        if (remainBombs <= Constants.BOMB_REMAIN_3_STAR_THRESHOLD)
+        {
+            return 3;
+        } else if (remainBombs <= Constants.BOMB_REMAIN_2_STAR_THRESHOLD)
+        {
+            return 2;
+        } else if (remainBombs <= Constants.BOMB_REMAIN_1_STAR_THRESHOLD)
+        {
+            return 1;
+        }
+        return 0;
     }
 }

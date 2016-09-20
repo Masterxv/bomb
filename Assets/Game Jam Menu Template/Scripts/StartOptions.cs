@@ -63,17 +63,6 @@ public class StartOptions : MonoBehaviour {
 
 	}
 
-	//Once the level has loaded, check if we want to call PlayLevelMusic
-	void OnLevelWasLoaded()
-	{
-		//if changeMusicOnStart is true, call the PlayLevelMusic function of playMusic
-		if (changeMusicOnStart)
-		{
-			playMusic.PlayLevelMusic ();
-		}	
-	}
-
-
 	public void LoadDelayed()
 	{
 		//Pause button now works if escape is pressed since we are no longer in Main menu.
