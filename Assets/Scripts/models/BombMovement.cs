@@ -77,7 +77,7 @@ public class BombMovement : MonoBehaviour
                 distances.Add(Vector3.Distance(points[numPoints - 1], points[0]));
             }
         }
-
+        
         transform.position = points[0];
         currentIndex = 0;
         nextIndex = 1;

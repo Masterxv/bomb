@@ -67,23 +67,9 @@ public class DesignLevelController : MonoBehaviour
     public void SaveLevelData(Level level)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.OpenWrite(Application.dataPath + "/data/lv" + level.index + ".dat");
+        FileStream file = File.OpenWrite(Application.dataPath + "/data/lv" + level.index + ".txt");
         bf.Serialize(file, level);
         file.Close();
-    }
-
-    public Level LoadLevelData(int index)
-    {
-        if (File.Exists(Application.dataPath + "/data/lv" + index + ".dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.OpenRead(Application.dataPath + "/data/lv" + index + ".dat");
-
-            Level levelToLoad = (Level)bf.Deserialize(file);
-            file.Close();
-            return levelToLoad;
-        }
-        return null;
     }
 
     // Use this for initialization

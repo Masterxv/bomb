@@ -10,17 +10,35 @@ public class GameController : MonoBehaviour
     public GameObject targetBomb;
     public GameObject waveBomb;
     public GameObject acidBomb;
-    
+
     public GameObject resultPanel;
 
     public string levelIndex;
     public static int clickedNumber;
+    public int numberOfClick;
+
+    static GameController _instance;
+    public static GameController instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        _instance = this;
+    }
 
     // Use this for initialization
     void Start()
     {
-        PlayerDataUtil.SavePlayerDataFirstTime();
-        PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
+        //PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
+        //PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
+        resultPanel.SetActive(false);
+        clickedNumber = 0;
+        numberOfClick = LevelUtil.getCurrentLevel().numberOfClick;
         Level level = LevelUtil.getCurrentLevel();
         // Init all bombs in level
         for (int i = 0; i < level.bombs.Count; i++)
@@ -50,10 +68,11 @@ public class GameController : MonoBehaviour
                 bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
             }
             bomb.GetComponent<Explode>().setBombData(bombInfo);
-            if(bombInfo.movement == null)
+            if (bombInfo.movement == null)
             {
                 bomb.GetComponent<BombMovement>().enabled = false;
-            } else
+            }
+            else
             {
                 bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
             }
@@ -81,11 +100,17 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(clickedNumber >= LevelUtil.getCurrentLevel().numberOfClick && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
+        if (clickedNumber >= numberOfClick && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
         {
+            if(resultPanel.activeInHierarchy)
+            {
+                return;
+            }
             // End this level, show the result
             resultPanel.SetActive(true);
-            int stars = GetStars();
+            int remainBombs = GameObject.FindGameObjectsWithTag("bomb").Length;
+            GameObject.Find("RemainBombValue").GetComponent<Text>().text = remainBombs + "";
+            int stars = GetStars(remainBombs);
             Sprite starSprite = Resources.Load<Sprite>("Sprites/stars/star");
             switch (stars)
             {
@@ -105,16 +130,17 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public static int GetStars()
+    public static int GetStars(int remainBombs)
     {
-        int remainBombs = GameObject.FindGameObjectsWithTag("bomb").Length;
         if (remainBombs <= Constants.BOMB_REMAIN_3_STAR_THRESHOLD)
         {
             return 3;
-        } else if (remainBombs <= Constants.BOMB_REMAIN_2_STAR_THRESHOLD)
+        }
+        else if (remainBombs <= Constants.BOMB_REMAIN_2_STAR_THRESHOLD)
         {
             return 2;
-        } else if (remainBombs <= Constants.BOMB_REMAIN_1_STAR_THRESHOLD)
+        }
+        else if (remainBombs <= Constants.BOMB_REMAIN_1_STAR_THRESHOLD)
         {
             return 1;
         }

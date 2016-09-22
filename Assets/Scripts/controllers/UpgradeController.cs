@@ -14,8 +14,8 @@ public class UpgradeController : MonoBehaviour
         ShowResetStarConfirm = false;
         ShowAdsOffer = false;
         // Init a fake player data for first time
-         PlayerDataUtil.SavePlayerDataFirstTime();
-        //PlayerDataUtil.LoadPlayerData();
+        // PlayerDataUtil.SavePlayerDataFirstTime();
+        // PlayerDataUtil.LoadPlayerData();
         InitAllItems();
         GameObject upgradeCanvas = GameObject.Find("UpgradeCanvas") as GameObject;
         RectTransform rt = upgradeCanvas.GetComponent<RectTransform>();

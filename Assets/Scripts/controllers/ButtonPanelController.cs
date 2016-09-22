@@ -56,6 +56,7 @@ public class ButtonPanelController : MonoBehaviour {
             SceneManager.LoadScene(1);
         } else
         {
+            GameController.instance.resultPanel.SetActive(false);
             LevelController.GoToLevel(LevelUtil.getCurrentLevel().index + 1);
         }
     }
