@@ -64,7 +64,7 @@ public class ButtonPanelController : MonoBehaviour {
     public void GenerateBtnClick()
     {
         SceneManager.LoadScene(4);
-    }
+   } 
 
     public void FacebookBtnClick()
     {

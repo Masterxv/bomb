@@ -6,7 +6,7 @@ public class BaseWaveBomb : BaseBomb
     public BaseWaveBomb()
     {
         radius = 100;
-        speed = 8;
+        speed = 18;
         numPoints = 2;
         bulletDamage = 1;
         bulletHealth = 1;
@@ -14,7 +14,7 @@ public class BaseWaveBomb : BaseBomb
         currentHealth = 1;
 
         signRadius = 3;
-        waveWidth = 2;
+        waveWidth = 3;
 
         valueInCoin = 5;
     }

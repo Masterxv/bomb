@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WaveExplode : Explode
 {
-    private GameObject[] signs;
+    public GameObject[] signs;
     public GameObject signPrefab;
     public int signRadius;
     public int waveWidth;
@@ -30,6 +30,7 @@ public class WaveExplode : Explode
             float y = Mathf.Cos((initAngle + pointNum * diffAngleWavePoint) * Mathf.Deg2Rad) * signRadius;
             Vector3 targetPosition = new Vector3(x, y, 0) + transform.position;
             GameObject tmpSign = Instantiate(signPrefab, targetPosition, Quaternion.identity) as GameObject;
+            tmpSign.transform.SetParent(gameObject.transform);
             signs[pointNum] = tmpSign;
         }
     }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ShooterExplode : Explode
 {
-    private GameObject[] signs;
+    public GameObject[] signs;
     public GameObject signPrefab;
     public int signRadius;
 
@@ -27,6 +27,7 @@ public class ShooterExplode : Explode
             // float tmpAngle = initAngle + (pointNum + 1) * diffAngle;
             // Quaternion rotation = Quaternion.AngleAxis(tmpAngle, new Vector3(0, 0, 1));
             GameObject tmpSign = Instantiate(signPrefab, targetPosition, Quaternion.identity) as GameObject;
+            tmpSign.transform.SetParent(gameObject.transform);
             signs[pointNum] = tmpSign;
         }
     }
