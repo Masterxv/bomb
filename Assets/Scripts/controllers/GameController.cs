@@ -127,6 +127,7 @@ public class GameController : MonoBehaviour
                     GameObject.Find("Star3").GetComponent<Image>().sprite = starSprite;
                     break;
             }
+            PlayerDataUtil.SavePlayerData();
         }
     }
 

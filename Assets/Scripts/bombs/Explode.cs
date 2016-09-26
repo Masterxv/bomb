@@ -81,6 +81,6 @@ public class Explode : MonoBehaviour
     public virtual void DoExplode()
     {
         CoinUtil.CreateCoins(transform.position, valueInCoin);
-        PlayerDataUtil.playerData.gold += valueInCoin;
+        GoldUtil.AddGold(valueInCoin);
     }
 }

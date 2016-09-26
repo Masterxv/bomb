@@ -10,12 +10,14 @@ public class PlayerData
     public int shooterLevel;
     public int waveLevel;
     public int targetLevel;
+    public int acidLevel;
     public int goldLevel;
 
     public int normalExtra;
     public int shooterExtra;
     public int waveExtra;
     public int targetExtra;
+    public int acidExtra;
 
     public int powerUpMoreClick;
     public int powerUpMoreBomb;

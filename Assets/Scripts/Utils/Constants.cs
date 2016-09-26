@@ -21,7 +21,7 @@ public class Constants
     public enum MovementTypes { polyline, polygon, circle };
 
     // Level selection scene
-    public static int LEVEL_MARGIN = 15;
+    public static int LEVEL_MARGIN = 0;
     public static int TOTAL_LEVEL = 42;
 
     // Upgrade
@@ -35,6 +35,15 @@ public class Constants
     public static int GOLD_UPGRADE_MAX_LEVEL = 7;
 
     public static int RESET_STARS_BASE_COST = 1000; // Gold
+
+    // Upgrade increment
+    public static float NORMAL_BOMB_RADIUS_INC = 0.1f; // 10%
+    public static int SHOOTER_BOMB_NUMPOINT_INC = 1; // target
+    public static int TARGET_BOMB_NUMPOINT_INC = 1; // target
+    public static int WAVE_BOMB_WAVE_WIDTH_INC = 1; // 100/3 %
+    public static int ACID_BOMB_DURATION_INC = 1; // second
+    public static float BOMB_VALUE_INC = 0.1f; // 10% 
+    public static float GOLD_INC = 0.1f; // 10%
 
     // Shop - bomb
     public static int NORMAL_BOMB_PRICE = 1000; // Gold

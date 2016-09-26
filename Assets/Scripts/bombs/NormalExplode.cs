@@ -3,6 +3,12 @@ using System.Collections;
 
 public class NormalExplode : Explode
 {
+    public override void Start()
+    {
+        base.Start();
+        radius = radius * (1 + PlayerDataUtil.playerData.normalLevel * Constants.NORMAL_BOMB_RADIUS_INC);
+    }
+
     public override void DoExplode()
     {
         base.DoExplode();

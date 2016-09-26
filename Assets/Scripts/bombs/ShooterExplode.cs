@@ -17,6 +17,7 @@ public class ShooterExplode : Explode
     {
         base.Start();
 
+        numPoints = numPoints + PlayerDataUtil.playerData.shooterLevel * Constants.SHOOTER_BOMB_NUMPOINT_INC;
         signs = new GameObject [numPoints];
         float diffAngle = 360 / numPoints;
         for(int pointNum = 0; pointNum < numPoints; pointNum++)

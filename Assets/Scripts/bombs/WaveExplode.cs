@@ -14,7 +14,7 @@ public class WaveExplode : Explode
     {
         base.setBombData(bombInfo);
         signRadius = baseBomb.signRadius;
-        waveWidth = baseBomb.waveWidth;
+        waveWidth = baseBomb.waveWidth + PlayerDataUtil.playerData.waveLevel * Constants.WAVE_BOMB_WAVE_WIDTH_INC;
     }
 
     public override void Start()

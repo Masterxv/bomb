@@ -9,6 +9,7 @@ public class LevelController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //PlayerDataUtil.SavePlayerDataFirstTime();
         PlayerDataUtil.LoadPlayerData();
 
         GameObject levelsCanvas = GameObject.Find("LevelCanvas") as GameObject;
@@ -17,7 +18,6 @@ public class LevelController : MonoBehaviour
         rt.anchorMax = new Vector2(0.5f, 1f);
         rt.sizeDelta = new Vector2(600, 1000);
         rt.anchoredPosition = new Vector2(0, -rt.sizeDelta.y/2);
-        //GameObject levelScrollView = GameObject.Find("LevelScrollView") as GameObject;
 
         GameObject levelPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/Level"));
         float levelPrefabWidth = levelPrefab.GetComponent<RectTransform>().sizeDelta.x;

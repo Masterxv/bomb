@@ -4,6 +4,12 @@ using System.Collections;
 
 public class TargetExplode : Explode
 {
+    public override void Start()
+    {
+        base.Start();
+        numPoints = numPoints + PlayerDataUtil.playerData.shooterLevel * Constants.TARGET_BOMB_NUMPOINT_INC;
+    }
+
     public override void DoExplode()
     {
         base.DoExplode();
