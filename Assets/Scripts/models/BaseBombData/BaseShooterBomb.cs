@@ -6,7 +6,7 @@ public class BaseShooterBomb : BaseBomb
     public BaseShooterBomb()
     {
         radius = 100;
-        speed = 25;
+        speed = 30;
         numPoints = 2;
         bulletDamage = 1;
         bulletHealth = 1;

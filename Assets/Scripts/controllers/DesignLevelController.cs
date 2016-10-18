@@ -71,13 +71,16 @@ public class DesignLevelController : MonoBehaviour
         file.Close();
     }
 
+    void Awake()
+    {
+        PlayerDataUtil.SavePlayerDataFirstTime();
+        level = LevelUtil.LoadLevelData(levelIndex);
+        LevelUtil.getCurrentLevel().numberOfClick = 100;
+    }
+
     // Use this for initialization
     void Start()
     {
-        PlayerDataUtil.LoadPlayerData();
-        //LevelUtil.getCurrentLevel().numberOfClick = 100;
-        //level = LevelUtil.LoadLevelData(levelIndex);
-
         //for (int i = 0; i < level.bombs.Count; i++)
         //{
         //    BombInfo bombInfo = level.bombs[i];
