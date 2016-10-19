@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor;
 
 public class DesignLevelController : MonoBehaviour
 {
@@ -68,9 +69,11 @@ public class DesignLevelController : MonoBehaviour
     public void SaveLevelData(Level level)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.OpenWrite(Application.dataPath + "/data/lv" + level.index + ".txt");
+        string destination = Application.dataPath + "/data/lv" + level.index + ".txt";
+        FileStream file = File.OpenWrite(destination);
         bf.Serialize(file, level);
         file.Close();
+        FileUtil.ReplaceFile(destination, Application.dataPath + "/Resources/Levels/lv" + level.index + ".txt");
     }
 
     void InitBombs(Level level)
@@ -134,9 +137,11 @@ public class DesignLevelController : MonoBehaviour
             GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = content;
             GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + imageName);
         }
+        tutorialContent = content;
+        tutorialImage = imageName;
     }
 
-    void Awake()
+    public void Refresh()
     {
         PlayerDataUtil.SavePlayerDataFirstTime();
         level = LevelUtil.LoadLevelData(levelIndex);
@@ -159,6 +164,11 @@ public class DesignLevelController : MonoBehaviour
             }
             InitTutorial(tutorialContent, tutorialImage);
         }
+    }
+
+    void Awake()
+    {
+        Refresh();
     }
 
     // Use this for initialization
