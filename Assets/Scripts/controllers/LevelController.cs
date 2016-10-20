@@ -110,7 +110,7 @@ public class LevelController : MonoBehaviour
         // Set seleted level data to main scene
         LevelUtil.setCurrentLevel(level);
         // Reset clicked number in the game controller
-        GameController.clickedNumber = 0;
+        GameController.instance.clickedNumber = 0;
         // Load scene
         SceneManager.LoadScene(2);
     }

@@ -14,8 +14,9 @@ public class GameController : MonoBehaviour
     public GameObject resultPanel;
 
     public string levelIndex;
-    public static int clickedNumber;
+    public int clickedNumber;
     public int numberOfClick;
+    public Text handCount;
 
     static GameController _instance;
     public static GameController instance
@@ -37,8 +38,11 @@ public class GameController : MonoBehaviour
         //PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
         //PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
         resultPanel.SetActive(false);
+        // Init number of click stuff
         clickedNumber = 0;
         numberOfClick = LevelUtil.getCurrentLevel().numberOfClick;
+        handCount.text = numberOfClick + "";
+
         Level level = LevelUtil.getCurrentLevel();
         // Init all bombs in level
         for (int i = 0; i < level.bombs.Count; i++)
@@ -92,9 +96,15 @@ public class GameController : MonoBehaviour
         UpdateGold();
     }
 
-    public static void UpdateGold()
+    public void UpdateGold()
     {
         GameObject.Find("CoinMeterCount").GetComponent<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
+    }
+
+    public void UpdateClickedNumber()
+    {
+        clickedNumber++;
+        handCount.text = (LevelUtil.getCurrentLevel().numberOfClick - clickedNumber) + "";
     }
 
     // Update is called once per frame
