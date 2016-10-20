@@ -138,7 +138,7 @@ public class GameController : MonoBehaviour
                 int nextLevelStars = PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index];
                 if (nextLevelStars == -1) // Unlock next level if it was locked
                 {
-                    PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index] = 0; 
+                    PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index] = 0;
                 }
             }
             PlayerDataUtil.SavePlayerData();
