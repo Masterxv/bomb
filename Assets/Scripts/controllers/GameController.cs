@@ -127,6 +127,16 @@ public class GameController : MonoBehaviour
                     GameObject.Find("Star3").GetComponent<Image>().sprite = starSprite;
                     break;
             }
+            if(stars > 0)
+            {
+                int currentLevelStars = PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index - 1];
+                if (stars > currentLevelStars) // Update current level star if this time stars is larger than last time stars.
+                {
+                    PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index - 1] = stars;
+                    PlayerDataUtil.playerData.earnedStars += (stars - currentLevelStars); // Update earned stars
+                }
+                PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index] = 0; // Unlock next level of this level had passed with stars
+            }
             PlayerDataUtil.SavePlayerData();
         }
     }

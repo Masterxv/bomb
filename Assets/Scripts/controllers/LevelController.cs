@@ -109,6 +109,8 @@ public class LevelController : MonoBehaviour
         Level level = LevelUtil.LoadLevelData(levelIndex);
         // Set seleted level data to main scene
         LevelUtil.setCurrentLevel(level);
+        // Reset clicked number in the game controller
+        GameController.clickedNumber = 0;
         // Load scene
         SceneManager.LoadScene(2);
     }

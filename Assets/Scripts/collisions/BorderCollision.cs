@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class BorderCollision : MonoBehaviour {
-
-    private bool collided;
     // Use this for initialization
     void Start()
     {

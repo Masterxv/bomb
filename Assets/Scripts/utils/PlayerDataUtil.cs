@@ -26,22 +26,22 @@ public class PlayerDataUtil
             playerData.levels[i] = i;
             playerData.stars[i] = -1;
         }
-        playerData.stars[0] = 1;
-        playerData.stars[1] = 2;
-        playerData.stars[2] = 3;
-        playerData.stars[3] = 3;
-        playerData.stars[4] = 3;
-        playerData.stars[5] = 3;
-        playerData.stars[6] = 3;
-        playerData.stars[7] = 3;
-        playerData.stars[8] = 0;
+        playerData.stars[0] = 0;
+        //playerData.stars[1] = 2;
+        //playerData.stars[2] = 3;
+        //playerData.stars[3] = 3;
+        //playerData.stars[4] = 3;
+        //playerData.stars[5] = 3;
+        //playerData.stars[6] = 3;
+        //playerData.stars[7] = 3;
+        //playerData.stars[8] = 0;
 
-        playerData.normalLevel = 0;
-        playerData.shooterLevel = 0;
-        playerData.waveLevel = 0;
-        playerData.targetLevel = 0;
-        playerData.acidLevel = 0;
-        playerData.goldLevel = 0;
+        playerData.normalLevel = 1;
+        playerData.shooterLevel = 1;
+        playerData.waveLevel = 1;
+        playerData.targetLevel = 1;
+        playerData.acidLevel = 1;
+        playerData.goldLevel = 1;
 
         playerData.normalExtra = 0;
         playerData.shooterExtra = 0;
@@ -49,11 +49,11 @@ public class PlayerDataUtil
         playerData.targetExtra = 0;
         playerData.acidExtra = 0;
 
-        playerData.earnedStars = 21;
+        playerData.earnedStars = 0;
         playerData.spentStars = 0;
         playerData.starResetedTime = 1;
 
-        playerData.gold = 5000;
+        playerData.gold = 0;
 
         SavePlayerData();
     }
