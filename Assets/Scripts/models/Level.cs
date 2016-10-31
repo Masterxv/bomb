@@ -9,6 +9,7 @@ public class Level
 {
     public int index;
     public List<BombInfo> bombs;
+    public List<WallInfo> walls;
     public int numberOfClick;
     public string tutorialContent;
     public string tutorialImage;

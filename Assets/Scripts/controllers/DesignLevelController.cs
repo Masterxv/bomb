@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
 
 public class DesignLevelController : MonoBehaviour
 {
@@ -14,6 +13,9 @@ public class DesignLevelController : MonoBehaviour
     public GameObject waveBomb;
     public GameObject acidBomb;
 
+    public GameObject normalWall;
+    public GameObject contraryWall;
+
 
     private Level level;
     public int levelIndex;
@@ -21,6 +23,8 @@ public class DesignLevelController : MonoBehaviour
 
     public string tutorialContent;
     public string tutorialImage;
+
+    public static bool active;
 
 
     public void GenerateLevelData()
@@ -32,6 +36,7 @@ public class DesignLevelController : MonoBehaviour
         level.tutorialContent = tutorialContent;
         level.tutorialImage = tutorialImage;
 
+        // Gain bomb data
         level.bombs = new List<BombInfo>();
         GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
         for (int i = 0; i < bombs.Length; i++)
@@ -62,6 +67,21 @@ public class DesignLevelController : MonoBehaviour
             level.bombs.Add(bombInfo);
         }
 
+        // Gain wall data
+        level.walls = new List<WallInfo>();
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
+        for (int i = 0; i < walls.Length; i++)
+        {
+            GameObject wall = walls[i];
+            WallInfo wallInfo = new WallInfo();
+            wallInfo.initAngle = -1 * wall.GetComponent<Wall>().initAngle;
+            wallInfo.initPosition.Fill(wall.transform.position);
+            wallInfo.maxHealth = wall.GetComponent<Wall>().maxHealth;
+            wallInfo.currentHealth = wall.GetComponent<Wall>().currentHealth;
+            wallInfo.type = wall.GetComponent<Wall>().type;
+            level.walls.Add(wallInfo);
+        }
+
         // Save level data to file
         SaveLevelData(level);
     }
@@ -73,7 +93,7 @@ public class DesignLevelController : MonoBehaviour
         FileStream file = File.OpenWrite(destination);
         bf.Serialize(file, level);
         file.Close();
-        FileUtil.ReplaceFile(destination, Application.dataPath + "/Resources/Levels/lv" + level.index + ".txt");
+        //FileUtil.ReplaceFile(destination, Application.dataPath + "/Resources/Levels/lv" + level.index + ".txt");
     }
 
     void InitBombs(Level level)
@@ -117,12 +137,44 @@ public class DesignLevelController : MonoBehaviour
         }
     }
 
+    void InitWalls(Level level)
+    {
+        for(var i=0; i<level.walls.Count; i++)
+        {
+            WallInfo wallInfo = level.walls[i];
+            GameObject wall = null;
+            switch(wallInfo.type)
+            {
+                case Constants.WallTypes.normal:
+                    wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
+                    break;
+                case Constants.WallTypes.contrary:
+                    wall = Instantiate(contraryWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
+                    break;
+            }
+            if (wall == null)
+            {
+                wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
+            }
+            wall.GetComponent<Wall>().setWallData(wallInfo);
+        }
+    }
+
     void RemoveAllCurrentBombs()
     {
         GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
         for (int i = 0; i < bombs.Length; i++)
         {
             Destroy(bombs[i]);
+        }
+    }
+
+    void RemoveAllCurrentWalls()
+    {
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
+        for (int i = 0; i < walls.Length; i++)
+        {
+            Destroy(walls[i]);
         }
     }
 
@@ -143,6 +195,7 @@ public class DesignLevelController : MonoBehaviour
 
     public void Refresh()
     {
+        active = true;
         PlayerDataUtil.SavePlayerDataFirstTime();
         level = LevelUtil.LoadLevelData(levelIndex);
         // If this level is already has, then load level data
@@ -150,7 +203,9 @@ public class DesignLevelController : MonoBehaviour
         {
             LevelUtil.getCurrentLevel().numberOfClick = 100;
             RemoveAllCurrentBombs();
+            RemoveAllCurrentWalls();
             InitBombs(level);
+            InitWalls(level);
             InitTutorial(level.tutorialContent, level.tutorialImage);
         }
         // If not then load new level data depend on current scene settings
@@ -161,6 +216,17 @@ public class DesignLevelController : MonoBehaviour
             {
                 GameObject bomb = bombs[i];
                 bomb.GetComponent<Explode>().initPosition = bomb.transform.position;
+            }
+
+            GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
+            for(int i=0; i<walls.Length; i++)
+            {
+                GameObject wall = walls[i];
+                wall.GetComponent<Wall>().initPosition = wall.transform.position;
+                RectTransform [] healthsTransform = wall.GetComponentsInChildren<RectTransform>();
+                healthsTransform[1].sizeDelta = new Vector2(healthsTransform[1].sizeDelta.x, wall.GetComponent<Wall>().maxHealth*Constants.WALL_HEALTH_UNIT);
+                healthsTransform[2].sizeDelta = new Vector2(healthsTransform[2].sizeDelta.x, wall.GetComponent<Wall>().currentHealth*Constants.WALL_HEALTH_UNIT);
+                wall.GetComponent<BoxCollider2D>().size = new Vector2(wall.GetComponent<BoxCollider2D>().size.x, wall.GetComponent<BoxCollider2D>().size.y * wall.GetComponent<Wall>().maxHealth / 2);
             }
             InitTutorial(tutorialContent, tutorialImage);
         }

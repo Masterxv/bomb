@@ -46,6 +46,7 @@ public class UpgradeController : MonoBehaviour
 
     void InitUpgradeItem(string itemName, int level, int levelMax, int baseCost)
     {
+        level = level + 1;
         GameObject levelObj = GameObject.Find(itemName + "Level");
         GameObject valueObj = GameObject.Find(itemName + "Value");
         Button btn = GameObject.Find(itemName + "Button").GetComponent<Button>();
@@ -83,7 +84,7 @@ public class UpgradeController : MonoBehaviour
 
     void InitResetStars()
     {
-        GameObject.Find("ResetValue").GetComponent<Text>().text = (PlayerDataUtil.playerData.starResetedTime * Constants.RESET_STARS_BASE_COST).ToString();
+        GameObject.Find("ResetValue").GetComponent<Text>().text = ((PlayerDataUtil.playerData.starResetedTime + 1) * Constants.RESET_STARS_BASE_COST).ToString();
     }
 
     // Update is called once per frame

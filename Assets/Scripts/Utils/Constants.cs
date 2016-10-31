@@ -18,6 +18,7 @@ public class Constants
     public static int BOMB_REMAIN_3_STAR_THRESHOLD = 0; // Bomb
 
     public enum BombTypes { normal, shooter, target, wave, acid };
+    public enum WallTypes { normal, contrary};
     public enum MovementTypes { polyline, polygon, circle };
 
     // Level selection scene
@@ -59,4 +60,7 @@ public class Constants
     public static int PAKE_1000_GOLD = 5; // USD
     public static int PAKE_3000_GOLD = 10; // USD
     public static int PAKE_10000_GOLD = 15; // USD
+
+    // Health bar unit
+    public static int WALL_HEALTH_UNIT = 50; // meter
 }

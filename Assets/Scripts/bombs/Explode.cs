@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class Explode : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Explode : MonoBehaviour
     public int health;
     public int currentHealth;
 
+    public bool isExploded;
+    public AudioClip bombExplodeSound;
     public int valueInCoin;
 
     public virtual void setBombData(BombInfo bombInfo)
@@ -61,6 +64,8 @@ public class Explode : MonoBehaviour
     {
         currentHealth = health;
         baseBomb = null;
+        isExploded = false;
+        transform.DOScale(new Vector2(1.2f, 1.2f), 0.7f).SetLoops(-1, LoopType.Yoyo);
     }
 
     // Update is called once per frame
@@ -71,16 +76,28 @@ public class Explode : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(GameController.instance.clickedNumber < LevelUtil.getCurrentLevel().numberOfClick)
+        if (GameController.instance.clickedNumber < LevelUtil.getCurrentLevel().numberOfClick)
         {
             GameController.instance.UpdateClickedNumber();
-            DoExplode();
+            PrepareToExplode();
         }
+    }
+
+    public void PrepareToExplode()
+    {
+        GameController.instance.isAnimating = true;
+        isExploded = true;
+        transform.DOPunchScale(new Vector2(1.2f, 1.2f), 0.5f).OnComplete(DoExplode);
     }
 
     public virtual void DoExplode()
     {
         CoinUtil.CreateCoins(transform.position, valueInCoin);
         GoldUtil.AddGold(valueInCoin);
+        if(bombExplodeSound != null)
+        {
+            AudioSource.PlayClipAtPoint(bombExplodeSound, transform.position);
+        }
+        GameController.instance.isAnimating = false;
     }
 }

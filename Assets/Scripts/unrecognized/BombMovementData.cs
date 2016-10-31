@@ -14,7 +14,6 @@ public class BombMovementData {
 
     public BombMovementData()
     {
-
     }
 
     public BombMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise)
