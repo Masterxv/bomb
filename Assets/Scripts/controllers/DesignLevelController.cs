@@ -196,7 +196,8 @@ public class DesignLevelController : MonoBehaviour
     public void Refresh()
     {
         active = true;
-        PlayerDataUtil.SavePlayerDataFirstTime();
+        PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
+        PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
         level = LevelUtil.LoadLevelData(levelIndex);
         // If this level is already has, then load level data
         if (level != null)

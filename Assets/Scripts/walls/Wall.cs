@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wall : MonoBehaviour {
+public class Wall : MonoBehaviour
+{
 
     public Constants.WallTypes type;
     public int maxHealth;
@@ -12,29 +13,28 @@ public class Wall : MonoBehaviour {
     public AudioClip takeDamageSound;
     public RectTransform healthBar;
 
+    public virtual void Start()
+    {
+
+    }
+
     public virtual void setWallData(WallInfo wallInfo)
     {
         maxHealth = wallInfo.maxHealth;
-        currentHealth = wallInfo.currentHealth;
+        currentHealth = wallInfo.maxHealth >= wallInfo.currentHealth ? wallInfo.currentHealth : wallInfo.maxHealth;
+        // rotate by init angle
         initAngle = wallInfo.initAngle;
+        transform.Rotate(0, 0, initAngle);
         initPosition = wallInfo.initPosition.GetV3();
         type = wallInfo.type;
     }
 
-    public virtual void TakeDamage()
+    public virtual void CollisionWithBullet(GameObject bullet)
     {
         // Play sound
         if (takeDamageSound != null)
         {
             AudioSource.PlayClipAtPoint(takeDamageSound, transform.position);
-        }
-        // Update health bar
-        Debug.Log(currentHealth);
-        currentHealth -= 1;
-        healthBar.sizeDelta = new Vector2(healthBar.sizeDelta.x, currentHealth*Constants.WALL_HEALTH_UNIT);
-        if(currentHealth <= 0)
-        {
-            Destroy(gameObject);
         }
     }
 }

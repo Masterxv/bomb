@@ -15,6 +15,7 @@ public class BulletCollision : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Bullet collision with bomb
         if (other.gameObject.CompareTag("bomb") && !other.gameObject.GetComponent<Explode>().isExploded)
         {
             int bulletDamage = gameObject.GetComponent<Bullet>().damage;
@@ -30,11 +31,11 @@ public class BulletCollision : MonoBehaviour {
                 other.gameObject.GetComponent<Explode>().PrepareToExplode();
             }
         }
-
+        // Bullet colision with wall
         if(other.gameObject.CompareTag("wall"))
         {
-            gameObject.GetComponent<Bullet>().currentHealth = 0;
-            other.gameObject.GetComponent<Wall>().TakeDamage();
+            gameObject.GetComponent<Bullet>().CollisionWithWall(other.gameObject);
+            other.gameObject.GetComponent<Wall>().CollisionWithBullet(gameObject);
         }
 
         // Destroy object if health <= 0

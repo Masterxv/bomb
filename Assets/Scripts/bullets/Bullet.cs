@@ -29,4 +29,12 @@ public class Bullet : MonoBehaviour {
 
 	void Update () {
     }
+
+    public virtual void CollisionWithWall(GameObject wall)
+    {
+        if (wall.GetComponent<Wall>().type == Constants.WallTypes.normal)
+        {
+            currentHealth = 0;
+        }
+    }
 }
