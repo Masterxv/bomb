@@ -5,6 +5,7 @@ using System.Collections;
 public class UpgradeController : MonoBehaviour
 {
 
+    public GameObject resetStarPanel;
     bool ShowResetStarConfirm;
     bool ShowAdsOffer;
 
@@ -14,15 +15,9 @@ public class UpgradeController : MonoBehaviour
         ShowResetStarConfirm = false;
         ShowAdsOffer = false;
         // Init a fake player data for first time
-        // PlayerDataUtil.SavePlayerDataFirstTime();
-        // PlayerDataUtil.LoadPlayerData();
+        PlayerDataUtil.SavePlayerDataFirstTime(); //TODO: remove in production
+        PlayerDataUtil.LoadPlayerData();  //TODO: remove in production
         InitAllItems();
-        GameObject upgradeCanvas = GameObject.Find("UpgradeCanvas") as GameObject;
-        RectTransform rt = upgradeCanvas.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 1f);
-        rt.anchorMax = new Vector2(0.5f, 1f);
-        rt.sizeDelta = new Vector2(600, 1000);
-        rt.anchoredPosition = new Vector2(0, -rt.sizeDelta.y / 2 - 100);
     }
 
     void InitAllItems()
@@ -87,83 +82,44 @@ public class UpgradeController : MonoBehaviour
         GameObject.Find("ResetValue").GetComponent<Text>().text = ((PlayerDataUtil.playerData.starResetedTime + 1) * Constants.RESET_STARS_BASE_COST).ToString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void ResetStars()
     {
         int currentGold = PlayerDataUtil.playerData.gold;
-        int resetPrice = PlayerDataUtil.playerData.starResetedTime * Constants.RESET_STARS_BASE_COST;
+        int resetPrice = (PlayerDataUtil.playerData.starResetedTime + 1) * Constants.RESET_STARS_BASE_COST;
         if (resetPrice <= currentGold)
         {
-            // Show reset confirm dialog
+            resetStarPanel.GetComponentInChildren<Text>().text = "Do you really wanna reset stars with " + (PlayerDataUtil.playerData.starResetedTime + 1) * Constants.RESET_STARS_BASE_COST + " gold?";
             ShowResetStarConfirm = true;
+            ShowAdsOffer = false;
         }
         else
         {
-            // Show ads offer dialog
+            resetStarPanel.GetComponentInChildren<Text>().text = "You do not have enough gold to reset, You can view an ads to gain '" + ((PlayerDataUtil.playerData.starResetedTime + 1) * Constants.RESET_STARS_BASE_COST) / 5 + "' gold?";
             ShowAdsOffer = true;
-        }
-    }
-
-    void OnGUI()
-    {
-        if (ShowResetStarConfirm)
-        {
-            GUI.ModalWindow(0, new Rect((Screen.width / 2) - 150, (Screen.height / 2) - 75
-                   , 300, 150), ShowResetStarConfirmDialog, "Reset Stars");
-        }
-
-        if (ShowAdsOffer)
-        {
-            GUI.ModalWindow(0, new Rect((Screen.width / 2) - 150, (Screen.height / 2) - 75
-                   , 300, 150), ShowResetStarAdsOfferDialog, "Reset Stars, Ads offer!");
-        }
-    }
-
-    void ShowResetStarConfirmDialog(int windowID)
-    {
-        // You may put a label to show a message to the player
-
-        GUI.Label(new Rect(50, 30, 200, 90), "Do you really wanna reset star with " + PlayerDataUtil.playerData.starResetedTime * Constants.RESET_STARS_BASE_COST + " gold?");
-
-        // You may put a button to close the pop up too
-
-        if (GUI.Button(new Rect(80, 100, 50, 30), "OK"))
-        {
             ShowResetStarConfirm = false;
+        }
+
+        resetStarPanel.SetActive(true);
+    }
+
+    public void ResetStarActionOK()
+    {
+        if(ShowResetStarConfirm)
+        {
             PlayerDataUtil.ResetStars();
             InitAllItems();
-        }
-        if (GUI.Button(new Rect(170, 100, 50, 30), "Cancel"))
+        } else
         {
-            ShowResetStarConfirm = false;
+            // Display ads
+            Debug.Log("ads displayed");
         }
+        resetStarPanel.SetActive(false);
     }
 
-
-    void ShowResetStarAdsOfferDialog(int windowID)
+    public void ResetStarActionCancel()
     {
-        // You may put a label to show a message to the player
-
-        GUI.Label(new Rect(50, 30, 200, 90), "You do not have enough gold to reset, You can view an ads to gain '" + (PlayerDataUtil.playerData.starResetedTime * Constants.RESET_STARS_BASE_COST)/5 + "' gold?");
-
-        // You may put a button to close the pop up too
-
-        if (GUI.Button(new Rect(80, 100, 50, 30), "OK"))
-        {
-            // Show ads then callback to reset stars
-        }
-        if (GUI.Button(new Rect(170, 100, 50, 30), "Cancel"))
-        {
-            ShowAdsOffer = false;
-        }
+        resetStarPanel.SetActive(false);
     }
-
-
 
     public void UpgradeItem(string itemName)
     {
