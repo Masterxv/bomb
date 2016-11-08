@@ -49,6 +49,7 @@ public class LevelController : MonoBehaviour
             {
                 case -1:
                     levelPrefabClone.GetComponentInChildren<Image>().sprite = level_locked;
+                    levelPrefabClone.GetComponentInChildren<Text>().text = "";
                     break;
                 case 0:
                     levelPrefabClone.GetComponentInChildren<Image>().sprite = level_0_star;
