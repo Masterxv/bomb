@@ -5,68 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    public int yDefaultOffset;
+    public GameObject levelPrefab;
+    public Sprite level_0_star;
+    public Sprite level_1_star;
+    public Sprite level_2_star;
+    public Sprite level_3_star;
+    public Sprite level_locked;
+
     // Use this for initialization
     void Start()
     {
         //PlayerDataUtil.SavePlayerDataFirstTime();
         PlayerDataUtil.LoadPlayerData();
 
-        GameObject levelsCanvas = GameObject.Find("LevelCanvas") as GameObject;
-        RectTransform rt = levelsCanvas.GetComponent<RectTransform>();
-        rt.anchorMin = new Vector2(0.5f, 1f);
-        rt.anchorMax = new Vector2(0.5f, 1f);
-        rt.sizeDelta = new Vector2(600, 1000);
-        rt.anchoredPosition = new Vector2(0, -rt.sizeDelta.y/2);
-
-        GameObject levelPrefab = (GameObject)Instantiate(Resources.Load("Prefabs/Level"));
-        float levelPrefabWidth = levelPrefab.GetComponent<RectTransform>().sizeDelta.x;
-        float levelPrefabHeight = levelPrefab.GetComponent<RectTransform>().sizeDelta.y;
-        float xOffset = 0;
-        float yOffset = 0;
-
         for (int i = 0; i < Constants.TOTAL_LEVEL; i++)
         {
             int levelIndex = i + 1;
             GameObject levelPrefabClone = Instantiate(levelPrefab);
-
+            
             // Add levelPrefab to levels canvas
-            levelPrefabClone.transform.SetParent(levelsCanvas.transform);
+            levelPrefabClone.transform.SetParent(transform);
 
             // Set properties for level prefabs children components
-
             // Set level name
             levelPrefabClone.GetComponentInChildren<Text>().text = levelIndex + "";
 
-            // Set level position, depend on level index
-            // Perform xOffset
-            int xChecker = levelIndex % 6;
-            if (xChecker == 0)
-            {
-                xChecker = 6;
-            }
-            xOffset = (xChecker - 3.5f) * (levelPrefabWidth + Constants.LEVEL_MARGIN);
-
-            // Perform y offset
-            int yChecker = levelIndex / 6;
-            if (xChecker == 6)
-            {
-                yOffset = -(yChecker - 1) * (levelPrefabHeight + Constants.LEVEL_MARGIN);
-            }
-            else
-            {
-                yOffset = -yChecker * (levelPrefabHeight + Constants.LEVEL_MARGIN);
-            }
-
-            levelPrefabClone.transform.position = levelsCanvas.transform.position + new Vector3(xOffset, yOffset + rt.sizeDelta.y / 2, 0);
             // Set level image, depend on status of level of players
-            // Load level sprites
-            Sprite level_0_star = Resources.Load<Sprite>("Sprites/levels/level-0-star");
-            Sprite level_1_star = Resources.Load<Sprite>("Sprites/levels/level-1-star");
-            Sprite level_2_star = Resources.Load<Sprite>("Sprites/levels/level-2-star");
-            Sprite level_3_star = Resources.Load<Sprite>("Sprites/levels/level-3-star");
-            Sprite level_locked = Resources.Load<Sprite>("Sprites/levels/level-locked");
-
             // Get user data
             int stars = PlayerDataUtil.playerData.stars[levelIndex - 1];
 
@@ -80,7 +44,6 @@ public class LevelController : MonoBehaviour
             {
                 b.onClick.AddListener(() => GoToLevel(levelIndex));
             }
-
 
             switch (stars)
             {
