@@ -13,20 +13,21 @@ public class PlayerData
     public int acidLevel;
     public int goldLevel;
 
-    public int normalExtra;
-    public int shooterExtra;
-    public int waveExtra;
-    public int targetExtra;
-    public int acidExtra;
-
     public int powerUpMoreClick;
     public int powerUpMoreBomb;
 
-    public int earnedStars;
     public int spentStars;
     public int starResetedTime;
 
     public int gold;
+
+    // for achievement
+    public int totalEarnedGold;
+    public int totalBombExploded;
+    public int totalPowerupPuchased;
+    public int bestCombo;
+    public int totalUpgrade;
+    public int earnedStars;
 
     public PlayerData()
     {

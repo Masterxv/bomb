@@ -23,11 +23,11 @@ public class UpgradeController : MonoBehaviour
     void InitAllItems()
     {
         // Init all upgrade items
-        InitUpgradeItem("Normal", PlayerDataUtil.playerData.normalLevel, Constants.BOMB_UPGRADE_MAX_LEVEL, Constants.NORMAL_BOMB_UPGRADE_BASE_COST);
-        InitUpgradeItem("Shooter", PlayerDataUtil.playerData.shooterLevel, Constants.BOMB_UPGRADE_MAX_LEVEL, Constants.SHOOTER_BOMB_UPGRADE_BASE_COST);
-        InitUpgradeItem("Target", PlayerDataUtil.playerData.targetLevel, Constants.BOMB_UPGRADE_MAX_LEVEL, Constants.TARGET_BOMB_UPGRADE_BASE_COST);
-        InitUpgradeItem("Wave", PlayerDataUtil.playerData.waveLevel, Constants.BOMB_UPGRADE_MAX_LEVEL, Constants.WAVE_BOMB_UPGRADE_BASE_COST);
-        InitUpgradeItem("Gold", PlayerDataUtil.playerData.goldLevel, Constants.GOLD_UPGRADE_MAX_LEVEL, Constants.GOLD_UPGRADE_BASE_COST);
+        InitUpgradeItem("Normal", PlayerDataUtil.playerData.normalLevel, Constants.UPGRADE_MAX_LEVEL, Constants.NORMAL_BOMB_UPGRADE_BASE_COST);
+        InitUpgradeItem("Shooter", PlayerDataUtil.playerData.shooterLevel, Constants.UPGRADE_MAX_LEVEL, Constants.SHOOTER_BOMB_UPGRADE_BASE_COST);
+        InitUpgradeItem("Target", PlayerDataUtil.playerData.targetLevel, Constants.UPGRADE_MAX_LEVEL, Constants.TARGET_BOMB_UPGRADE_BASE_COST);
+        InitUpgradeItem("Wave", PlayerDataUtil.playerData.waveLevel, Constants.UPGRADE_MAX_LEVEL, Constants.WAVE_BOMB_UPGRADE_BASE_COST);
+        InitUpgradeItem("Gold", PlayerDataUtil.playerData.goldLevel, Constants.UPGRADE_MAX_LEVEL, Constants.GOLD_UPGRADE_BASE_COST);
 
         // Init earned and remain stars
         InitEarnedAndRemainStars();
@@ -108,7 +108,7 @@ public class UpgradeController : MonoBehaviour
         {
             PlayerDataUtil.ResetStars();
             InitAllItems();
-        } else
+        } else if(ShowAdsOffer)
         {
             // Display ads
             Debug.Log("ads displayed");

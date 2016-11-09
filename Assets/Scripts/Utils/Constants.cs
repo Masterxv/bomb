@@ -20,6 +20,7 @@ public class Constants
     public enum BombTypes { normal, shooter, target, wave, acid };
     public enum WallTypes { normal, contrary};
     public enum MovementTypes { polyline, polygon, circle };
+    public enum AchievementTypes { destroyBomb, earnGold, getCombo, getStar, getUpgrade, purchasePowerUp};
 
     // Level selection scene
     public static int LEVEL_MARGIN = 0;
@@ -31,11 +32,8 @@ public class Constants
     public static int TARGET_BOMB_UPGRADE_BASE_COST = 3; // Star
     public static int WAVE_BOMB_UPGRADE_BASE_COST = 2; // Star
     public static int GOLD_UPGRADE_BASE_COST = 3; // Star
-
-    public static int BOMB_UPGRADE_MAX_LEVEL = 4;
-    public static int GOLD_UPGRADE_MAX_LEVEL = 7;
-
     public static int RESET_STARS_BASE_COST = 1000; // Gold
+    public static int UPGRADE_MAX_LEVEL = 10;
 
     // Upgrade increment
     public static float NORMAL_BOMB_RADIUS_INC = 0.1f; // 10%
@@ -46,20 +44,17 @@ public class Constants
     public static float BOMB_VALUE_INC = 0.1f; // 10% 
     public static float GOLD_INC = 0.1f; // 10%
 
-    // Shop - bomb
-    public static int NORMAL_BOMB_PRICE = 1000; // Gold
-    public static int SHOOTER_BOMB_PRICE = 2000; // Gold
-    public static int TARGET_BOMB_PRICE = 3000; // Gold
-    public static int WAVE_BOMB_PRICE = 2000; // Gold
+    // Achievement award in gold
+    public static int ACHIEVEMENT_MAX_LEVEL = 10;
 
     // Shop - powerup
     public static int MORE_BOMB = 1000; // Gold
     public static int ONE_MORE_CLICK = 1000; // Gold
 
     // Shop - in-app purchase
-    public static int PAKE_1000_GOLD = 5; // USD
-    public static int PAKE_3000_GOLD = 10; // USD
-    public static int PAKE_10000_GOLD = 15; // USD
+    public static int PAKE_10000_GOLD = 1; // USD
+    public static int PAKE_60000_GOLD = 5; // USD
+    public static int PAKE_200000_GOLD = 15; // USD
 
     // Health bar unit
     public static int WALL_HEALTH_UNIT = 50; // meter

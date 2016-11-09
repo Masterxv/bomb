@@ -92,6 +92,10 @@ public class GameController : MonoBehaviour
 
     void InitWalls(Level level)
     {
+        if(level.walls == null)
+        {
+            return;
+        }
         for (var i = 0; i < level.walls.Count; i++)
         {
             WallInfo wallInfo = level.walls[i];

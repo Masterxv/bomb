@@ -43,17 +43,18 @@ public class PlayerDataUtil
         playerData.acidLevel = 0;
         playerData.goldLevel = 0;
 
-        playerData.normalExtra = 0;
-        playerData.shooterExtra = 0;
-        playerData.waveExtra = 0;
-        playerData.targetExtra = 0;
-        playerData.acidExtra = 0;
-
         playerData.earnedStars = 0;
         playerData.spentStars = 0;
         playerData.starResetedTime = 0;
 
         playerData.gold = 0;
+
+        // Achievement
+        playerData.totalEarnedGold = 0;
+        playerData.totalBombExploded = 0;
+        playerData.totalPowerupPuchased = 0;
+        playerData.totalUpgrade = 0;
+        playerData.bestCombo = 0;
 
         SavePlayerData();
     }
