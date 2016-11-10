@@ -61,5 +61,6 @@ public class WaveExplode : Explode
 
             Destroy(tmpSign);
         }
+        base.DoneExplode();
     }
 }

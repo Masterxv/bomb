@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
     public Text handCount;
 
     public bool isAnimating;
+    public IEnumerator coroutine;
 
     static GameController _instance;
     public static GameController instance
@@ -154,6 +155,7 @@ public class GameController : MonoBehaviour
         InitWalls(level);
         InitTutorial(level);
         UpdateGold();
+        PlayerDataUtil.playerData.totalMatch++;
     }
 
     public void UpdateGold()
@@ -172,13 +174,28 @@ public class GameController : MonoBehaviour
     {
         if (clickedNumber >= numberOfClick && !isAnimating && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
         {
-            if(resultPanel.activeInHierarchy)
+            if (resultPanel.activeInHierarchy)
             {
                 return;
             }
+            coroutine = EndGameLogic(1.0f);
+            StartCoroutine(coroutine);
+        }
+    }
+
+    // All logic when end a game level
+    public IEnumerator EndGameLogic(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (clickedNumber >= numberOfClick && !isAnimating && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
+        {
+            StopCoroutine(coroutine);
             // End this level, show the result panel
             resultPanel.SetActive(true);
             resultPanel.transform.DOScale(new Vector3(0.5f, 0.5f, 0), 1); ; // Animate to show result panel
+
+            // Calculate star
             int remainBombs = GameObject.FindGameObjectsWithTag("bomb").Length;
             GameObject.Find("RemainBombValue").GetComponent<Text>().text = remainBombs + "";
             int stars = GetStars(remainBombs);
@@ -197,7 +214,7 @@ public class GameController : MonoBehaviour
                     GameObject.Find("Star3").GetComponent<Image>().sprite = starSprite;
                     break;
             }
-            if(stars > 0)
+            if (stars > 0)
             {
                 int currentLevelStars = PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index - 1];
                 if (stars > currentLevelStars) // Update current level star if this time stars is larger than last time stars.
@@ -211,7 +228,25 @@ public class GameController : MonoBehaviour
                     PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index] = 0;
                 }
             }
+
+            // Add exploded bomb
+            int explodedBombs = LevelUtil.getCurrentLevel().bombs.Count - remainBombs;
+            PlayerDataUtil.playerData.totalBombExploded += explodedBombs;
+
+            // Calculate best combo
+            if (clickedNumber == 1 && explodedBombs > PlayerDataUtil.playerData.bestCombo)
+            {
+                PlayerDataUtil.playerData.bestCombo = explodedBombs;
+            }
+
             PlayerDataUtil.SavePlayerData();
+
+            // Show ads depend on total match of player
+            if (PlayerDataUtil.playerData.totalMatch % Constants.MATCH_COUNT_EACH_POPUP_ADS == 0)
+            {
+                // TODO: Display popup ads
+
+            }
         }
     }
 

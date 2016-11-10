@@ -5,6 +5,8 @@ public class GoldUtil
 {
     public static void AddGold(int valueInCoin)
     {
-        PlayerDataUtil.playerData.gold += (int)(valueInCoin * (1 + PlayerDataUtil.playerData.goldLevel * Constants.GOLD_INC));
+        int valueToAdd = (int)(valueInCoin * (1 + PlayerDataUtil.playerData.goldLevel * Constants.GOLD_INC));
+        PlayerDataUtil.playerData.gold += valueToAdd;
+        PlayerDataUtil.playerData.totalEarnedGold += valueToAdd;
     }
 }

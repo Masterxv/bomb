@@ -98,6 +98,10 @@ public class Explode : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(bombExplodeSound, transform.position);
         }
+    }
+
+    public virtual void DoneExplode()
+    {
         GameController.instance.isAnimating = false;
     }
 }

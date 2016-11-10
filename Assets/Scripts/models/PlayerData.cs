@@ -29,6 +29,9 @@ public class PlayerData
     public int totalUpgrade;
     public int earnedStars;
 
+    // for show ads
+    public int totalMatch;
+
     public PlayerData()
     {
     }

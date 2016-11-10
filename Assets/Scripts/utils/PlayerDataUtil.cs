@@ -56,6 +56,9 @@ public class PlayerDataUtil
         playerData.totalUpgrade = 0;
         playerData.bestCombo = 0;
 
+        // Count match to show ads
+        playerData.totalMatch = 0;
+
         SavePlayerData();
     }
 

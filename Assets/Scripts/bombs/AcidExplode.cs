@@ -27,6 +27,6 @@ public class AcidExplode : Explode {
                 newBullet.GetComponent<AcidBullet>().setData(thisPosition, targetPosition, distance, velocity, bulletDamage, bulletHealth, duration);
             }
         }
-
+        base.DoneExplode();
     }
 }

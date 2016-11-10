@@ -156,6 +156,7 @@ public class UpgradeController : MonoBehaviour
         }
         PlayerDataUtil.playerData.spentStars += baseCost * level;
         InitAllItems();
+        PlayerDataUtil.playerData.totalUpgrade++; // Update total upgrade to gain achievement
         PlayerDataUtil.SavePlayerData();
     }
 }

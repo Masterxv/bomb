@@ -28,5 +28,6 @@ public class NormalExplode : Explode
             Vector3 velocity = (targetPosition - thisPosition).normalized * speed;
             newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, radius, velocity, bulletDamage, bulletHealth);
         }
+        base.DoneExplode();
     }
 }

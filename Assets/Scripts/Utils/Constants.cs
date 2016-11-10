@@ -58,4 +58,7 @@ public class Constants
 
     // Health bar unit
     public static int WALL_HEALTH_UNIT = 50; // meter
+
+    // Match count for show ads
+    public static int MATCH_COUNT_EACH_POPUP_ADS = 5;
 }

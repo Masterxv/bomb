@@ -49,5 +49,6 @@ public class ShooterExplode : Explode
             newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, Constants.BULLET_MAX_DISTANCE, velocity, bulletDamage, bulletHealth);
             Destroy(tmpSign);
         }
+        base.DoneExplode();
     }
 }

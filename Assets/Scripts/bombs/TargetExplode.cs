@@ -31,5 +31,6 @@ public class TargetExplode : Explode
             float distance = Vector3.Distance(thisPosition, targetPosition);
             newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, distance, velocity, bulletDamage, bulletHealth);
         }
+        base.DoneExplode();
     }
 }
