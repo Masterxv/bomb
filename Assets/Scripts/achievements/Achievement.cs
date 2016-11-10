@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class Achievement : MonoBehaviour
@@ -17,6 +18,8 @@ public class Achievement : MonoBehaviour
     public float baseAward;
     public float awardINC;
 
+    public int progress;
+
     public Achievement()
     {
     }
@@ -28,5 +31,7 @@ public class Achievement : MonoBehaviour
 
     void Start()
     {
+        GetComponentInChildren<Text>().text = progress + " %";
+        GetComponent<Button>().onClick.AddListener(() => AchievementController.instance.AchievementClicked(this));
     }
 }

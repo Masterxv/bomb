@@ -15,7 +15,8 @@ class EarnGold : Achievement
         award = (int)(baseAward * Math.Pow(awardINC, level));
         description = "Earn total " + cost + " gold!";
 
-        if (PlayerDataUtil.playerData.totalEarnedGold >= cost)
+        progress = (int)(1.0f * PlayerDataUtil.playerData.totalEarnedGold / cost * 100);
+        if (progress >= 100)
         {
             earned = true;
         }

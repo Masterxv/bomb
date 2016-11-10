@@ -9,13 +9,14 @@ class GetUpgrade : Achievement
         baseCost = 10;
         costINC = 10;
         baseAward = 200;
-        awardINC = 500;
+        awardINC = 3;
 
         cost = (int)(baseCost + level * costINC);
         award = (int)(baseAward + level * awardINC);
         description = "Buy total " + cost + " upgrades!";
 
-        if (PlayerDataUtil.playerData.totalUpgrade >= cost)
+        progress = (int)(1.0f * PlayerDataUtil.playerData.totalUpgrade / cost * 100);
+        if (progress >= 100)
         {
             earned = true;
         }

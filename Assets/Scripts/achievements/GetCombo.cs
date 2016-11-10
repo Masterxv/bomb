@@ -15,7 +15,8 @@ class GetCombo : Achievement
         award = (int)(baseAward * Math.Pow(awardINC, level));
         description = "Get a combo " + cost + " bombs!";
 
-        if (PlayerDataUtil.playerData.bestCombo >= cost)
+        progress = (int)(1.0f * PlayerDataUtil.playerData.bestCombo / cost * 100);
+        if (progress >= 100)
         {
             earned = true;
         }

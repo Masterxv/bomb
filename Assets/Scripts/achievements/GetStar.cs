@@ -15,7 +15,8 @@ class GetStar : Achievement
         award = (int)(baseAward * Math.Pow(awardINC, level));
         description = "Win total " + cost + " stars!";
 
-        if (PlayerDataUtil.playerData.earnedStars >= cost)
+        progress = (int)(1.0f * PlayerDataUtil.playerData.earnedStars / cost * 100);
+        if (progress >= 100)
         {
             earned = true;
         }

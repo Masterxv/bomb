@@ -9,13 +9,14 @@ class PurchasePowerup : Achievement
         baseCost = 10;
         costINC = 3;
         baseAward = 200;
-        awardINC = 10;
+        awardINC = 4;
 
         cost = (int)(baseCost + Math.Pow(costINC, level));
-        award = (int)(baseAward + level * awardINC);
+        award = (int)(baseAward + Math.Pow(awardINC, level));
         description = "Purchase total " + cost + " Powerup!";
 
-        if (PlayerDataUtil.playerData.totalPowerupPuchased >= cost)
+        progress = (int)(1.0f * PlayerDataUtil.playerData.totalPowerupPuchased / cost * 100);
+        if (progress >= 100)
         {
             earned = true;
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class AchievementController : MonoBehaviour {
@@ -13,6 +14,21 @@ public class AchievementController : MonoBehaviour {
     public GameObject achievementInfoPanel;
 
     private int numberOfColumn = 6;
+
+    static AchievementController _instance;
+    public static AchievementController instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        _instance = this;
+    }
+
 	// Use this for initialization
 	void Start () {
         PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
@@ -43,9 +59,48 @@ public class AchievementController : MonoBehaviour {
             purchasePowerup.transform.SetParent(achievementContent.transform);
         }
 	}
+
+    public void CloseAchievementInfoPanel()
+    {
+        achievementInfoPanel.SetActive(false);
+    }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public void AchievementClicked(Achievement achievement)
+    {
+        
+        achievementInfoPanel.SetActive(true);
+        // Set sprites
+        switch(achievement.type)
+        {
+            case Constants.AchievementTypes.destroyBomb:
+                achievementInfoPanel.GetComponentsInChildren<Image>()[2].sprite = destroyBombPrefab.GetComponent<Image>().sprite;
+                break;
+            case Constants.AchievementTypes.earnGold:
+                achievementInfoPanel.GetComponentsInChildren<Image>()[2].sprite = earnGoldPrefab.GetComponent<Image>().sprite;
+                break;
+            case Constants.AchievementTypes.getCombo:
+                achievementInfoPanel.GetComponentsInChildren<Image>()[2].sprite = getComboPrefab.GetComponent<Image>().sprite;
+                break;
+            case Constants.AchievementTypes.getStar:
+                achievementInfoPanel.GetComponentsInChildren<Image>()[2].sprite = getStarPrefab.GetComponent<Image>().sprite;
+                break;
+            case Constants.AchievementTypes.getUpgrade:
+                achievementInfoPanel.GetComponentsInChildren<Image>()[2].sprite = getUpgradePrefab.GetComponent<Image>().sprite;
+                break;
+            case Constants.AchievementTypes.purchasePowerUp:
+                achievementInfoPanel.GetComponentsInChildren<Image>()[2].sprite = purchasePowerupPrefab.GetComponent<Image>().sprite;
+                break;
+        }
+
+        achievementInfoPanel.GetComponentsInChildren<Text>()[0].text = achievement.description;
+        achievementInfoPanel.GetComponentsInChildren<Text>()[1].text = "Award: " + achievement.award + " gold";
+        if (achievement.earned)
+        {
+            achievementInfoPanel.GetComponentsInChildren<Text>()[2].text = "EARNED";
+        }
+        else
+        {
+            achievementInfoPanel.GetComponentsInChildren<Text>()[2].text = "In progress: " + achievement.progress + "%";
+        }
+    }
 }
