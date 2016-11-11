@@ -13,6 +13,9 @@ public class AchievementController : MonoBehaviour {
 
     public GameObject achievementInfoPanel;
 
+    public GameObject currentGold;
+    public GameObject currentEarnedStar;
+
     private int numberOfColumn = 6;
 
     static AchievementController _instance;
@@ -33,31 +36,9 @@ public class AchievementController : MonoBehaviour {
 	void Start () {
         PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
         PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
-        GameObject achievementContent = GameObject.Find("AchievementContent");
-
-        for (int i=0; i< Constants.ACHIEVEMENT_MAX_LEVEL; i++)
-        {
-            GameObject destroyBomb = Instantiate(destroyBombPrefab);
-            GameObject earnGold = Instantiate(earnGoldPrefab);
-            GameObject getCombo = Instantiate(getComboPrefab);
-            GameObject getStar = Instantiate(getStarPrefab);
-            GameObject getUpgrade = Instantiate(getUpgradePrefab);
-            GameObject purchasePowerup = Instantiate(purchasePowerupPrefab);
-
-            destroyBomb.GetComponent<Achievement>().setData(i + 1);
-            earnGold.GetComponent<Achievement>().setData(i + 1);
-            getCombo.GetComponent<Achievement>().setData(i + 1);
-            getStar.GetComponent<Achievement>().setData(i + 1);
-            getUpgrade.GetComponent<Achievement>().setData(i + 1);
-            purchasePowerup.GetComponent<Achievement>().setData(i + 1);
-
-            destroyBomb.transform.SetParent(achievementContent.transform);
-            earnGold.transform.SetParent(achievementContent.transform);
-            getCombo.transform.SetParent(achievementContent.transform);
-            getStar.transform.SetParent(achievementContent.transform);
-            getUpgrade.transform.SetParent(achievementContent.transform);
-            purchasePowerup.transform.SetParent(achievementContent.transform);
-        }
+        InitItems();
+        InitGold();
+        InitEarnedStar();
 	}
 
     public void CloseAchievementInfoPanel()
@@ -102,5 +83,44 @@ public class AchievementController : MonoBehaviour {
         {
             achievementInfoPanel.GetComponentsInChildren<Text>()[2].text = "In progress: " + achievement.progress + "%";
         }
+    }
+
+    public void InitItems()
+    {
+        GameObject achievementContent = GameObject.Find("AchievementContent");
+
+        for (int i = 0; i < Constants.ACHIEVEMENT_MAX_LEVEL; i++)
+        {
+            GameObject destroyBomb = Instantiate(destroyBombPrefab);
+            GameObject earnGold = Instantiate(earnGoldPrefab);
+            GameObject getCombo = Instantiate(getComboPrefab);
+            GameObject getStar = Instantiate(getStarPrefab);
+            GameObject getUpgrade = Instantiate(getUpgradePrefab);
+            GameObject purchasePowerup = Instantiate(purchasePowerupPrefab);
+
+            destroyBomb.GetComponent<Achievement>().setData(i + 1);
+            earnGold.GetComponent<Achievement>().setData(i + 1);
+            getCombo.GetComponent<Achievement>().setData(i + 1);
+            getStar.GetComponent<Achievement>().setData(i + 1);
+            getUpgrade.GetComponent<Achievement>().setData(i + 1);
+            purchasePowerup.GetComponent<Achievement>().setData(i + 1);
+
+            destroyBomb.transform.SetParent(achievementContent.transform);
+            earnGold.transform.SetParent(achievementContent.transform);
+            getCombo.transform.SetParent(achievementContent.transform);
+            getStar.transform.SetParent(achievementContent.transform);
+            getUpgrade.transform.SetParent(achievementContent.transform);
+            purchasePowerup.transform.SetParent(achievementContent.transform);
+        }
+    }
+
+    public void InitGold()
+    {
+        currentGold.GetComponentInChildren<Text>().text = PlayerDataUtil.playerData.gold.ToString();
+    }
+
+    public void InitEarnedStar()
+    {
+        currentEarnedStar.GetComponentInChildren<Text>().text = PlayerDataUtil.playerData.earnedStars.ToString();
     }
 }
