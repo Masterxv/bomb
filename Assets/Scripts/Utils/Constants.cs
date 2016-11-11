@@ -48,13 +48,20 @@ public class Constants
     public static int ACHIEVEMENT_MAX_LEVEL = 10;
 
     // Shop - powerup
-    public static int MORE_BOMB = 1000; // Gold
-    public static int ONE_MORE_CLICK = 1000; // Gold
+    public static int MORE_BOMB_PRICE = 3000; // Gold
+    public static int MORE_CLICK_PRICE = 5000; // Gold
+
+    // Shop - view ads config
+    public static float PROBABILITY_GET_MORE_BOMB = 0.8f;
+    public static int GOLD_EARN_BY_WATCH_ADS = 3000;
 
     // Shop - in-app purchase
-    public static int PAKE_10000_GOLD = 1; // USD
-    public static int PAKE_60000_GOLD = 5; // USD
-    public static int PAKE_200000_GOLD = 15; // USD
+    public static int GOLD_PACKAGE_1_PRICE = 1; // USD
+    public static int GOLD_PACKAGE_2_PRICE = 5; // USD
+    public static int GOLD_PACKAGE_3_PRICE = 15; // USD
+    public static int GOLD_PACKAGE_1_VALUE = 10000; // gold
+    public static int GOLD_PACKAGE_2_VALUE = 60000; // gold
+    public static int GOLD_PACKAGE_3_VALUE = 200000; // gold
 
     // Health bar unit
     public static int WALL_HEALTH_UNIT = 50; // meter

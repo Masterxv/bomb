@@ -47,7 +47,7 @@ public class PlayerDataUtil
         playerData.spentStars = 0;
         playerData.starResetedTime = 0;
 
-        playerData.gold = 0;
+        playerData.gold = 100000;
 
         // Achievement
         playerData.totalEarnedGold = 0;
