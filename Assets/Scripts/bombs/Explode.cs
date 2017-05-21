@@ -76,16 +76,16 @@ public class Explode : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (GameController.instance.clickedNumber < LevelUtil.getCurrentLevel().numberOfClick)
+        if (GameController.Instance.clickedNumber < LevelUtil.getCurrentLevel().numberOfClick)
         {
-            GameController.instance.UpdateClickedNumber();
+            GameController.Instance.UpdateClickedNumber();
             PrepareToExplode();
         }
     }
 
     public void PrepareToExplode()
     {
-        GameController.instance.isAnimating = true;
+        GameController.Instance.isAnimating = true;
         isExploded = true;
         transform.DOPunchScale(new Vector2(1.2f, 1.2f), 0.5f).OnComplete(DoExplode);
     }
@@ -102,6 +102,6 @@ public class Explode : MonoBehaviour
 
     public virtual void DoneExplode()
     {
-        GameController.instance.isAnimating = false;
+        GameController.Instance.isAnimating = false;
     }
 }

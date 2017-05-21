@@ -68,4 +68,7 @@ public class Constants
 
     // Match count for show ads
     public static int MATCH_COUNT_EACH_POPUP_ADS = 5;
+
+    // End game logic delay timeout
+    public static float END_GAME_LOGIC_DELAY = 1.0f;
 }

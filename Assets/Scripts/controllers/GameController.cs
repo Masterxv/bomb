@@ -4,47 +4,25 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class GameController : MySingleton<GameController>
 {
-
-    public GameObject normalBomb;
-    public GameObject shooterBomb;
-    public GameObject targetBomb;
-    public GameObject waveBomb;
-    public GameObject acidBomb;
-
-    public GameObject normalWall;
-    public GameObject contraryWall;
-
+    // Panel
     public GameObject resultPanel;
+    public GameObject coinMeter;
+    public GameObject tutorial;
 
+    // Utilities
     public Sprite starSprite;
-
-    public string levelIndex;
+    private string levelIndex;
     public int clickedNumber;
-    public int numberOfClick;
+    private int numberOfClick;
     public Text handCount;
-
-    public bool isAnimating;
-    public IEnumerator coroutine;
-
-    static GameController _instance;
-    public static GameController instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
-
-    void Awake()
-    {
-        _instance = this;
-    }
+    public bool isAnimating; // Check if have any doing animation
+    public IEnumerator coroutine; // coroutine for end game logic
 
     void MainSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.buildIndex == 2)
+        if (scene.buildIndex == 2)
         {
             clickedNumber = 0;
         }
@@ -56,80 +34,26 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < level.bombs.Count; i++)
         {
             BombInfo bombInfo = level.bombs[i];
-            GameObject bomb = null;
-            switch (bombInfo.type)
-            {
-                case Constants.BombTypes.normal:
-                    bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.shooter:
-                    bomb = Instantiate(shooterBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.target:
-                    bomb = Instantiate(targetBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.wave:
-                    bomb = Instantiate(waveBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.acid:
-                    bomb = Instantiate(acidBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-            }
-            if (bomb == null)
-            {
-                bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-            }
-            bomb.GetComponent<Explode>().setBombData(bombInfo);
-            if (bombInfo.movement == null)
-            {
-                bomb.GetComponent<BombMovement>().enabled = false;
-            }
-            else
-            {
-                bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
-            }
+            BombManager.Instance.CreateBomb(bombInfo);
         }
     }
 
     void InitWalls(Level level)
     {
-        if(level.walls == null)
+        if (level.walls == null)
         {
             return;
         }
         for (var i = 0; i < level.walls.Count; i++)
         {
             WallInfo wallInfo = level.walls[i];
-            GameObject wall = null;
-            switch (wallInfo.type)
-            {
-                case Constants.WallTypes.normal:
-                    wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.WallTypes.contrary:
-                    wall = Instantiate(contraryWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-            }
-            if (wall == null)
-            {
-                wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-            }
-            wall.GetComponent<Wall>().setWallData(wallInfo);
+            WallManager.Instance.CreateWall(wallInfo);
         }
     }
 
     void InitTutorial(Level level)
     {
-        // Init tutorials
-        if (level.tutorialContent == "")
-        {
-            GameObject.Find("Tutorial").SetActive(false);
-        }
-        else
-        {
-            GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = level.tutorialContent;
-            GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialImage);
-        }
+        tutorial.GetComponent<TutorialPanelController>().init(level);
     }
 
     // Use this for initialization
@@ -138,14 +62,16 @@ public class GameController : MonoBehaviour
         SceneManager.sceneLoaded += MainSceneLoaded;
         PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
         PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
+
         resultPanel.SetActive(false);
         isAnimating = false;
+
         // Init number of click stuff
         clickedNumber = 0;
         numberOfClick = LevelUtil.getCurrentLevel().numberOfClick;
-        handCount.text = numberOfClick + "";
+        handCount.text = numberOfClick.ToString();
 
-        if(DesignLevelController.active)
+        if (DesignLevelController.active)
         {
             return;
         }
@@ -160,13 +86,13 @@ public class GameController : MonoBehaviour
 
     public void UpdateGold()
     {
-        GameObject.Find("CoinMeterCount").GetComponent<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
+        coinMeter.GetComponentInChildren<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
     }
 
     public void UpdateClickedNumber()
     {
         clickedNumber++;
-        handCount.text = (LevelUtil.getCurrentLevel().numberOfClick - clickedNumber) + "";
+        handCount.text = (LevelUtil.getCurrentLevel().numberOfClick - clickedNumber).ToString();
     }
 
     // Update is called once per frame
@@ -197,21 +123,22 @@ public class GameController : MonoBehaviour
 
             // Calculate star
             int remainBombs = GameObject.FindGameObjectsWithTag("bomb").Length;
-            GameObject.Find("RemainBombValue").GetComponent<Text>().text = remainBombs + "";
+            ResultPanelController resultsPanelController = resultPanel.GetComponent<ResultPanelController>();
+            resultsPanelController.remainBomb.text = remainBombs.ToString();
             int stars = GetStars(remainBombs);
             switch (stars)
             {
                 case 1:
-                    GameObject.Find("Star1").GetComponent<Image>().sprite = starSprite;
+                    resultsPanelController.star1.sprite = starSprite;
                     break;
                 case 2:
-                    GameObject.Find("Star1").GetComponent<Image>().sprite = starSprite;
-                    GameObject.Find("Star2").GetComponent<Image>().sprite = starSprite;
+                    resultsPanelController.star1.sprite = starSprite;
+                    resultsPanelController.star2.sprite = starSprite;
                     break;
                 case 3:
-                    GameObject.Find("Star1").GetComponent<Image>().sprite = starSprite;
-                    GameObject.Find("Star2").GetComponent<Image>().sprite = starSprite;
-                    GameObject.Find("Star3").GetComponent<Image>().sprite = starSprite;
+                    resultsPanelController.star1.sprite = starSprite;
+                    resultsPanelController.star2.sprite = starSprite;
+                    resultsPanelController.star3.sprite = starSprite;
                     break;
             }
             if (stars > 0)
