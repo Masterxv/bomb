@@ -27,14 +27,14 @@ public class PlayerDataUtil
             playerData.stars[i] = -1;
         }
         playerData.stars[0] = 0;
-        //playerData.stars[1] = 2;
-        //playerData.stars[2] = 3;
-        //playerData.stars[3] = 3;
-        //playerData.stars[4] = 3;
-        //playerData.stars[5] = 3;
-        //playerData.stars[6] = 3;
-        //playerData.stars[7] = 3;
-        //playerData.stars[8] = 0;
+        playerData.stars[1] = 2;
+        playerData.stars[2] = 3;
+        playerData.stars[3] = 3;
+        playerData.stars[4] = 3;
+        playerData.stars[5] = 3;
+        playerData.stars[6] = 3;
+        playerData.stars[7] = 3;
+        playerData.stars[8] = 0;
 
         playerData.normalLevel = 0;
         playerData.shooterLevel = 0;
@@ -55,6 +55,10 @@ public class PlayerDataUtil
         playerData.totalPowerupPuchased = 0;
         playerData.totalUpgrade = 0;
         playerData.bestCombo = 0;
+
+        // Powerup
+        playerData.powerUpMoreBomb = 10;
+        playerData.powerUpMoreClick = 5;
 
         // Count match to show ads
         playerData.totalMatch = 0;

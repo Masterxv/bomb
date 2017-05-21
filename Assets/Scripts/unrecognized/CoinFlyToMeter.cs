@@ -13,7 +13,7 @@ public class CoinFlyToMeter : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.Lerp(transform.position, coinMeter.transform.position, 1.8f * Time.deltaTime);
-        if (Vector2.Distance(transform.position, coinMeter.transform.position) <= 10)
+        if (Vector2.Distance(transform.position, coinMeter.transform.position) <= 1)
         {
             audioSource.Play();
             GameController.Instance.UpdateGold();

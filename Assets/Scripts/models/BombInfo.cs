@@ -18,6 +18,14 @@ public class BombInfo {
         movement = new BombMovementData();
     }
 
+    public BombInfo(BombInfo other)
+    {
+        this.type = other.type;
+        this.initPosition = other.initPosition;
+        this.initAngle = other.initAngle;
+        this.movement = other.movement;
+    }
+
     public BombInfo(Constants.BombTypes type, MyVector3 initPosition, float initAngle, BombMovementData movement)
     {
         this.type = type;

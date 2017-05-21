@@ -76,7 +76,7 @@ public class Explode : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (GameController.Instance.clickedNumber < LevelUtil.getCurrentLevel().numberOfClick)
+        if (GameController.Instance.clickedNumber < GameController.Instance.numberOfClick)
         {
             GameController.Instance.UpdateClickedNumber();
             PrepareToExplode();

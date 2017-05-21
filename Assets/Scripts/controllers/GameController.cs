@@ -6,17 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MySingleton<GameController>
 {
+    // Level
+    Level level;
+
     // Panel
     public GameObject resultPanel;
     public GameObject coinMeter;
     public GameObject tutorial;
+    public GameObject helperPanel;
 
     // Utilities
     public Sprite starSprite;
     private string levelIndex;
     public int clickedNumber;
-    private int numberOfClick;
-    public Text handCount;
+    public int numberOfClick;
     public bool isAnimating; // Check if have any doing animation
     public IEnumerator coroutine; // coroutine for end game logic
 
@@ -28,7 +31,7 @@ public class GameController : MySingleton<GameController>
         }
     }
 
-    void InitBombs(Level level)
+    void InitBombs()
     {
         // Init all bombs in level
         for (int i = 0; i < level.bombs.Count; i++)
@@ -38,7 +41,7 @@ public class GameController : MySingleton<GameController>
         }
     }
 
-    void InitWalls(Level level)
+    void InitWalls()
     {
         if (level.walls == null)
         {
@@ -51,9 +54,14 @@ public class GameController : MySingleton<GameController>
         }
     }
 
-    void InitTutorial(Level level)
+    void InitTutorial()
     {
         tutorial.GetComponent<TutorialPanelController>().init(level);
+    }
+
+    void InitPowerUp()
+    {
+        helperPanel.GetComponent<HelperPanelController>().init();
     }
 
     // Use this for initialization
@@ -69,17 +77,17 @@ public class GameController : MySingleton<GameController>
         // Init number of click stuff
         clickedNumber = 0;
         numberOfClick = LevelUtil.getCurrentLevel().numberOfClick;
-        handCount.text = numberOfClick.ToString();
 
         if (DesignLevelController.active)
         {
             return;
         }
-        Level level = LevelUtil.getCurrentLevel();
+        level = LevelUtil.getCurrentLevel();
 
-        InitBombs(level);
-        InitWalls(level);
-        InitTutorial(level);
+        InitBombs();
+        InitWalls();
+        InitTutorial();
+        InitPowerUp();
         UpdateGold();
         PlayerDataUtil.playerData.totalMatch++;
     }
@@ -92,7 +100,7 @@ public class GameController : MySingleton<GameController>
     public void UpdateClickedNumber()
     {
         clickedNumber++;
-        handCount.text = (LevelUtil.getCurrentLevel().numberOfClick - clickedNumber).ToString();
+        helperPanel.GetComponent<HelperPanelController>().handCount.text = (numberOfClick - clickedNumber).ToString();
     }
 
     // Update is called once per frame
@@ -177,7 +185,22 @@ public class GameController : MySingleton<GameController>
         }
     }
 
-    public static int GetStars(int remainBombs)
+    public void AddMoreBomb()
+    {
+        // Init all bombs in level
+        for (int i = 0; i < level.bombs.Count; i++)
+        {
+            BombInfo bombInfo = new BombInfo(level.bombs[i]);
+            bombInfo.movement = null;
+            bombInfo.initPosition.x = Random.Range(-90, 90);
+            bombInfo.initPosition.y = Random.Range(-40, 40);
+            bombInfo.initAngle = Random.Range(0, 360);
+
+            BombManager.Instance.CreateBomb(bombInfo);
+        }
+    }
+
+    public int GetStars(int remainBombs)
     {
         if (remainBombs <= Constants.BOMB_REMAIN_3_STAR_THRESHOLD)
         {
