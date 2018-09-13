@@ -21,8 +21,7 @@ public class DesignLevelController : MonoBehaviour
     public int levelIndex;
     public int numberOfClick;
 
-    public string tutorialContent;
-    public string tutorialImage;
+    public TutorialContent tutorialContent;
 
     public static bool active;
 
@@ -34,7 +33,6 @@ public class DesignLevelController : MonoBehaviour
         level.index = levelIndex;
         level.numberOfClick = numberOfClick > 0 ? numberOfClick : 1;
         level.tutorialContent = tutorialContent;
-        level.tutorialImage = tutorialImage;
 
         // Gain bomb data
         level.bombs = new List<BombInfo>();
@@ -178,19 +176,18 @@ public class DesignLevelController : MonoBehaviour
         }
     }
 
-    void InitTutorial(string content, string imageName)
+    void InitTutorial(string descriptions, string imageName)
     {
-        if (content == "")
+        if (descriptions == "")
         {
             GameObject.Find("Tutorial").SetActive(false);
         }
         else
         {
-            GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = content;
+            GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = descriptions;
             GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + imageName);
         }
-        tutorialContent = content;
-        tutorialImage = imageName;
+        tutorialContent = new TutorialContent("", descriptions, imageName);
     }
 
     public void Refresh()
@@ -202,16 +199,18 @@ public class DesignLevelController : MonoBehaviour
         // If this level is already has, then load level data
         if (level != null)
         {
+            Debug.LogError("Level it not null");
             LevelUtil.getCurrentLevel().numberOfClick = 100;
             RemoveAllCurrentBombs();
             RemoveAllCurrentWalls();
             InitBombs(level);
             InitWalls(level);
-            InitTutorial(level.tutorialContent, level.tutorialImage);
+            InitTutorial(level.tutorialContent.descriptions, level.tutorialContent.image);
         }
         // If not then load new level data depend on current scene settings
         else
         {
+            Debug.LogError("Level it NULL");
             GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
             for (int i = 0; i < bombs.Length; i++)
             {
@@ -229,7 +228,7 @@ public class DesignLevelController : MonoBehaviour
                 healthsTransform[2].sizeDelta = new Vector2(healthsTransform[2].sizeDelta.x, wall.GetComponent<Wall>().currentHealth*Constants.WALL_HEALTH_UNIT);
                 wall.GetComponent<BoxCollider2D>().size = new Vector2(wall.GetComponent<BoxCollider2D>().size.x, wall.GetComponent<BoxCollider2D>().size.y * wall.GetComponent<Wall>().maxHealth / 2);
             }
-            InitTutorial(tutorialContent, tutorialImage);
+            InitTutorial(tutorialContent.descriptions, tutorialContent.image);
         }
     }
 

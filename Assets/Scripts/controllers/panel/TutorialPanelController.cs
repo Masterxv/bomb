@@ -10,14 +10,14 @@ public class TutorialPanelController : MonoBehaviour
 
     public void init(Level level)
     {
-        if (level.tutorialContent == string.Empty)
+        if (level.tutorialContent.descriptions == string.Empty)
         {
             gameObject.SetActive(false);
         }
         else
         {
-            content.text = level.tutorialContent;
-            image.sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialImage);
+            content.text = level.tutorialContent.descriptions;
+            image.sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialContent.image);
         }
     }
 }

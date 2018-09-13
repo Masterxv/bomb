@@ -16,8 +16,6 @@ public class AchievementController : MonoBehaviour {
     public GameObject currentGold;
     public GameObject currentEarnedStar;
 
-    private int numberOfColumn = 6;
-
     static AchievementController _instance;
     public static AchievementController instance
     {
@@ -95,22 +93,16 @@ public class AchievementController : MonoBehaviour {
             GameObject earnGold = Instantiate(earnGoldPrefab);
             GameObject getCombo = Instantiate(getComboPrefab);
             GameObject getStar = Instantiate(getStarPrefab);
-            GameObject getUpgrade = Instantiate(getUpgradePrefab);
-            GameObject purchasePowerup = Instantiate(purchasePowerupPrefab);
 
             destroyBomb.GetComponent<Achievement>().setData(i + 1);
             earnGold.GetComponent<Achievement>().setData(i + 1);
             getCombo.GetComponent<Achievement>().setData(i + 1);
             getStar.GetComponent<Achievement>().setData(i + 1);
-            getUpgrade.GetComponent<Achievement>().setData(i + 1);
-            purchasePowerup.GetComponent<Achievement>().setData(i + 1);
 
             destroyBomb.transform.SetParent(achievementContent.transform);
             earnGold.transform.SetParent(achievementContent.transform);
             getCombo.transform.SetParent(achievementContent.transform);
             getStar.transform.SetParent(achievementContent.transform);
-            getUpgrade.transform.SetParent(achievementContent.transform);
-            purchasePowerup.transform.SetParent(achievementContent.transform);
         }
     }
 

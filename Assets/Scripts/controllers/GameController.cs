@@ -17,7 +17,6 @@ public class GameController : MySingleton<GameController>
 
     // Utilities
     public Sprite starSprite;
-    private string levelIndex;
     public int clickedNumber;
     public int numberOfClick;
     public bool isAnimating; // Check if have any doing animation
@@ -59,9 +58,14 @@ public class GameController : MySingleton<GameController>
         tutorial.GetComponent<TutorialPanelController>().init(level);
     }
 
-    void InitPowerUp()
+    void InitHelperPanel()
     {
         helperPanel.GetComponent<HelperPanelController>().init();
+    }
+
+    GameObject[] findGameObjectsWithTag(string tag)
+    {
+        return GameObject.FindGameObjectsWithTag(tag);
     }
 
     // Use this for initialization
@@ -87,9 +91,15 @@ public class GameController : MySingleton<GameController>
         InitBombs();
         InitWalls();
         InitTutorial();
-        InitPowerUp();
+        InitHelperPanel();
         UpdateGold();
         PlayerDataUtil.playerData.totalMatch++;
+    }
+
+    public void UpdateClickedNumber()
+    {
+        clickedNumber++;
+        helperPanel.GetComponent<HelperPanelController>().updateHandCount();
     }
 
     public void UpdateGold()
@@ -97,16 +107,10 @@ public class GameController : MySingleton<GameController>
         coinMeter.GetComponentInChildren<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
     }
 
-    public void UpdateClickedNumber()
-    {
-        clickedNumber++;
-        helperPanel.GetComponent<HelperPanelController>().handCount.text = (numberOfClick - clickedNumber).ToString();
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (clickedNumber >= numberOfClick && !isAnimating && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
+        if (clickedNumber >= numberOfClick && !isAnimating && findGameObjectsWithTag("bullet").Length <= 0)
         {
             if (resultPanel.activeInHierarchy)
             {
@@ -122,7 +126,7 @@ public class GameController : MySingleton<GameController>
     {
         yield return new WaitForSeconds(delay);
 
-        if (clickedNumber >= numberOfClick && !isAnimating && GameObject.FindGameObjectsWithTag("bullet").Length <= 0)
+        if (clickedNumber >= numberOfClick && !isAnimating && findGameObjectsWithTag("bullet").Length <= 0)
         {
             StopCoroutine(coroutine);
             // End this level, show the result panel
@@ -130,7 +134,7 @@ public class GameController : MySingleton<GameController>
             resultPanel.transform.DOScale(new Vector3(0.5f, 0.5f, 0), 1); ; // Animate to show result panel
 
             // Calculate star
-            int remainBombs = GameObject.FindGameObjectsWithTag("bomb").Length;
+            int remainBombs = findGameObjectsWithTag("bomb").Length;
             ResultPanelController resultsPanelController = resultPanel.GetComponent<ResultPanelController>();
             resultsPanelController.remainBomb.text = remainBombs.ToString();
             int stars = GetStars(remainBombs);
@@ -182,21 +186,6 @@ public class GameController : MySingleton<GameController>
                 // TODO: Display popup ads
 
             }
-        }
-    }
-
-    public void AddMoreBomb()
-    {
-        // Init all bombs in level
-        for (int i = 0; i < level.bombs.Count; i++)
-        {
-            BombInfo bombInfo = new BombInfo(level.bombs[i]);
-            bombInfo.movement = null;
-            bombInfo.initPosition.x = Random.Range(-90, 90);
-            bombInfo.initPosition.y = Random.Range(-40, 40);
-            bombInfo.initAngle = Random.Range(0, 360);
-
-            BombManager.Instance.CreateBomb(bombInfo);
         }
     }
 

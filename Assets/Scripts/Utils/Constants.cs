@@ -24,7 +24,7 @@ public class Constants
 
     // Level selection scene
     public static int LEVEL_MARGIN = 0;
-    public static int TOTAL_LEVEL = 42;
+    public static int TOTAL_LEVEL = 100;
 
     // Upgrade
     public static int NORMAL_BOMB_UPGRADE_BASE_COST = 1; // Star

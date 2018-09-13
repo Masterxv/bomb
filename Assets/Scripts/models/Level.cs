@@ -11,21 +11,19 @@ public class Level
     public List<BombInfo> bombs;
     public List<WallInfo> walls;
     public int numberOfClick;
-    public string tutorialContent;
-    public string tutorialImage;
-    public string tutorialTitle = "";
+    public TutorialContent tutorialContent;
 
     public Level()
     {
 
     }
 
-    public Level(int index, List<BombInfo> bombs, string tutorialContent, string tutorialImage, int numberOfClick)
+    public Level(int index, int numberOfClick, TutorialContent tutorialContent, List<BombInfo> bombs, List<WallInfo> walls)
     {
         this.index = index;
-        this.bombs = bombs;
-        this.tutorialContent = tutorialContent;
-        this.tutorialImage = tutorialImage;
         this.numberOfClick = numberOfClick;
+        this.bombs = bombs;
+        this.walls = walls;
+        this.tutorialContent = tutorialContent;
     }
 }
