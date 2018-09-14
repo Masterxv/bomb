@@ -12,18 +12,20 @@ public class Level
     public List<WallInfo> walls;
     public int numberOfClick;
     public TutorialContent tutorialContent;
+    public ExtraBombInfo[] extraBombs;
 
     public Level()
     {
 
     }
 
-    public Level(int index, int numberOfClick, TutorialContent tutorialContent, List<BombInfo> bombs, List<WallInfo> walls)
+    public Level(int index, int numberOfClick, TutorialContent tutorialContent, List<BombInfo> bombs, List<WallInfo> walls, ExtraBombInfo[] extraBombs)
     {
         this.index = index;
         this.numberOfClick = numberOfClick;
+        this.tutorialContent = tutorialContent;
         this.bombs = bombs;
         this.walls = walls;
-        this.tutorialContent = tutorialContent;
+        this.extraBombs = extraBombs;
     }
 }

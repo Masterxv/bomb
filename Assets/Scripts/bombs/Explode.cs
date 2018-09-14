@@ -65,7 +65,6 @@ public class Explode : MonoBehaviour
         currentHealth = health;
         baseBomb = null;
         isExploded = false;
-        transform.DOScale(new Vector2(1.2f, 1.2f), 0.7f).SetLoops(-1, LoopType.Yoyo);
     }
 
     // Update is called once per frame
@@ -76,18 +75,18 @@ public class Explode : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (GameController.Instance.clickedNumber < GameController.Instance.numberOfClick)
+        if (ControllerUtil.coreController.clickedNumber < ControllerUtil.coreController.numberOfClick)
         {
-            GameController.Instance.UpdateClickedNumber();
+            ControllerUtil.coreController.UpdateClickedNumber();
             PrepareToExplode();
         }
     }
 
     public void PrepareToExplode()
     {
-        GameController.Instance.isAnimating = true;
+        ControllerUtil.coreController.isAnimating = true;
         isExploded = true;
-        transform.DOPunchScale(new Vector2(1.2f, 1.2f), 0.5f).OnComplete(DoExplode);
+        GetComponent<BombAnimation>().DoExplodeAnimation(DoExplode);
     }
 
     public virtual void DoExplode()
@@ -102,6 +101,6 @@ public class Explode : MonoBehaviour
 
     public virtual void DoneExplode()
     {
-        GameController.Instance.isAnimating = false;
+        ControllerUtil.coreController.isAnimating = false;
     }
 }

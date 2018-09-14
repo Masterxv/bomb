@@ -5,26 +5,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class DesignLevelController : MonoBehaviour
+public class DesignLevelController : CoreController
 {
+    // bomb prefab
     public GameObject normalBomb;
     public GameObject shooterBomb;
     public GameObject targetBomb;
     public GameObject waveBomb;
     public GameObject acidBomb;
 
+    // wall prefab
     public GameObject normalWall;
     public GameObject contraryWall;
 
-
-    private Level level;
+    // other properties
     public int levelIndex;
-    public int numberOfClick;
-
     public TutorialContent tutorialContent;
-
     public static bool active;
-
 
     public void GenerateLevelData()
     {
@@ -80,6 +77,9 @@ public class DesignLevelController : MonoBehaviour
             level.walls.Add(wallInfo);
         }
 
+        // Gain extra bomb data
+        level.extraBombs = extraBombs;
+
         // Save level data to file
         SaveLevelData(level);
     }
@@ -92,70 +92,6 @@ public class DesignLevelController : MonoBehaviour
         bf.Serialize(file, level);
         file.Close();
         //FileUtil.ReplaceFile(destination, Application.dataPath + "/Resources/Levels/lv" + level.index + ".txt");
-    }
-
-    void InitBombs(Level level)
-    {
-        // Init all bombs in level
-        for (int i = 0; i < level.bombs.Count; i++)
-        {
-            BombInfo bombInfo = level.bombs[i];
-            GameObject bomb = null;
-            switch (bombInfo.type)
-            {
-                case Constants.BombTypes.normal:
-                    bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.shooter:
-                    bomb = Instantiate(shooterBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.target:
-                    bomb = Instantiate(targetBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.wave:
-                    bomb = Instantiate(waveBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.BombTypes.acid:
-                    bomb = Instantiate(acidBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-            }
-            if (bomb == null)
-            {
-                bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-            }
-            bomb.GetComponent<Explode>().setBombData(bombInfo);
-            if (bombInfo.movement == null)
-            {
-                bomb.GetComponent<BombMovement>().enabled = false;
-            }
-            else
-            {
-                bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
-            }
-        }
-    }
-
-    void InitWalls(Level level)
-    {
-        for(var i=0; i<level.walls.Count; i++)
-        {
-            WallInfo wallInfo = level.walls[i];
-            GameObject wall = null;
-            switch(wallInfo.type)
-            {
-                case Constants.WallTypes.normal:
-                    wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-                case Constants.WallTypes.contrary:
-                    wall = Instantiate(contraryWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-                    break;
-            }
-            if (wall == null)
-            {
-                wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
-            }
-            wall.GetComponent<Wall>().setWallData(wallInfo);
-        }
     }
 
     void RemoveAllCurrentBombs()
@@ -176,25 +112,9 @@ public class DesignLevelController : MonoBehaviour
         }
     }
 
-    void InitTutorial(string descriptions, string imageName)
-    {
-        if (descriptions == "")
-        {
-            GameObject.Find("Tutorial").SetActive(false);
-        }
-        else
-        {
-            GameObject.Find("Tutorial").GetComponentInChildren<Text>().text = descriptions;
-            GameObject.Find("Tutorial").GetComponentsInChildren<Image>()[1].sprite = Resources.Load<Sprite>("Sprites/tutorials/" + imageName);
-        }
-        tutorialContent = new TutorialContent("", descriptions, imageName);
-    }
-
-    public void Refresh()
+    public override void Refresh()
     {
         active = true;
-        PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
-        PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
         level = LevelUtil.LoadLevelData(levelIndex);
         // If this level is already has, then load level data
         if (level != null)
@@ -203,14 +123,15 @@ public class DesignLevelController : MonoBehaviour
             LevelUtil.getCurrentLevel().numberOfClick = 100;
             RemoveAllCurrentBombs();
             RemoveAllCurrentWalls();
-            InitBombs(level);
-            InitWalls(level);
-            InitTutorial(level.tutorialContent.descriptions, level.tutorialContent.image);
+            InitBombs();
+            InitWalls();
+            InitTutorial();
+            InitHelperPanel();
         }
         // If not then load new level data depend on current scene settings
         else
         {
-            Debug.LogError("Level it NULL");
+            Debug.LogError("Level is NULL");
             GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
             for (int i = 0; i < bombs.Length; i++)
             {
@@ -228,19 +149,12 @@ public class DesignLevelController : MonoBehaviour
                 healthsTransform[2].sizeDelta = new Vector2(healthsTransform[2].sizeDelta.x, wall.GetComponent<Wall>().currentHealth*Constants.WALL_HEALTH_UNIT);
                 wall.GetComponent<BoxCollider2D>().size = new Vector2(wall.GetComponent<BoxCollider2D>().size.x, wall.GetComponent<BoxCollider2D>().size.y * wall.GetComponent<Wall>().maxHealth / 2);
             }
-            InitTutorial(tutorialContent.descriptions, tutorialContent.image);
+            List<BombInfo> bombInfos = new List<BombInfo>();
+            List<WallInfo> wallInfos = new List<WallInfo>();
+            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs);
+            InitTutorial();
+            InitHelperPanel();
         }
-    }
-
-    void Awake()
-    {
-        Refresh();
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-
     }
 
     // Update is called once per frame

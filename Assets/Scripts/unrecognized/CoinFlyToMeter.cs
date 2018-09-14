@@ -2,21 +2,21 @@
 
 public class CoinFlyToMeter : MonoBehaviour
 {
-    public GameObject coinMeter;
     AudioSource audioSource;
     void Start()
     {
-        audioSource = GameController.Instance.coinMeter.GetComponent<AudioSource>();
+        audioSource = ControllerUtil.coreController.coinMeter.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        GameObject coinMeter = ControllerUtil.coreController.coinMeter;
         transform.position = Vector3.Lerp(transform.position, coinMeter.transform.position, 1.8f * Time.deltaTime);
         if (Vector2.Distance(transform.position, coinMeter.transform.position) <= 1)
         {
             audioSource.Play();
-            GameController.Instance.UpdateGold();
+            ControllerUtil.coreController.UpdateGold();
             Destroy(gameObject);
         }
     }
