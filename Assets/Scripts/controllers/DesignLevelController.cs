@@ -23,17 +23,20 @@ public class DesignLevelController : CoreController
     public TutorialContent tutorialContent;
     public static bool active;
 
+    // bombs level
+    public int normalLevel;
+    public int shooterLevel;
+    public int waveLevel;
+    public int targetLevel;
+    public int acidLevel;
+
     public void GenerateLevelData()
     {
         // Push all data to level
-        level = new Level();
-        level.index = levelIndex;
-        level.numberOfClick = numberOfClick > 0 ? numberOfClick : 1;
-        level.tutorialContent = tutorialContent;
-
         // Gain bomb data
-        level.bombs = new List<BombInfo>();
+        List<BombInfo> bombInfos = new List<BombInfo>();
         GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+        Debug.LogError(bombs.Length);
         for (int i = 0; i < bombs.Length; i++)
         {
             GameObject bomb = bombs[i];
@@ -59,11 +62,12 @@ public class DesignLevelController : CoreController
                 bombInfo.movement = null;
             }
 
-            level.bombs.Add(bombInfo);
+            bombInfos.Add(bombInfo);
         }
 
+        Debug.LogError(bombInfos.Count);
         // Gain wall data
-        level.walls = new List<WallInfo>();
+        List<WallInfo> wallInfos = new List<WallInfo>();
         GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
         for (int i = 0; i < walls.Length; i++)
         {
@@ -74,24 +78,22 @@ public class DesignLevelController : CoreController
             wallInfo.maxHealth = wall.GetComponent<Wall>().maxHealth;
             wallInfo.currentHealth = wall.GetComponent<Wall>().currentHealth;
             wallInfo.type = wall.GetComponent<Wall>().type;
-            level.walls.Add(wallInfo);
+            wallInfos.Add(wallInfo);
         }
 
-        // Gain extra bomb data
-        level.extraBombs = extraBombs;
-
-        // Save level data to file
+        level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
         SaveLevelData(level);
     }
 
     public void SaveLevelData(Level level)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        string destination = Application.dataPath + "/data/lv" + level.index + ".txt";
+        string destination = Application.dataPath + "/Resources/Levels/lv_" + level.index + ".txt";
         FileStream file = File.OpenWrite(destination);
         bf.Serialize(file, level);
         file.Close();
-        //FileUtil.ReplaceFile(destination, Application.dataPath + "/Resources/Levels/lv" + level.index + ".txt");
+        // open success dialog
+        showMessageDialog(true, "Notice", "Generate level succeeded!");
     }
 
     void RemoveAllCurrentBombs()
@@ -116,6 +118,7 @@ public class DesignLevelController : CoreController
     {
         active = true;
         level = LevelUtil.LoadLevelData(levelIndex);
+        Debug.LogError(level.bombs.Count);
         // If this level is already has, then load level data
         if (level != null)
         {
@@ -151,7 +154,7 @@ public class DesignLevelController : CoreController
             }
             List<BombInfo> bombInfos = new List<BombInfo>();
             List<WallInfo> wallInfos = new List<WallInfo>();
-            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs);
+            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
             InitTutorial();
             InitHelperPanel();
         }

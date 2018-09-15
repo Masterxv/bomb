@@ -16,6 +16,7 @@ public abstract class CoreController: MonoBehaviour
     public GameObject coinMeter;
     public GameObject tutorialPanel;
     public GameObject helperPanel;
+    public GameObject messageDialog;
 
     // Utilities
     public Sprite starSprite;
@@ -104,6 +105,24 @@ public abstract class CoreController: MonoBehaviour
     }
 
     #endregion
+
+    public void fillDialogInfo(string title, string content)
+    {
+        messageDialog.GetComponent<MessageDialogController>().fillDialogInfo(title, content);
+    }
+    public void showMessageDialog(bool isFillDialogInfo=false, string title="", string content="")
+    {
+        if (isFillDialogInfo)
+        {
+            fillDialogInfo(title, content);
+        }
+        messageDialog.SetActive(true);
+    }
+
+    public void hideMessageDialog()
+    {
+        messageDialog.SetActive(false);
+    }
 
     // All logic when end a game level
     public IEnumerator EndGameLogic(float delay)

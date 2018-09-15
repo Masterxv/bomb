@@ -36,7 +36,7 @@ public class LevelUtil
         //file.Close();
         // return null;
 
-        TextAsset asset = Resources.Load<TextAsset>("Levels/lv" + index);
+        TextAsset asset = Resources.Load<TextAsset>("Levels/lv_" + index);
         if (asset == null)
         {
             return null;

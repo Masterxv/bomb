@@ -36,13 +36,6 @@ public class PlayerDataUtil
         playerData.stars[7] = 3;
         playerData.stars[8] = 0;
 
-        playerData.normalLevel = 0;
-        playerData.shooterLevel = 0;
-        playerData.waveLevel = 0;
-        playerData.targetLevel = 0;
-        playerData.acidLevel = 0;
-        playerData.goldLevel = 0;
-
         playerData.earnedStars = 0;
         playerData.spentStars = 0;
         playerData.starResetedTime = 0;
