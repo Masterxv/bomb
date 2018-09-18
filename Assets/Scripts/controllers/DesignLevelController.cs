@@ -118,7 +118,6 @@ public class DesignLevelController : CoreController
     {
         active = true;
         level = LevelUtil.LoadLevelData(levelIndex);
-        Debug.LogError(level.bombs.Count);
         // If this level is already has, then load level data
         if (level != null)
         {

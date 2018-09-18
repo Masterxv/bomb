@@ -45,7 +45,7 @@ public class HelperPanelController : MonoBehaviour
     public void updateAnExtraBombItem(GameObject extraBombGameObject, ExtraBombInfo extraBombInfo)
     {
         ExtraBomb extraBomb = extraBombGameObject.GetComponent<ExtraBomb>();
-        extraBomb.image.sprite = Resources.Load<Sprite>("Sprites/bombs/" + extraBombInfo.bombType);
+        extraBomb.image.sprite = SpriteManager.Instance.spriteAtlas.GetSprite("bomb_" + extraBombInfo.bombType);
         extraBomb.count.text = extraBombInfo.count + String.Empty;
         extraBombGameObject.SetActive(true);
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 using System;
 using System.Collections;
@@ -68,7 +69,7 @@ public abstract class CoreController: MonoBehaviour
 
     public void UpdateGold()
     {
-        coinMeter.GetComponentInChildren<TextMesh>().text = PlayerDataUtil.playerData.gold.ToString();
+        coinMeter.GetComponentInChildren<Text>().text = PlayerDataUtil.playerData.gold.ToString();
     }
 
     #endregion
