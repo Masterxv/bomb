@@ -5,8 +5,8 @@ public class BaseNormalBomb : BaseBomb
 {
     public BaseNormalBomb()
     {
-        radius = 7;
-        speed = 20;
+        radius = 2;
+        speed = 5;
         numPoints = 15;
         bulletDamage = 1;
         bulletHealth = 1;

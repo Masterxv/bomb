@@ -44,6 +44,17 @@ public class DesignLevelController : CoreController
            
             bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
             bombInfo.type = bomb.GetComponent<Explode>().type;
+
+            BombRotate bombRotate = bomb.GetComponent<BombRotate>();
+            if (bombRotate.speed > 0)
+            {
+                bombInfo.rotate = new BombRotateData(bombRotate.isClockwise, bombRotate.speed);
+            }
+            else
+            {
+                bombInfo.rotate = null;
+            }
+
             BombMovement bombMovement = bomb.GetComponent<BombMovement>();
             if (bombMovement.speed > 0)
             {
@@ -65,7 +76,6 @@ public class DesignLevelController : CoreController
             bombInfos.Add(bombInfo);
         }
 
-        Debug.LogError(bombInfos.Count);
         // Gain wall data
         List<WallInfo> wallInfos = new List<WallInfo>();
         GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
@@ -82,6 +92,10 @@ public class DesignLevelController : CoreController
         }
 
         level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
+    }
+
+    public void SaveGeneratedData()
+    {
         SaveLevelData(level);
     }
 
@@ -119,44 +133,21 @@ public class DesignLevelController : CoreController
         active = true;
         level = LevelUtil.LoadLevelData(levelIndex);
         // If this level is already has, then load level data
-        if (level != null)
+        if (level == null)
+        {
+            Debug.LogError("Level is NULL");
+            GenerateLevelData();
+        } else
         {
             Debug.LogError("Level it not null");
             LevelUtil.getCurrentLevel().numberOfClick = 100;
-            RemoveAllCurrentBombs();
-            RemoveAllCurrentWalls();
-            InitBombs();
-            InitWalls();
-            InitTutorial();
-            InitHelperPanel();
         }
-        // If not then load new level data depend on current scene settings
-        else
-        {
-            Debug.LogError("Level is NULL");
-            GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
-            for (int i = 0; i < bombs.Length; i++)
-            {
-                GameObject bomb = bombs[i];
-                bomb.GetComponent<Explode>().initPosition = bomb.transform.position;
-            }
-
-            GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
-            for(int i=0; i<walls.Length; i++)
-            {
-                GameObject wall = walls[i];
-                wall.GetComponent<Wall>().initPosition = wall.transform.position;
-                RectTransform [] healthsTransform = wall.GetComponentsInChildren<RectTransform>();
-                healthsTransform[1].sizeDelta = new Vector2(healthsTransform[1].sizeDelta.x, wall.GetComponent<Wall>().maxHealth*Constants.WALL_HEALTH_UNIT);
-                healthsTransform[2].sizeDelta = new Vector2(healthsTransform[2].sizeDelta.x, wall.GetComponent<Wall>().currentHealth*Constants.WALL_HEALTH_UNIT);
-                wall.GetComponent<BoxCollider2D>().size = new Vector2(wall.GetComponent<BoxCollider2D>().size.x, wall.GetComponent<BoxCollider2D>().size.y * wall.GetComponent<Wall>().maxHealth / 2);
-            }
-            List<BombInfo> bombInfos = new List<BombInfo>();
-            List<WallInfo> wallInfos = new List<WallInfo>();
-            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
-            InitTutorial();
-            InitHelperPanel();
-        }
+        RemoveAllCurrentBombs();
+        RemoveAllCurrentWalls();
+        InitBombs();
+        InitWalls();
+        InitTutorial();
+        InitHelperPanel();
     }
 
     // Update is called once per frame

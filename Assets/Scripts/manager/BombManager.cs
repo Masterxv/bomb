@@ -45,5 +45,14 @@ public class BombManager : MySingleton<BombManager>
         {
             bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
         }
+
+        if (bombInfo.rotate == null)
+        {
+            bomb.GetComponent<BombMovement>().enabled = false;
+        }
+        else
+        {
+            bomb.GetComponent<BombRotate>().SetRotateData(bombInfo.rotate);
+        }
     }
 }

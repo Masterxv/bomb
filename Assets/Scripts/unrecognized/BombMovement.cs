@@ -6,18 +6,18 @@ public class BombMovement : MonoBehaviour
 {
     private float movementAngle;
 
-    public Vector3 point1;
-    public Vector3 point2;
-    public Vector3 point3;
-    public Vector3 point4;
+    //public Vector3 point1;
+    //public Vector3 point2;
+    //public Vector3 point3;
+    //public Vector3 point4;
 
-    public List<Vector3> points;
+    public List<Vector3> points = new List<Vector3>(4);
     public List<float> distances;
 
     public Constants.MovementTypes type;
     public float radius;
     public float speed;
-    public bool isClockwise;
+    public bool isClockwise = true;
 
     private int currentIndex;
     private int nextIndex;
@@ -29,6 +29,7 @@ public class BombMovement : MonoBehaviour
     public void SetMovementData(BombMovementData movement)
     {
         type = movement.type;
+        points = new List<Vector3>();
         for (int i = 0; i < movement.points.Length; i++)
         {
             points.Add(movement.points[i].GetV3());
@@ -44,27 +45,31 @@ public class BombMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (speed < 0)
+        {
+            return;
+        }
         turnTimes = 0;
         numPoints = points.Count;
-        point1 = transform.position;
+        //point1 = transform.position;
         if (!isProduction)
         {
-            if (point1.x != -1)
-            {
-                points.Add(point1);
-            }
-            if (point2.x != -1)
-            {
-                points.Add(point2);
-            }
-            if (point3.x != -1)
-            {
-                points.Add(point3);
-            }
-            if (point4.x != -1)
-            {
-                points.Add(point4);
-            }
+            //if (point1.x != -1)
+            //{
+            //    points.Add(point1);
+            //}
+            //if (point2.x != -1)
+            //{
+            //    points.Add(point2);
+            //}
+            //if (point3.x != -1)
+            //{
+            //    points.Add(point3);
+            //}
+            //if (point4.x != -1)
+            //{
+            //    points.Add(point4);
+            //}
 
             numPoints = points.Count;
        
@@ -90,11 +95,11 @@ public class BombMovement : MonoBehaviour
         {
             if (isClockwise)
             {
-                movementAngle += speed * Time.deltaTime;
+                movementAngle -= speed * Time.deltaTime;
             }
             else
             {
-                movementAngle -= speed * Time.deltaTime;
+                movementAngle += speed * Time.deltaTime;
             }
             float x = Mathf.Cos(movementAngle) * radius + points[0].x;
             float y = Mathf.Sin(movementAngle) * radius + points[0].y;

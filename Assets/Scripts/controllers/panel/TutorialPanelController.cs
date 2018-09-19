@@ -17,7 +17,7 @@ public class TutorialPanelController : MonoBehaviour
         else
         {
             content.text = level.tutorialContent.descriptions;
-            image.sprite = Resources.Load<Sprite>("Sprites/tutorials/" + level.tutorialContent.image);
+            image.sprite = SpriteManager.Instance.spriteAtlas.GetSprite(level.tutorialContent.image);
         }
     }
 }

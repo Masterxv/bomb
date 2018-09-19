@@ -10,12 +10,14 @@ public class BombInfo {
     public MyVector3 initPosition;
     public float initAngle;
     public BombMovementData movement;
+    public BombRotateData rotate;
 
     public BombInfo()
     {
         initAngle = 0;
         initPosition = new MyVector3();
         movement = new BombMovementData();
+        rotate = new BombRotateData();
     }
 
     public BombInfo(BombInfo other)
@@ -24,13 +26,15 @@ public class BombInfo {
         this.initPosition = other.initPosition;
         this.initAngle = other.initAngle;
         this.movement = other.movement;
+        this.rotate = other.rotate;
     }
 
-    public BombInfo(Constants.BombTypes type, MyVector3 initPosition, float initAngle, BombMovementData movement)
+    public BombInfo(Constants.BombTypes type, MyVector3 initPosition, float initAngle, BombMovementData movement, BombRotateData rotate)
     {
         this.type = type;
         this.initPosition = initPosition;
         this.initAngle = initAngle;
         this.movement = movement;
+        this.rotate = rotate;
     }
 }
