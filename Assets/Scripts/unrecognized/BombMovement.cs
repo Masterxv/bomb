@@ -45,7 +45,7 @@ public class BombMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (speed < 0)
+        if (speed <= 0)
         {
             return;
         }

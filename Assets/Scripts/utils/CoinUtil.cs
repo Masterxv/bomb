@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CoinUtil : MonoBehaviour {
-    public static GameObject coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
+public class CoinUtil : MySingleton<CoinUtil> {
 
-    public static void CreateCoin(Vector3 position)
+    public GameObject coinPrefab;
+
+    //public static GameObject coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
+
+    public void CreateCoin(Vector3 position)
     {
         Instantiate(coinPrefab, position, Quaternion.identity);
     }
 
-    public static void CreateCoins(Vector3 position, int numberOfCoin)
+    public void CreateCoins(Vector3 position, int numberOfCoin)
     {
         Vector3 coinPosition = new Vector3();
         for (int i=0; i<numberOfCoin; i++)

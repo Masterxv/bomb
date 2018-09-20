@@ -30,6 +30,9 @@ public class DesignLevelController : CoreController
     public int targetLevel;
     public int acidLevel;
 
+    // override level data
+    public bool overrideLevelData;
+
     public void GenerateLevelData()
     {
         // Push all data to level
@@ -41,7 +44,7 @@ public class DesignLevelController : CoreController
         {
             GameObject bomb = bombs[i];
             BombInfo bombInfo = new BombInfo();
-           
+
             bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
             bombInfo.type = bomb.GetComponent<Explode>().type;
 
@@ -92,6 +95,7 @@ public class DesignLevelController : CoreController
         }
 
         level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
+        SaveLevelData(level);
     }
 
     public void SaveGeneratedData()
@@ -131,17 +135,29 @@ public class DesignLevelController : CoreController
     public override void Refresh()
     {
         active = true;
-        level = LevelUtil.LoadLevelData(levelIndex);
+        clickedNumber = 0;
+        if (overrideLevelData)
+        {
+            Debug.LogError("Override level data");
+            level = null;
+        }
+        else
+        {
+            level = LevelUtil.LoadLevelData(levelIndex);
+        }
+
         // If this level is already has, then load level data
         if (level == null)
         {
             Debug.LogError("Level is NULL");
             GenerateLevelData();
-        } else
+        }
+        else
         {
             Debug.LogError("Level it not null");
             LevelUtil.getCurrentLevel().numberOfClick = 100;
         }
+
         RemoveAllCurrentBombs();
         RemoveAllCurrentWalls();
         InitBombs();
