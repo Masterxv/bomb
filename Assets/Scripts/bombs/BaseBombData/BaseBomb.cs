@@ -10,7 +10,7 @@ public class BaseBomb {
     public int health;
     public int currentHealth;
 
-    public int signRadius; // only for shooter and wave bomb
+    public float signRadius; // only for shooter and wave bomb
 
     public int waveWidth; // only for Wave bomb
     public float duration; // only for Acid bomb

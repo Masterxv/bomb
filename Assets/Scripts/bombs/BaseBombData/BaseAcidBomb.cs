@@ -5,7 +5,7 @@ public class BaseAcidBomb : BaseBomb
 {
     public BaseAcidBomb()
     {
-        radius = 6;
+        radius = 1.5f;
         speed = 10;
         numPoints = 20;
         bulletDamage = 1;

@@ -5,7 +5,7 @@ public class ShooterExplode : Explode
 {
     public GameObject[] signs;
     public GameObject signPrefab;
-    public int signRadius;
+    public float signRadius;
 
     public override void setBombData(BombInfo bombInfo)
     {
@@ -21,12 +21,12 @@ public class ShooterExplode : Explode
         float diffAngle = 360 / numPoints;
         for(int pointNum = 0; pointNum < numPoints; pointNum++)
         {
-            float x = Mathf.Sin((initAngle + (pointNum+1) * diffAngle)*Mathf.Deg2Rad) * signRadius;
-            float y = Mathf.Cos((initAngle + (pointNum+1) * diffAngle)*Mathf.Deg2Rad) * signRadius;
+            float tmpAngle = initAngle + (pointNum + 1) * diffAngle;
+            float x = Mathf.Sin(tmpAngle*Mathf.Deg2Rad) * signRadius;
+            float y = Mathf.Cos(tmpAngle*Mathf.Deg2Rad) * signRadius;
             Vector3 targetPosition = new Vector3(x, y, 0) + transform.position;
-            // float tmpAngle = initAngle + (pointNum + 1) * diffAngle;
-            // Quaternion rotation = Quaternion.AngleAxis(tmpAngle, new Vector3(0, 0, 1));
-            GameObject tmpSign = Instantiate(signPrefab, targetPosition, Quaternion.identity) as GameObject;
+            Quaternion rotation = Quaternion.AngleAxis(tmpAngle, new Vector3(0, 0, -1));
+            GameObject tmpSign = Instantiate(signPrefab, targetPosition, rotation) as GameObject;
             tmpSign.transform.SetParent(gameObject.transform);
             signs[pointNum] = tmpSign;
         }

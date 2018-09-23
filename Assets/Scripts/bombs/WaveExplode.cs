@@ -5,7 +5,7 @@ public class WaveExplode : Explode
 {
     public GameObject[] signs;
     public GameObject signPrefab;
-    public int signRadius;
+    public float signRadius;
     public int waveWidth;
     private int bulletEachWave;
     private float diffAngleWavePoint;
@@ -26,10 +26,12 @@ public class WaveExplode : Explode
         diffAngleWavePoint = 360 / numPoints;
         for (int pointNum = 0; pointNum < numPoints; pointNum++)
         {
-            float x = Mathf.Sin((initAngle + pointNum * diffAngleWavePoint) * Mathf.Deg2Rad) * signRadius;
-            float y = Mathf.Cos((initAngle + pointNum * diffAngleWavePoint) * Mathf.Deg2Rad) * signRadius;
+            float tmpAngle = initAngle + (pointNum + 1) * diffAngleWavePoint;
+            float x = Mathf.Sin(tmpAngle * Mathf.Deg2Rad) * signRadius;
+            float y = Mathf.Cos(tmpAngle * Mathf.Deg2Rad) * signRadius;
             Vector3 targetPosition = new Vector3(x, y, 0) + transform.position;
-            GameObject tmpSign = Instantiate(signPrefab, targetPosition, Quaternion.identity) as GameObject;
+            Quaternion rotation = Quaternion.AngleAxis(tmpAngle, new Vector3(0, 0, -1));
+            GameObject tmpSign = Instantiate(signPrefab, targetPosition, rotation) as GameObject;
             tmpSign.transform.SetParent(gameObject.transform);
             signs[pointNum] = tmpSign;
         }
