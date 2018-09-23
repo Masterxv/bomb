@@ -43,15 +43,17 @@ public class BombManager : MySingleton<BombManager>
         }
         else
         {
+            bomb.GetComponent<BombMovement>().enabled = true;
             bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
         }
 
         if (bombInfo.rotate == null)
         {
-            bomb.GetComponent<BombMovement>().enabled = false;
+            bomb.GetComponent<BombRotate>().enabled = false;
         }
         else
         {
+            bomb.GetComponent<BombRotate>().enabled = true;
             bomb.GetComponent<BombRotate>().SetRotateData(bombInfo.rotate);
         }
     }

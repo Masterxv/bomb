@@ -14,7 +14,7 @@ public class GameController : CoreController
         }
     }
 
-    public override void Refresh()
+    public override void Refresh(bool withBackup)
     {
         Debug.LogError("Refresh in Game controller");
         SceneManager.sceneLoaded += MainSceneLoaded;

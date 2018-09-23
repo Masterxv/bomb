@@ -89,7 +89,7 @@ public abstract class CoreController: MonoBehaviour
         Refresh();
     }
 
-    public abstract void Refresh();
+    public abstract void Refresh(bool withBackup=false);
 
     // Update is called once per frame
     void Update()

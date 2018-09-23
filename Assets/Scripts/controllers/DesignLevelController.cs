@@ -33,69 +33,79 @@ public class DesignLevelController : CoreController
     // override level data
     public bool overrideLevelData;
 
-    public void GenerateLevelData()
+    Level backupLevel;
+
+    public void GenerateLevelData(bool withBackup=false)
     {
-        // Push all data to level
-        // Gain bomb data
-        List<BombInfo> bombInfos = new List<BombInfo>();
-        GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
-        Debug.LogError(bombs.Length);
-        for (int i = 0; i < bombs.Length; i++)
+        Debug.Log(withBackup);
+        if (withBackup)
         {
-            GameObject bomb = bombs[i];
-            BombInfo bombInfo = new BombInfo();
-
-            bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
-            bombInfo.type = bomb.GetComponent<Explode>().type;
-
-            BombRotate bombRotate = bomb.GetComponent<BombRotate>();
-            if (bombRotate.speed > 0)
+            level = backupLevel;
+        }
+        else
+        {
+            // Push all data to level
+            // Gain bomb data
+            List<BombInfo> bombInfos = new List<BombInfo>();
+            GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+            Debug.LogError(bombs.Length);
+            for (int i = 0; i < bombs.Length; i++)
             {
-                bombInfo.rotate = new BombRotateData(bombRotate.isClockwise, bombRotate.speed);
-            }
-            else
-            {
-                bombInfo.rotate = null;
-            }
+                GameObject bomb = bombs[i];
+                BombInfo bombInfo = new BombInfo();
 
-            BombMovement bombMovement = bomb.GetComponent<BombMovement>();
-            if (bombMovement.speed > 0)
-            {
-                bombInfo.initPosition.Fill(bomb.GetComponent<Explode>().initPosition);
-                MyVector3[] points = new MyVector3[bombMovement.points.Count];
-                for (int j = 0; j < bombMovement.points.Count; j++)
+                bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
+                bombInfo.type = bomb.GetComponent<Explode>().type;
+
+                BombRotate bombRotate = bomb.GetComponent<BombRotate>();
+                if (bombRotate.speed > 0)
                 {
-                    points[j] = new MyVector3();
-                    points[j].Fill(bombMovement.points[j]);
+                    bombInfo.rotate = new BombRotateData(bombRotate.isClockwise, bombRotate.speed);
                 }
-                bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise);
+                else
+                {
+                    bombInfo.rotate = null;
+                }
+
+                BombMovement bombMovement = bomb.GetComponent<BombMovement>();
+                if (bombMovement.speed > 0)
+                {
+                    bombInfo.initPosition.Fill(bomb.GetComponent<Explode>().initPosition);
+                    MyVector3[] points = new MyVector3[bombMovement.points.Count];
+                    for (int j = 0; j < bombMovement.points.Count; j++)
+                    {
+                        points[j] = new MyVector3();
+                        points[j].Fill(bombMovement.points[j]);
+                    }
+                    bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise);
+                }
+                else
+                {
+                    bombInfo.initPosition.Fill(bomb.transform.position);
+                    bombInfo.movement = null;
+                }
+
+                bombInfos.Add(bombInfo);
             }
-            else
+
+            // Gain wall data
+            List<WallInfo> wallInfos = new List<WallInfo>();
+            GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
+            for (int i = 0; i < walls.Length; i++)
             {
-                bombInfo.initPosition.Fill(bomb.transform.position);
-                bombInfo.movement = null;
+                GameObject wall = walls[i];
+                WallInfo wallInfo = new WallInfo();
+                wallInfo.initAngle = -1 * wall.GetComponent<Wall>().initAngle;
+                wallInfo.initPosition.Fill(wall.transform.position);
+                wallInfo.maxHealth = wall.GetComponent<Wall>().maxHealth;
+                wallInfo.currentHealth = wall.GetComponent<Wall>().currentHealth;
+                wallInfo.type = wall.GetComponent<Wall>().type;
+                wallInfos.Add(wallInfo);
             }
 
-            bombInfos.Add(bombInfo);
+            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
+            backupLevel = level;
         }
-
-        // Gain wall data
-        List<WallInfo> wallInfos = new List<WallInfo>();
-        GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
-        for (int i = 0; i < walls.Length; i++)
-        {
-            GameObject wall = walls[i];
-            WallInfo wallInfo = new WallInfo();
-            wallInfo.initAngle = -1 * wall.GetComponent<Wall>().initAngle;
-            wallInfo.initPosition.Fill(wall.transform.position);
-            wallInfo.maxHealth = wall.GetComponent<Wall>().maxHealth;
-            wallInfo.currentHealth = wall.GetComponent<Wall>().currentHealth;
-            wallInfo.type = wall.GetComponent<Wall>().type;
-            wallInfos.Add(wallInfo);
-        }
-
-        level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
-        SaveLevelData(level);
     }
 
     public void SaveGeneratedData()
@@ -132,7 +142,7 @@ public class DesignLevelController : CoreController
         }
     }
 
-    public override void Refresh()
+    public override void Refresh(bool withBackup)
     {
         active = true;
         clickedNumber = 0;
@@ -150,7 +160,7 @@ public class DesignLevelController : CoreController
         if (level == null)
         {
             Debug.LogError("Level is NULL");
-            GenerateLevelData();
+            GenerateLevelData(withBackup);
         }
         else
         {
