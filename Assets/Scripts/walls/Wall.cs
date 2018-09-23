@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wall : MonoBehaviour
+public abstract class Wall : MonoBehaviour
 {
 
     public Constants.WallTypes type;
@@ -11,7 +11,6 @@ public class Wall : MonoBehaviour
     public Vector3 initPosition;
 
     public AudioClip takeDamageSound;
-    public RectTransform healthBar;
 
     public virtual void Start()
     {
@@ -22,12 +21,15 @@ public class Wall : MonoBehaviour
     {
         maxHealth = wallInfo.maxHealth;
         currentHealth = wallInfo.maxHealth >= wallInfo.currentHealth ? wallInfo.currentHealth : wallInfo.maxHealth;
+        setHealthText();
         // rotate by init angle
         initAngle = wallInfo.initAngle;
         transform.Rotate(0, 0, initAngle);
         initPosition = wallInfo.initPosition.GetV3();
         type = wallInfo.type;
     }
+
+    public abstract void setHealthText();
 
     public virtual void CollisionWithBullet(GameObject bullet)
     {

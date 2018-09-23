@@ -22,4 +22,9 @@ public class ContraryWall : Wall
         }
         bullet.GetComponent<Rigidbody2D>().velocity = resultVelocity;
     }
+
+    public override void setHealthText()
+    {
+        // intend to do nothing
+    }
 }
