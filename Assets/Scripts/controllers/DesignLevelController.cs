@@ -96,11 +96,40 @@ public class DesignLevelController : CoreController
             {
                 GameObject wall = walls[i];
                 WallInfo wallInfo = new WallInfo();
-                wallInfo.initAngle = -1 * wall.GetComponent<Wall>().initAngle;
+                wallInfo.initAngle = wall.GetComponent<Wall>().initAngle;
                 wallInfo.initPosition.Fill(wall.transform.position);
                 wallInfo.maxHealth = wall.GetComponent<Wall>().maxHealth;
                 wallInfo.currentHealth = wall.GetComponent<Wall>().currentHealth;
                 wallInfo.type = wall.GetComponent<Wall>().type;
+
+                WallRotate wallRotate = wall.GetComponent<WallRotate>();
+                if (wallRotate.speed > 0)
+                {
+                    wallInfo.rotate = new WallRotateData(wallRotate.isClockwise, wallRotate.speed);
+                }
+                else
+                {
+                    wallInfo.rotate = null;
+                }
+
+                WallMovement wallMovement = wall.GetComponent<WallMovement>();
+                if (wallMovement.speed > 0)
+                {
+                    wallInfo.initPosition.Fill(wall.GetComponent<Explode>().initPosition);
+                    MyVector3[] points = new MyVector3[wallMovement.points.Count];
+                    for (int j = 0; j < wallMovement.points.Count; j++)
+                    {
+                        points[j] = new MyVector3();
+                        points[j].Fill(wallMovement.points[j]);
+                    }
+                    wallInfo.movement = new WallMovementData(wallMovement.type, points, wallMovement.distances, wallMovement.speed, wallMovement.radius, wallMovement.isClockwise);
+                }
+                else
+                {
+                    wallInfo.initPosition.Fill(wall.transform.position);
+                    wallInfo.movement = null;
+                }
+
                 wallInfos.Add(wallInfo);
             }
 
@@ -150,7 +179,6 @@ public class DesignLevelController : CoreController
         else
         {
             Debug.LogError("Level it not null");
-            //LevelUtil.getCurrentLevel().numberOfClick = 100;
         }
 
         resultPanel.SetActive(false);

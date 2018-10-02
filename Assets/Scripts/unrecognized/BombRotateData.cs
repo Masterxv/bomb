@@ -2,20 +2,13 @@
 using UnityEditor;
 using System;
 
-[Serializable]
-public class BombRotateData
+public class BombRotateData: RotateData
 {
-    public bool isClockwise;
-    public float speed;
-
-    public BombRotateData()
+    public BombRotateData(): base()
     {
-
     }
 
-    public BombRotateData(bool isClockwise, float speed)
+    public BombRotateData(bool isClockwise, float speed): base(isClockwise, speed)
     {
-        this.isClockwise = isClockwise;
-        this.speed = speed;
     }
 }

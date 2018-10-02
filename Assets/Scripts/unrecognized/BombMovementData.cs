@@ -3,26 +3,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[Serializable]
-public class BombMovementData {
-    public Constants.MovementTypes type;
-    public MyVector3[] points;
-    public List<float> distances;
-    public float radius;
-    public float speed;
-    public bool isClockwise;
-
-    public BombMovementData()
+public class BombMovementData: MovementData {
+    public BombMovementData(): base()
     {
     }
 
-    public BombMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise)
+    public BombMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise): base(type, points, distances, speed, radius, isClockwise)
     {
-        this.type = type;
-        this.points = points;
-        this.distances = distances;
-        this.radius = radius;
-        this.speed = speed;
-        this.isClockwise = isClockwise;
     }
 }

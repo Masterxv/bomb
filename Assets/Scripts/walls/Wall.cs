@@ -24,7 +24,7 @@ public abstract class Wall : MonoBehaviour
         setHealthText();
         // rotate by init angle
         initAngle = wallInfo.initAngle;
-        transform.Rotate(0, 0, initAngle);
+        transform.Rotate(0, 0, -initAngle);
         initPosition = wallInfo.initPosition.GetV3();
         type = wallInfo.type;
     }

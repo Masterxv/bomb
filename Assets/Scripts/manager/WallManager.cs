@@ -25,5 +25,25 @@ public class WallManager : MySingleton<WallManager>
             wall = Instantiate(normalWall, wallInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
         }
         wall.GetComponent<Wall>().setWallData(wallInfo);
+
+        if (wallInfo.movement == null)
+        {
+            wall.GetComponent<WallMovement>().enabled = false;
+        }
+        else
+        {
+            wall.GetComponent<WallMovement>().enabled = true;
+            wall.GetComponent<WallMovement>().SetMovementData(wallInfo.movement);
+        }
+
+        if (wallInfo.rotate == null)
+        {
+            wall.GetComponent<WallRotate>().enabled = false;
+        }
+        else
+        {
+            wall.GetComponent<WallRotate>().enabled = true;
+            wall.GetComponent<WallRotate>().SetRotateData(wallInfo.rotate);
+        }
     }
 }
