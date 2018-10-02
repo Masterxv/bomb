@@ -21,6 +21,7 @@ public class GameController : CoreController
         PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
         PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
 
+        ended = false;
         resultPanel.SetActive(false);
         isAnimating = false;
 

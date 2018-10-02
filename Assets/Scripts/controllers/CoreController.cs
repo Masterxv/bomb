@@ -26,6 +26,7 @@ public abstract class CoreController: MonoBehaviour
     public bool isAnimating; // Check if have any doing animation
     public IEnumerator coroutine; // coroutine for end game logic
     public ExtraBombInfo[] extraBombs;
+    protected bool ended = false;
 
     #region Init and Update methods
     protected void InitBombs()
@@ -92,7 +93,7 @@ public abstract class CoreController: MonoBehaviour
     public abstract void Refresh(bool withBackup=false);
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (clickedNumber >= numberOfClick && !isAnimating && findGameObjectsWithTag("bullet").Length <= 0)
         {
@@ -125,13 +126,35 @@ public abstract class CoreController: MonoBehaviour
         messageDialog.SetActive(false);
     }
 
+
+    public void RemoveAllCurrentBombs()
+    {
+        GameObject[] bombs = findGameObjectsWithTag("bomb");
+        for (int i = 0; i < bombs.Length; i++)
+        {
+            Destroy(bombs[i]);
+        }
+    }
+
+    public void RemoveAllCurrentWalls()
+    {
+        GameObject[] walls = findGameObjectsWithTag("wall");
+        for (int i = 0; i < walls.Length; i++)
+        {
+            Destroy(walls[i]);
+        }
+    }
+
     // All logic when end a game level
     public IEnumerator EndGameLogic(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        if (clickedNumber >= numberOfClick && !isAnimating && findGameObjectsWithTag("bullet").Length <= 0)
+        if (!ended && clickedNumber >= numberOfClick && !isAnimating && findGameObjectsWithTag("bullet").Length <= 0)
         {
+            ended = true;
+            RemoveAllCurrentBombs();
+            RemoveAllCurrentWalls();
             StopCoroutine(coroutine);
             // End this level, show the result panel
             resultPanel.SetActive(true);
@@ -188,7 +211,7 @@ public abstract class CoreController: MonoBehaviour
             if (PlayerDataUtil.playerData.totalMatch % Constants.MATCH_COUNT_EACH_POPUP_ADS == 0)
             {
                 // TODO: Display popup ads
-
+                Debug.LogError("Display ads");
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using DG.Tweening;
 
 public class DesignLevelController : CoreController
 {
@@ -124,26 +125,10 @@ public class DesignLevelController : CoreController
         showMessageDialog(true, "Notice", "Generate level succeeded!");
     }
 
-    void RemoveAllCurrentBombs()
-    {
-        GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
-        for (int i = 0; i < bombs.Length; i++)
-        {
-            Destroy(bombs[i]);
-        }
-    }
-
-    void RemoveAllCurrentWalls()
-    {
-        GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
-        for (int i = 0; i < walls.Length; i++)
-        {
-            Destroy(walls[i]);
-        }
-    }
-
     public override void Refresh(bool withBackup)
     {
+        ended = false;
+        resultPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0);
         active = true;
         clickedNumber = 0;
         if (overrideLevelData)
@@ -165,20 +150,15 @@ public class DesignLevelController : CoreController
         else
         {
             Debug.LogError("Level it not null");
-            LevelUtil.getCurrentLevel().numberOfClick = 100;
+            //LevelUtil.getCurrentLevel().numberOfClick = 100;
         }
 
+        resultPanel.SetActive(false);
         RemoveAllCurrentBombs();
         RemoveAllCurrentWalls();
         InitBombs();
         InitWalls();
         InitTutorial();
         InitHelperPanel();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
