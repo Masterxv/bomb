@@ -36,23 +36,6 @@ public class PlayerDataUtil
         playerData.stars[7] = 3;
         playerData.stars[8] = 0;
 
-        playerData.earnedStars = 0;
-        playerData.spentStars = 0;
-        playerData.starResetedTime = 0;
-
-        playerData.gold = 0;
-
-        // Achievement
-        playerData.totalEarnedGold = 0;
-        playerData.totalBombExploded = 0;
-        playerData.totalPowerupPuchased = 0;
-        playerData.totalUpgrade = 0;
-        playerData.bestCombo = 0;
-
-        // Powerup
-        playerData.powerUpMoreBomb = 10;
-        playerData.powerUpMoreClick = 5;
-
         // Count match to show ads
         playerData.totalMatch = 0;
 
@@ -74,19 +57,5 @@ public class PlayerDataUtil
         {
             SavePlayerDataFirstTime();
         }
-    }
-
-    public static void ResetStars()
-    {
-        playerData.spentStars = 0;
-        playerData.normalLevel = 1;
-        playerData.shooterLevel = 1;
-        playerData.waveLevel = 1;
-        playerData.targetLevel = 1;
-        playerData.goldLevel = 1;
-
-        playerData.gold -= playerData.starResetedTime * Constants.RESET_STARS_BASE_COST;
-        playerData.starResetedTime++;
-        SavePlayerData();
     }
 }

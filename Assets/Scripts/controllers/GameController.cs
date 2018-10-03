@@ -18,8 +18,6 @@ public class GameController : CoreController
     {
         Debug.LogError("Refresh in Game controller");
         SceneManager.sceneLoaded += MainSceneLoaded;
-        PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
-        PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
 
         ended = false;
         resultPanel.SetActive(false);
@@ -40,7 +38,6 @@ public class GameController : CoreController
         InitWalls();
         InitTutorial();
         InitHelperPanel();
-        UpdateGold();
         PlayerDataUtil.playerData.totalMatch++;
     }
 }

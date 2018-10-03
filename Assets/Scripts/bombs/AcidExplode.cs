@@ -7,7 +7,7 @@ public class AcidExplode : Explode {
     public override void setBombData(BombInfo bombInfo)
     {
         base.setBombData(bombInfo);
-        duration = baseBomb.duration * (1 + PlayerDataUtil.playerData.acidLevel * Constants.ACID_BOMB_DURATION_INC);
+        duration = baseBomb.duration * (1 + LevelUtil.getCurrentLevel().acidLevel * Constants.ACID_BOMB_DURATION_INC);
     }
 
     public override void DoExplode()

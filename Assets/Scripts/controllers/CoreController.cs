@@ -14,7 +14,6 @@ public abstract class CoreController: MonoBehaviour
 
     // Panel
     public GameObject resultPanel;
-    public GameObject coinMeter;
     public GameObject tutorialPanel;
     public GameObject helperPanel;
     public GameObject messageDialog;
@@ -68,18 +67,13 @@ public abstract class CoreController: MonoBehaviour
         helperPanel.GetComponent<HelperPanelController>().updateHandCount(level);
     }
 
-    public void UpdateGold()
-    {
-        coinMeter.GetComponentInChildren<Text>().text = PlayerDataUtil.playerData.gold.ToString();
-    }
-
     #endregion
 
     #region mono behavior methods
 
     void Awake()
     {
-        //PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
+        PlayerDataUtil.SavePlayerDataFirstTime(); // TODO: remove in production
         PlayerDataUtil.LoadPlayerData(); // TODO: remove in production
     }
 
@@ -180,29 +174,13 @@ public abstract class CoreController: MonoBehaviour
                     resultsPanelController.star3.sprite = starSprite;
                     break;
             }
-            if (stars > 0)
+            if (stars == 3)
             {
-                int currentLevelStars = PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index - 1];
-                if (stars > currentLevelStars) // Update current level star if this time stars is larger than last time stars.
-                {
-                    PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index - 1] = stars;
-                    PlayerDataUtil.playerData.earnedStars += (stars - currentLevelStars); // Update earned stars
-                }
                 int nextLevelStars = PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index];
                 if (nextLevelStars == -1) // Unlock next level if it was locked
                 {
                     PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index] = 0;
                 }
-            }
-
-            // Add exploded bomb
-            int explodedBombs = LevelUtil.getCurrentLevel().bombs.Count - remainBombs;
-            PlayerDataUtil.playerData.totalBombExploded += explodedBombs;
-
-            // Calculate best combo
-            if (clickedNumber == 1 && explodedBombs > PlayerDataUtil.playerData.bestCombo)
-            {
-                PlayerDataUtil.playerData.bestCombo = explodedBombs;
             }
 
             PlayerDataUtil.SavePlayerData();

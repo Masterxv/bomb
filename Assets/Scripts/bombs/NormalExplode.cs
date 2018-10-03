@@ -6,7 +6,7 @@ public class NormalExplode : Explode
     public override void Start()
     {
         base.Start();
-        radius = radius * (1 + PlayerDataUtil.playerData.normalLevel * Constants.NORMAL_BOMB_RADIUS_INC);
+        radius = radius * (1 + LevelUtil.getCurrentLevel().normalLevel * Constants.NORMAL_BOMB_RADIUS_INC);
     }
 
     public override void DoExplode()

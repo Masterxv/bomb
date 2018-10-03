@@ -91,7 +91,6 @@ public class Explode : MonoBehaviour
 
     public virtual void DoExplode()
     {
-        CoinUtil.Instance.CreateCoins(transform.position, valueInCoin);
         if(bombExplodeSound != null)
         {
             AudioSource.PlayClipAtPoint(bombExplodeSound, transform.position);
