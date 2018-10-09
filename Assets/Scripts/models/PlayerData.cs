@@ -4,7 +4,7 @@
 public class PlayerData
 {
     public int [] levels;
-    public int [] stars;
+    public bool [] unlocked;
 
     // for show ads
     public int totalMatch;

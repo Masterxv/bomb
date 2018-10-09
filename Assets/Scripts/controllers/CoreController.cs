@@ -19,7 +19,6 @@ public abstract class CoreController: MonoBehaviour
     public GameObject messageDialog;
 
     // Utilities
-    public Sprite starSprite;
     public int clickedNumber;
     public int numberOfClick;
     public bool isAnimating; // Check if have any doing animation
@@ -152,37 +151,28 @@ public abstract class CoreController: MonoBehaviour
             StopCoroutine(coroutine);
             // End this level, show the result panel
             resultPanel.SetActive(true);
-            resultPanel.transform.DOScale(new Vector3(0.5f, 0.5f, 0), 1); ; // Animate to show result panel
+            resultPanel.transform.DOScale(new Vector3(0.5f, 0.5f, 0), 1); // Animate to show result panel
 
-            // Calculate star
+            // Unlocked level if need
             int remainBombs = findGameObjectsWithTag("bomb").Length;
-            ResultPanelController resultsPanelController = resultPanel.GetComponent<ResultPanelController>();
-            resultsPanelController.remainBomb.text = remainBombs.ToString();
-            int stars = LevelUtil.GetStars(remainBombs);
-            switch (stars)
+            bool isNextLevelUnlocked = false;
+            if (level.index < Constants.TOTAL_LEVEL - 1)
             {
-                case 1:
-                    resultsPanelController.star1.sprite = starSprite;
-                    break;
-                case 2:
-                    resultsPanelController.star1.sprite = starSprite;
-                    resultsPanelController.star2.sprite = starSprite;
-                    break;
-                case 3:
-                    resultsPanelController.star1.sprite = starSprite;
-                    resultsPanelController.star2.sprite = starSprite;
-                    resultsPanelController.star3.sprite = starSprite;
-                    break;
-            }
-            if (stars == 3)
-            {
-                int nextLevelStars = PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index];
-                if (nextLevelStars == -1) // Unlock next level if it was locked
+                isNextLevelUnlocked = PlayerDataUtil.playerData.unlocked[LevelUtil.getCurrentLevel().index + 1];
+                if (remainBombs <= 0)
                 {
-                    PlayerDataUtil.playerData.stars[LevelUtil.getCurrentLevel().index] = 0;
+                    if (!isNextLevelUnlocked)
+                    {
+                        // Unlock next level if it was locked
+                        PlayerDataUtil.playerData.unlocked[LevelUtil.getCurrentLevel().index] = true;
+                        isNextLevelUnlocked = true;
+                    }
                 }
             }
 
+            // Fill result panel
+            ResultPanelController resultsPanelController = resultPanel.GetComponent<ResultPanelController>();
+            resultsPanelController.fillData(remainBombs, isNextLevelUnlocked);
             PlayerDataUtil.SavePlayerData();
 
             // Show ads depend on total match of player

@@ -6,11 +6,8 @@ using UnityEngine.SceneManagement;
 public class LevelController : MonoBehaviour
 {
     public GameObject levelPrefab;
-    public Sprite level_0_star;
-    public Sprite level_1_star;
-    public Sprite level_2_star;
-    public Sprite level_3_star;
-    public Sprite level_locked;
+    public Sprite levelUnlocked;
+    public Sprite levelLocked;
 
     // Use this for initialization
     void Start()
@@ -20,7 +17,6 @@ public class LevelController : MonoBehaviour
 
         for (int i = 0; i < Constants.TOTAL_LEVEL; i++)
         {
-            int levelIndex = i + 1;
             GameObject levelPrefabClone = Instantiate(levelPrefab);
             
             // Add levelPrefab to levels canvas
@@ -28,41 +24,23 @@ public class LevelController : MonoBehaviour
 
             // Set properties for level prefabs children components
             // Set level name
-            levelPrefabClone.GetComponentInChildren<Text>().text = levelIndex + "";
+            levelPrefabClone.GetComponentInChildren<Text>().text = (i + 1) + "";
 
             // Set level image, depend on status of level of players
             // Get user data
-            int stars = PlayerDataUtil.playerData.stars[levelIndex - 1];
+            bool unlocked = PlayerDataUtil.playerData.unlocked[i];
 
             // Set level data and even when click
             Button b = levelPrefabClone.GetComponent<Button>();
-            if (stars == -1)
+            if (unlocked)
             {
-                b.interactable = false;
+                levelPrefabClone.GetComponentInChildren<Image>().sprite = levelUnlocked;
+                b.onClick.AddListener(() => GoToLevel(i));
             }
             else
             {
-                b.onClick.AddListener(() => GoToLevel(levelIndex));
-            }
-
-            switch (stars)
-            {
-                case -1:
-                    levelPrefabClone.GetComponentInChildren<Image>().sprite = level_locked;
-                    levelPrefabClone.GetComponentInChildren<Text>().text = "";
-                    break;
-                case 0:
-                    levelPrefabClone.GetComponentInChildren<Image>().sprite = level_0_star;
-                    break;
-                case 1:
-                    levelPrefabClone.GetComponentInChildren<Image>().sprite = level_1_star;
-                    break;
-                case 2:
-                    levelPrefabClone.GetComponentInChildren<Image>().sprite = level_2_star;
-                    break;
-                case 3:
-                    levelPrefabClone.GetComponentInChildren<Image>().sprite = level_3_star;
-                    break;
+                levelPrefabClone.GetComponentInChildren<Image>().sprite = levelLocked;
+                b.interactable = false;
             }
         }
     }
@@ -74,6 +52,6 @@ public class LevelController : MonoBehaviour
         // Set seleted level data to main scene
         LevelUtil.setCurrentLevel(level);
         // Load scene
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene((int)SceneEnum.MainScene);
     }
 }

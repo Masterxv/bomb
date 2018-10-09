@@ -30,12 +30,6 @@ public class LevelUtil
     public static Level LoadLevelData(int index)
     {
         BinaryFormatter bf = new BinaryFormatter();
-
-        //FileStream file = File.OpenRead(Application.dataPath + "/data/lv" + index + ".dat");
-        //Level levelToLoad = (Level)bf.Deserialize(file);
-        //file.Close();
-        // return null;
-
         TextAsset asset = Resources.Load<TextAsset>("Levels/lv_" + index);
         if (asset == null)
         {
@@ -46,22 +40,5 @@ public class LevelUtil
         stream.Close();
         currentLevel = levelToLoad;
         return levelToLoad;
-    }
-
-    public static int GetStars(int remainBombs)
-    {
-        if (remainBombs <= Constants.BOMB_REMAIN_3_STAR_THRESHOLD)
-        {
-            return 3;
-        }
-        else if (remainBombs <= Constants.BOMB_REMAIN_2_STAR_THRESHOLD)
-        {
-            return 2;
-        }
-        else if (remainBombs <= Constants.BOMB_REMAIN_1_STAR_THRESHOLD)
-        {
-            return 1;
-        }
-        return 0;
     }
 }
