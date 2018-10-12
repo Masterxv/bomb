@@ -9,8 +9,9 @@ public class LevelUtil
 {
     private static Level currentLevel;
 
-    public static void init()
+    public static void init(Level level)
     {
+        currentLevel = level;
     }
 
     public static Level getCurrentLevel()

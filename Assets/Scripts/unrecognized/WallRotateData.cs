@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 
+[Serializable]
 public class WallRotateData: RotateData
 {
     public WallRotateData(): base()

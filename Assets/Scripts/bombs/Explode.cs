@@ -7,9 +7,15 @@ using DG.Tweening;
 public class Explode : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public AudioClip bombExplodeSound;
+    public GameObject locked;
+    public TextMesh timer;
+
     protected BaseBomb baseBomb;
 
+
     public Constants.BombTypes type;
+
     public Vector3 initPosition;
     public float initAngle;
 
@@ -20,16 +26,23 @@ public class Explode : MonoBehaviour
     public int bulletHealth;
     public int health;
     public int currentHealth;
+    public bool isLocked;
+    public float timeout;
 
     public bool isExploded;
-    public AudioClip bombExplodeSound;
     public int valueInCoin;
+
+    public float passedTime;
+    private float intervalCounter;
+    private const float PASSED_TIME_INTERVAL = 0.1f;
 
     public virtual void setBombData(BombInfo bombInfo)
     {
         type = bombInfo.type;
         initPosition = bombInfo.initPosition.GetV3();
         initAngle = bombInfo.initAngle;
+        isLocked = bombInfo.isLocked;
+        timeout = bombInfo.timeout;
 
         switch (type)
         {
@@ -57,6 +70,36 @@ public class Explode : MonoBehaviour
         health = baseBomb.health;
         currentHealth = baseBomb.currentHealth;
         valueInCoin = baseBomb.valueInCoin;
+
+        intervalCounter = 0;
+
+        if(isLocked)
+        {
+            locked.GetComponent<SpriteRenderer>().enabled = true;
+        } else
+        {
+            locked.GetComponent<SpriteRenderer>().enabled = false;
+        }
+
+        if (bombInfo.movement == null || bombInfo.movement.speed <= 0)
+        {
+            GetComponent<BombMovement>().enabled = false;
+        }
+        else
+        {
+            GetComponent<BombMovement>().enabled = true;
+            GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
+        }
+
+        if (bombInfo.rotate == null || bombInfo.rotate.speed <= 0)
+        {
+            GetComponent<BombRotate>().enabled = false;
+        }
+        else
+        {
+            GetComponent<BombRotate>().enabled = true;
+            GetComponent<BombRotate>().SetRotateData(bombInfo.rotate);
+        }
     }
 
     // Use this for initialization
@@ -65,17 +108,37 @@ public class Explode : MonoBehaviour
         currentHealth = health;
         baseBomb = null;
         isExploded = false;
+        passedTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(timeout <= 0)
+        {
+            return;
+        }
+        if (passedTime < timeout)
+        {
+            intervalCounter += Time.deltaTime;
+            if (intervalCounter >= PASSED_TIME_INTERVAL) {
+                passedTime += intervalCounter;
+                timer.text = Math.Round(timeout - passedTime, 1) + ""; ;
+                intervalCounter = 0;
+            }
+        } else
+        {
+            if(!isExploded)
+            {
+                timer.text = "";
+                PrepareToExplode();
+            }
+        }
     }
 
     void OnMouseDown()
     {
-        if (ControllerUtil.coreController.clickedNumber < ControllerUtil.coreController.numberOfClick)
+        if (ControllerUtil.coreController.clickedNumber < ControllerUtil.coreController.numberOfClick && !isLocked)
         {
             ControllerUtil.coreController.UpdateClickedNumber();
             PrepareToExplode();

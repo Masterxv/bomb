@@ -80,6 +80,7 @@ public abstract class CoreController: MonoBehaviour
     void Start()
     {
         ControllerUtil.init();
+        LevelUtil.init(level);
         Refresh();
     }
 
@@ -186,7 +187,7 @@ public abstract class CoreController: MonoBehaviour
 
 
     #region Utilities methods
-    GameObject[] findGameObjectsWithTag(string tag)
+    protected GameObject[] findGameObjectsWithTag(string tag)
     {
         return GameObject.FindGameObjectsWithTag(tag);
     }

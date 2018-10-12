@@ -48,15 +48,23 @@ public class DesignLevelController : CoreController
             // Push all data to level
             // Gain bomb data
             List<BombInfo> bombInfos = new List<BombInfo>();
-            GameObject[] bombs = GameObject.FindGameObjectsWithTag("bomb");
+            List<WallInfo> wallInfos = new List<WallInfo>();
+
+            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
+            LevelUtil.setCurrentLevel(level);
+
+            GameObject[] bombs = findGameObjectsWithTag("bomb");
             Debug.LogError(bombs.Length);
             for (int i = 0; i < bombs.Length; i++)
             {
                 GameObject bomb = bombs[i];
                 BombInfo bombInfo = new BombInfo();
+                Explode bombExplode = bomb.GetComponent<Explode>();
 
-                bombInfo.initAngle = -1 * bomb.GetComponent<Explode>().initAngle;
-                bombInfo.type = bomb.GetComponent<Explode>().type;
+                bombInfo.initAngle = -1 * bombExplode.initAngle;
+                bombInfo.type = bombExplode.type;
+                bombInfo.isLocked = bombExplode.isLocked;
+                bombInfo.timeout = bombExplode.timeout;
 
                 BombRotate bombRotate = bomb.GetComponent<BombRotate>();
                 if (bombRotate.speed > 0)
@@ -90,8 +98,7 @@ public class DesignLevelController : CoreController
             }
 
             // Gain wall data
-            List<WallInfo> wallInfos = new List<WallInfo>();
-            GameObject[] walls = GameObject.FindGameObjectsWithTag("wall");
+            GameObject[] walls = findGameObjectsWithTag("wall");
             for (int i = 0; i < walls.Length; i++)
             {
                 GameObject wall = walls[i];
@@ -133,7 +140,8 @@ public class DesignLevelController : CoreController
                 wallInfos.Add(wallInfo);
             }
 
-            level = new Level(levelIndex, numberOfClick, tutorialContent, bombInfos, wallInfos, extraBombs, normalLevel, shooterLevel, waveLevel, targetLevel, acidLevel);
+            level.walls = wallInfos;
+            level.bombs = bombInfos;
             backupLevel = level;
         }
     }
@@ -156,6 +164,7 @@ public class DesignLevelController : CoreController
 
     public override void Refresh(bool withBackup)
     {
+        Debug.LogError("refresh in design level controller");
         ended = false;
         resultPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0);
         active = true;

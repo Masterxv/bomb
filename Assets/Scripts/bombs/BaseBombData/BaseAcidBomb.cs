@@ -13,7 +13,7 @@ public class BaseAcidBomb : BaseBomb
         health = 1;
         currentHealth = 1;
 
-        duration = 3;
+        bulletExistDuration = 3;
 
         valueInCoin = 5;
     }

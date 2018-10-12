@@ -37,24 +37,5 @@ public class BombManager : MySingleton<BombManager>
             bomb = Instantiate(normalBomb, bombInfo.initPosition.GetV3(), Quaternion.identity) as GameObject;
         }
         bomb.GetComponent<Explode>().setBombData(bombInfo);
-        if (bombInfo.movement == null)
-        {
-            bomb.GetComponent<BombMovement>().enabled = false;
-        }
-        else
-        {
-            bomb.GetComponent<BombMovement>().enabled = true;
-            bomb.GetComponent<BombMovement>().SetMovementData(bombInfo.movement);
-        }
-
-        if (bombInfo.rotate == null)
-        {
-            bomb.GetComponent<BombRotate>().enabled = false;
-        }
-        else
-        {
-            bomb.GetComponent<BombRotate>().enabled = true;
-            bomb.GetComponent<BombRotate>().SetRotateData(bombInfo.rotate);
-        }
     }
 }

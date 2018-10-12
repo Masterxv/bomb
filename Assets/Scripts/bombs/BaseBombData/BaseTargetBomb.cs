@@ -13,6 +13,8 @@ public class BaseTargetBomb : BaseBomb
         health = 1;
         currentHealth = 1;
 
+        signRadius = 0.8f;
+
         valueInCoin = 5;
     }
 }

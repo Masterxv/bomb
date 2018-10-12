@@ -2,6 +2,7 @@
 using UnityEditor;
 using System;
 
+[Serializable]
 public class BombRotateData: RotateData
 {
     public BombRotateData(): base()

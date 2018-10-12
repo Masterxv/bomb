@@ -27,6 +27,26 @@ public abstract class Wall : MonoBehaviour
         transform.Rotate(0, 0, -initAngle);
         initPosition = wallInfo.initPosition.GetV3();
         type = wallInfo.type;
+
+        if (wallInfo.movement == null || wallInfo.movement.speed <= 0)
+        {
+            GetComponent<WallMovement>().enabled = false;
+        }
+        else
+        {
+            GetComponent<WallMovement>().enabled = true;
+            GetComponent<WallMovement>().SetMovementData(wallInfo.movement);
+        }
+
+        if (wallInfo.rotate == null || wallInfo.rotate.speed <= 0)
+        {
+            GetComponent<WallRotate>().enabled = false;
+        }
+        else
+        {
+            GetComponent<WallRotate>().enabled = true;
+            GetComponent<WallRotate>().SetRotateData(wallInfo.rotate);
+        }
     }
 
     public abstract void setHealthText();

@@ -13,7 +13,7 @@ public class BaseBomb {
     public float signRadius; // only for shooter and wave bomb
 
     public int waveWidth; // only for Wave bomb
-    public float duration; // only for Acid bomb
+    public float bulletExistDuration; // only for Acid bomb
 
     public int valueInCoin;
 }

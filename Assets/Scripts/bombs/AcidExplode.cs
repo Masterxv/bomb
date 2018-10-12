@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class AcidExplode : Explode {
-    public float duration;
+    public float bulletExistDuration;
 
     public override void setBombData(BombInfo bombInfo)
     {
         base.setBombData(bombInfo);
-        duration = baseBomb.duration * (1 + LevelUtil.getCurrentLevel().acidLevel * Constants.ACID_BOMB_DURATION_INC);
+        bulletExistDuration = baseBomb.bulletExistDuration * (1 + LevelUtil.getCurrentLevel().acidLevel * Constants.ACID_BOMB_DURATION_INC);
     }
 
     public override void DoExplode()
@@ -24,7 +24,7 @@ public class AcidExplode : Explode {
                 GameObject newBullet = Instantiate(bulletPrefab, thisPosition, Quaternion.identity) as GameObject;
                 Vector3 velocity = (targetPosition - thisPosition).normalized * speed;
                 float distance = Vector3.Distance(thisPosition, targetPosition);
-                newBullet.GetComponent<AcidBullet>().setData(thisPosition, targetPosition, distance, velocity, bulletDamage, bulletHealth, duration);
+                newBullet.GetComponent<AcidBullet>().setData(thisPosition, targetPosition, distance, velocity, bulletDamage, bulletHealth, bulletExistDuration);
             }
         }
         base.DoneExplode();
