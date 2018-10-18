@@ -81,6 +81,14 @@ public class Explode : MonoBehaviour
             locked.GetComponent<SpriteRenderer>().enabled = false;
         }
 
+        if(timeout > 0)
+        {
+            timer.gameObject.SetActive(true);
+        } else
+        {
+            timer.gameObject.SetActive(false);
+        }
+
         if (bombInfo.movement == null || bombInfo.movement.speed <= 0)
         {
             GetComponent<BombMovement>().enabled = false;

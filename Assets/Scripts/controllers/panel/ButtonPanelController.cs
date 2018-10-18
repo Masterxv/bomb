@@ -16,6 +16,6 @@ public class ButtonPanelController : MonoBehaviour {
 
     public void ReplayBtnClick()
     {
-        LevelController.GoToLevel(LevelUtil.getCurrentLevel().index);
+        ControllerUtil.coreController.Refresh();
     }
 }
