@@ -80,7 +80,7 @@ public abstract class CoreController: MonoBehaviour
     void Start()
     {
         ControllerUtil.init();
-        LevelUtil.init(level);
+        level = LevelUtil.LoadLevelData(PlayerDataUtil.playerData.unlockedLevelIndex);
         Refresh();
     }
 
@@ -121,6 +121,15 @@ public abstract class CoreController: MonoBehaviour
     }
 
 
+    public void RemoveAllBullets()
+    {
+        GameObject[] bullets = findGameObjectsWithTag("bullet");
+        for (int i = 0; i < bullets.Length; i++)
+        {
+            Destroy(bullets[i]);
+        }
+    }
+
     public void RemoveAllCurrentBombs()
     {
         GameObject[] bombs = findGameObjectsWithTag("bomb");
@@ -159,13 +168,13 @@ public abstract class CoreController: MonoBehaviour
             bool isNextLevelUnlocked = false;
             if (level.index < Constants.TOTAL_LEVEL - 1)
             {
-                isNextLevelUnlocked = PlayerDataUtil.playerData.unlocked[LevelUtil.getCurrentLevel().index + 1];
+                isNextLevelUnlocked = level.index + 1 <= PlayerDataUtil.playerData.unlockedLevelIndex;
                 if (remainBombs <= 0)
                 {
                     if (!isNextLevelUnlocked)
                     {
                         // Unlock next level if it was locked
-                        PlayerDataUtil.playerData.unlocked[LevelUtil.getCurrentLevel().index] = true;
+                        PlayerDataUtil.playerData.unlockedLevelIndex += 1;
                         isNextLevelUnlocked = true;
                     }
                 }
@@ -174,6 +183,7 @@ public abstract class CoreController: MonoBehaviour
             // Fill result panel
             ResultPanelController resultsPanelController = resultPanel.GetComponent<ResultPanelController>();
             resultsPanelController.fillData(remainBombs, isNextLevelUnlocked);
+            PlayerDataUtil.playerData.totalMatch++;
             PlayerDataUtil.SavePlayerData();
 
             // Show ads depend on total match of player

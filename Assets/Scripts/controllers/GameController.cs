@@ -34,10 +34,13 @@ public class GameController : CoreController
             return;
         }
 
+        RemoveAllBullets();
+        RemoveAllCurrentBombs();
+        RemoveAllCurrentWalls();
+
         InitBombs();
         InitWalls();
         InitTutorial();
         InitHelperPanel();
-        PlayerDataUtil.playerData.totalMatch++;
     }
 }

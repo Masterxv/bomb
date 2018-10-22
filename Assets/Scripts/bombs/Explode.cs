@@ -75,10 +75,10 @@ public class Explode : MonoBehaviour
 
         if(isLocked)
         {
-            locked.GetComponent<SpriteRenderer>().enabled = true;
+            locked.SetActive(true);
         } else
         {
-            locked.GetComponent<SpriteRenderer>().enabled = false;
+            locked.SetActive(false);
         }
 
         if(timeout > 0)

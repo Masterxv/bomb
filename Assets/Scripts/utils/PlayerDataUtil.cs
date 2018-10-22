@@ -20,23 +20,9 @@ public class PlayerDataUtil
     public static void SavePlayerDataFirstTime()
     {
         playerData = new PlayerData();
-        playerData.levels = new int[Constants.TOTAL_LEVEL];
-        playerData.unlocked = new bool[Constants.TOTAL_LEVEL];
-        for (int i = 0; i < Constants.TOTAL_LEVEL; i++)
-        {
-            playerData.levels[i] = i;
-            playerData.unlocked[i] = false;
-        }
-        playerData.unlocked[0] = true;
-        //playerData.unlocked[1] = true;
-        //playerData.unlocked[2] = true;
-        //playerData.unlocked[3] = true;
-        //playerData.unlocked[4] = true;
-        //playerData.unlocked[5] = true;
-
+        playerData.unlockedLevelIndex = 1;
         // Count match to show ads
         playerData.totalMatch = 0;
-
         SavePlayerData();
     }
 

@@ -28,7 +28,7 @@ public class LevelController : MonoBehaviour
 
             // Set level image, depend on status of level of players
             // Get user data
-            bool unlocked = PlayerDataUtil.playerData.unlocked[i];
+            bool unlocked = i + 1 <= PlayerDataUtil.playerData.unlockedLevelIndex;
 
             // Set level data and even when click
             Button b = levelPrefabClone.GetComponent<Button>();

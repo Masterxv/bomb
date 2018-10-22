@@ -54,7 +54,6 @@ public class DesignLevelController : CoreController
             LevelUtil.setCurrentLevel(level);
 
             GameObject[] bombs = findGameObjectsWithTag("bomb");
-            Debug.LogError(bombs.Length);
             for (int i = 0; i < bombs.Length; i++)
             {
                 GameObject bomb = bombs[i];
@@ -191,6 +190,7 @@ public class DesignLevelController : CoreController
         }
 
         resultPanel.SetActive(false);
+        RemoveAllBullets();
         RemoveAllCurrentBombs();
         RemoveAllCurrentWalls();
         InitBombs();

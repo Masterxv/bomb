@@ -3,8 +3,7 @@
 [Serializable]
 public class PlayerData
 {
-    public int [] levels;
-    public bool [] unlocked;
+    public int unlockedLevelIndex;
 
     // for show ads
     public int totalMatch;
