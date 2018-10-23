@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public abstract class CoreController: MonoBehaviour
+public abstract class CoreController : MonoBehaviour
 {
     // Level
     public Level level;
@@ -84,20 +84,24 @@ public abstract class CoreController: MonoBehaviour
         Refresh();
     }
 
-    public abstract void Refresh(bool withBackup=false);
+    public abstract void Refresh(bool withBackup = false);
 
     // Update is called once per frame
     protected void Update()
     {
-        if (clickedNumber >= numberOfClick && !isAnimating && findGameObjectsWithTag("bullet").Length <= 0)
+        if (resultPanel.activeInHierarchy)
         {
-            if (resultPanel.activeInHierarchy)
-            {
-                return;
-            }
-            coroutine = EndGameLogic(1.0f);
-            StartCoroutine(coroutine);
+            return;
         }
+
+        int numberOfBullet = findGameObjectsWithTag("bullet").Length;
+        if(isAnimating || numberOfBullet > 0) { return; }
+        int numberOfBomb = findGameObjectsWithTag("bomb").Length;
+        if (clickedNumber < numberOfBullet && numberOfBomb > 0) { return; }
+
+        // end game logic
+        coroutine = EndGameLogic(1.0f);
+        StartCoroutine(coroutine);
     }
 
     #endregion
@@ -106,7 +110,7 @@ public abstract class CoreController: MonoBehaviour
     {
         messageDialog.GetComponent<MessageDialogController>().fillDialogInfo(title, content);
     }
-    public void showMessageDialog(bool isFillDialogInfo=false, string title="", string content="")
+    public void showMessageDialog(bool isFillDialogInfo = false, string title = "", string content = "")
     {
         if (isFillDialogInfo)
         {
