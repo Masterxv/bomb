@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultPanelController : MonoBehaviour
+public class ResultPanelController : BasePanelController
 {
     public Image icon;
     public Sprite starFilled;
@@ -39,7 +39,7 @@ public class ResultPanelController : MonoBehaviour
 
     public void replay()
     {
-        ControllerUtil.coreController.Refresh();
+        ControllerUtil.coreController.Refresh(true);
     }
 
     public void nextLevel()

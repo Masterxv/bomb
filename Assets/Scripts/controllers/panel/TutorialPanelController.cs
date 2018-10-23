@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialPanelController : MonoBehaviour
+public class TutorialPanelController : BasePanelController
 {
     public Image image;
     public Text content;

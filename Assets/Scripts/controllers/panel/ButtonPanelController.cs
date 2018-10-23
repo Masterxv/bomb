@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class ButtonPanelController : MonoBehaviour {
+public class ButtonPanelController : BasePanelController {
 
     public void MainMenuBtnClick()
     {

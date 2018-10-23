@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 
-public class MessageDialogController : MonoBehaviour
+public class MessageDialogController : BasePanelController
 {
     public Button btnClose;
     public Text title;
@@ -20,11 +20,6 @@ public class MessageDialogController : MonoBehaviour
     }
 
     private void Start()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void btnCloseOnClick()
     {
         gameObject.SetActive(false);
     }

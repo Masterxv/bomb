@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HelperPanelController : MonoBehaviour
+public class HelperPanelController : BasePanelController
 {
     const int EXTRA_BOMB_MAX_INDEX = 2;
     public Text handCount;
