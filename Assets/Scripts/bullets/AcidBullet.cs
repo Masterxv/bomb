@@ -11,8 +11,9 @@ public class AcidBullet : Bullet
         this.bulletExistDuration = bulletExistDuration;
     }
 
-    void Update()
+    public override void Update()
     {
+        base.Update();
         if (Vector3.Distance(transform.position, initPosition) > distance)
         {
             rb.velocity = new Vector3(0, 0, 0);

@@ -71,4 +71,7 @@ public class Constants
 
     // End game logic delay timeout
     public static float END_GAME_LOGIC_DELAY = 1.0f;
+
+    // Expired time for bullet, some tricks
+    public static float BULLET_EXPIRED_TIME = 15f;
 }

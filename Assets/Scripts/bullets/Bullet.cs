@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class Bullet : MonoBehaviour {
@@ -10,6 +11,8 @@ public class Bullet : MonoBehaviour {
     public int damage { get; set; }
     public int health { get; set; }
     public int currentHealth { get; set; }
+    private float expiredTime;
+    private float existDuration;
 
     public virtual void setData(Vector3 initPosition, Vector3 targetPosition, float distance, Vector3 velocity, int damage, int health)
     {
@@ -25,9 +28,16 @@ public class Bullet : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = velocity;
         currentHealth = health;
+        expiredTime = Constants.BULLET_EXPIRED_TIME;
+        existDuration = 0;
     }
 
-	void Update () {
+    public virtual void Update () {
+        existDuration += Time.deltaTime;
+        if (existDuration > expiredTime)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public virtual void CollisionWithWall(GameObject wall)
