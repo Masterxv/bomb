@@ -7,12 +7,28 @@ public class LevelController : MonoBehaviour
 {
     public GameObject levelPrefab;
     public Sprite levelUnlocked;
+
     public Sprite levelLocked;
+
+    public ScrollRect scrollRect;
+    public RectTransform contentPanel;
+    private GameObject latestLevelUnlockedPrefab;
+
+    public void SnapTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+         Vector2 anchoredPosition =
+            (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position)
+            - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+
+        contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x, anchoredPosition.y - 100);
+    }
 
     // Use this for initialization
     void Start()
     {
-        //PlayerDataUtil.SavePlayerDataFirstTime();
+        PlayerDataUtil.SavePlayerDataFirstTime();
         PlayerDataUtil.LoadPlayerData();
 
         for (int i = 0; i < Constants.TOTAL_LEVEL; i++)
@@ -36,6 +52,7 @@ public class LevelController : MonoBehaviour
             {
                 levelPrefabClone.GetComponentInChildren<Image>().sprite = levelUnlocked;
                 b.onClick.AddListener(() => GoToLevel(i));
+                latestLevelUnlockedPrefab = levelPrefabClone;
             }
             else
             {
@@ -43,6 +60,7 @@ public class LevelController : MonoBehaviour
                 b.interactable = false;
             }
         }
+        SnapTo(latestLevelUnlockedPrefab.GetComponent<RectTransform>());
     }
 
     public static void GoToLevel(int levelIndex)
