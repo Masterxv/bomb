@@ -16,7 +16,7 @@ public class GameController : CoreController
 
     public override void Refresh(bool withBackup)
     {
-        Debug.LogError("Refresh in Game controller");
+        Debug.Log("Refresh in Game controller");
         SceneManager.sceneLoaded += MainSceneLoaded;
 
         ended = false;
@@ -41,6 +41,6 @@ public class GameController : CoreController
         InitBombs();
         InitWalls();
         InitTutorial();
-        InitHelperPanel();
+        InitButtonPanel();
     }
 }

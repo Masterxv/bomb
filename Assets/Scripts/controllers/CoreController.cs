@@ -15,7 +15,7 @@ public abstract class CoreController : MonoBehaviour
     // Panel
     public GameObject resultPanel;
     public GameObject tutorialPanel;
-    public GameObject helperPanel;
+    public GameObject buttonPanel;
     public GameObject messageDialog;
 
     // Utilities
@@ -55,15 +55,15 @@ public abstract class CoreController : MonoBehaviour
         tutorialPanel.GetComponent<TutorialPanelController>().init(level);
     }
 
-    protected void InitHelperPanel()
+    protected void InitButtonPanel()
     {
-        helperPanel.GetComponent<HelperPanelController>().init(level);
+        buttonPanel.GetComponent<ButtonPanelController>().updateClickCounter(level);
     }
 
     public void UpdateClickedNumber()
     {
         clickedNumber++;
-        helperPanel.GetComponent<HelperPanelController>().updateHandCount(level);
+        buttonPanel.GetComponent<ButtonPanelController>().updateClickCounter(level);
     }
 
     #endregion

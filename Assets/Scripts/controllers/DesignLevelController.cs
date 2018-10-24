@@ -163,14 +163,17 @@ public class DesignLevelController : CoreController
 
     public override void Refresh(bool withBackup)
     {
-        Debug.LogError("refresh in design level controller");
+        Debug.Log("refresh in design level controller");
         ended = false;
-        resultPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0);
         active = true;
         clickedNumber = 0;
+
+        resultPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0);
+        tutorialPanel.SetActive(true);
+
         if (overrideLevelData)
         {
-            Debug.LogError("Override level data");
+            Debug.Log("Override level data");
             level = null;
         }
         else
@@ -181,12 +184,12 @@ public class DesignLevelController : CoreController
         // If this level is already has, then load level data
         if (level == null)
         {
-            Debug.LogError("Level is NULL");
+            Debug.Log("Level is NULL");
             GenerateLevelData(withBackup);
         }
         else
         {
-            Debug.LogError("Level it not null");
+            Debug.Log("Level it not null");
         }
 
         resultPanel.SetActive(false);
@@ -196,6 +199,6 @@ public class DesignLevelController : CoreController
         InitBombs();
         InitWalls();
         InitTutorial();
-        InitHelperPanel();
+        InitButtonPanel();
     }
 }

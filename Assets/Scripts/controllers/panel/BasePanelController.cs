@@ -20,4 +20,9 @@ public class BasePanelController : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public void show()
+    {
+        gameObject.SetActive(true);
+    }
 }
