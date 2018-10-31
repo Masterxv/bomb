@@ -16,6 +16,7 @@ public class TutorialPanelController : BasePanelController
         }
         else
         {
+            gameObject.SetActive(true);
             content.text = level.tutorialContent.descriptions;
             image.sprite = SpriteManager.Instance.spriteAtlas.GetSprite(level.tutorialContent.image);
         }

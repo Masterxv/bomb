@@ -166,6 +166,8 @@ public class DesignLevelController : CoreController
         Debug.Log("refresh in design level controller");
         ended = false;
         active = true;
+        eslapedTime = 0;
+        maxTimer = -1;
         clickedNumber = 0;
 
         resultPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0);

@@ -25,6 +25,8 @@ public abstract class CoreController : MonoBehaviour
     public IEnumerator coroutine; // coroutine for end game logic
     public ExtraBombInfo[] extraBombs;
     protected bool ended = false;
+    protected float maxTimer = -1;
+    protected float eslapedTime = 0;
 
     #region Init and Update methods
     protected void InitBombs()
@@ -34,6 +36,10 @@ public abstract class CoreController : MonoBehaviour
         {
             BombInfo bombInfo = level.bombs[i];
             BombManager.Instance.CreateBomb(bombInfo);
+            if (bombInfo.timeout > 0 && bombInfo.timeout > maxTimer)
+            {
+                maxTimer = bombInfo.timeout;
+            }
         }
     }
 
@@ -94,6 +100,8 @@ public abstract class CoreController : MonoBehaviour
             return;
         }
 
+        eslapedTime += Time.deltaTime;
+        if(eslapedTime < maxTimer) { return; }
         int numberOfBullet = findGameObjectsWithTag("bullet").Length;
         if(isAnimating || numberOfBullet > 0) { return; }
         int numberOfBomb = findGameObjectsWithTag("bomb").Length;

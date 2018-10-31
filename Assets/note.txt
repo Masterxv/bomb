@@ -1,2 +1,5 @@
 - tut_bomb_angle
 - tut_bomb_rotate 
+- tut_bomb_super_fast
+- tut_bomb_lock
+- tut_bomb_auto

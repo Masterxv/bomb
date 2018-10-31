@@ -20,19 +20,17 @@ public class GameController : CoreController
         SceneManager.sceneLoaded += MainSceneLoaded;
 
         ended = false;
-        resultPanel.SetActive(false);
+        eslapedTime = 0;
+        maxTimer = -1;
         isAnimating = false;
-
-        // Init number of click stuff
         clickedNumber = 0;
+
+        resultPanel.transform.localScale = new Vector3(0.1f, 0.1f, 0);
+        resultPanel.SetActive(false);
+
         level = LevelUtil.getCurrentLevel();
         numberOfClick = level.numberOfClick;
         extraBombs = level.extraBombs;
-
-        if (DesignLevelController.active)
-        {
-            return;
-        }
 
         RemoveAllBullets();
         RemoveAllCurrentBombs();
