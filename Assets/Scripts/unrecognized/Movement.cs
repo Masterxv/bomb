@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 public class Movement : MonoBehaviour
 {
-    private float movementAngle;
-
     public List<Vector3> points = new List<Vector3>(4);
     public List<float> distances;
 
     public Constants.MovementTypes type;
     public float radius;
     public float speed;
+
+    [Header("For Circle move type only!")]
+    public float initAngle;
     public bool isClockwise = true;
 
     private int currentIndex;
@@ -34,6 +35,7 @@ public class Movement : MonoBehaviour
         radius = movement.radius;
         speed = movement.speed;
         isClockwise = movement.isClockwise;
+        initAngle = movement.initAngle * Mathf.Deg2Rad;
         isProduction = true;
     }
 
@@ -72,14 +74,15 @@ public class Movement : MonoBehaviour
         {
             if (isClockwise)
             {
-                movementAngle -= speed * Time.deltaTime;
+                initAngle -= speed * Time.deltaTime;
             }
             else
             {
-                movementAngle += speed * Time.deltaTime;
+                initAngle += speed * Time.deltaTime;
             }
-            float x = Mathf.Cos(movementAngle) * radius + points[0].x;
-            float y = Mathf.Sin(movementAngle) * radius + points[0].y;
+            float x = Mathf.Cos(initAngle) * radius + points[0].x;
+            float y = Mathf.Sin(initAngle) * radius + points[0].y;
+            Debug.LogError(initAngle + " - " + x + " - " + y);
             transform.position = new Vector3(x, y, 0);
         }
         else // Move in a polyline or polygon

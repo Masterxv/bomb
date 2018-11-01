@@ -3,3 +3,5 @@
 - tut_bomb_super_fast
 - tut_bomb_lock
 - tut_bomb_auto
+- tut_bomb_move
+- 

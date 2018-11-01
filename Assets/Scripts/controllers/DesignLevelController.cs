@@ -85,7 +85,7 @@ public class DesignLevelController : CoreController
                         points[j] = new MyVector3();
                         points[j].Fill(bombMovement.points[j]);
                     }
-                    bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise);
+                    bombInfo.movement = new BombMovementData(bombMovement.type, points, bombMovement.distances, bombMovement.speed, bombMovement.radius, bombMovement.isClockwise, bombMovement.initAngle);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ public class DesignLevelController : CoreController
                         points[j] = new MyVector3();
                         points[j].Fill(wallMovement.points[j]);
                     }
-                    wallInfo.movement = new WallMovementData(wallMovement.type, points, wallMovement.distances, wallMovement.speed, wallMovement.radius, wallMovement.isClockwise);
+                    wallInfo.movement = new WallMovementData(wallMovement.type, points, wallMovement.distances, wallMovement.speed, wallMovement.radius, wallMovement.isClockwise, wallMovement.initAngle);
                 }
                 else
                 {

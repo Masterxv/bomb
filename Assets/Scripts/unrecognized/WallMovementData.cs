@@ -10,7 +10,7 @@ public class WallMovementData: MovementData
     {
     }
 
-    public WallMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise): base(type, points, distances, speed, radius, isClockwise)
+    public WallMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise, float initAngle): base(type, points, distances, speed, radius, isClockwise, initAngle)
     {
     }
 }

@@ -6,7 +6,7 @@ public abstract class BombAnimation : MonoBehaviour
 {
     void Start()
     {
-        DoStandingAnimation();
+        //DoStandingAnimation();
     }
 
     abstract public void DoStandingAnimation();

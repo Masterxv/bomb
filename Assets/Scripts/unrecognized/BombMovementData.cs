@@ -9,7 +9,7 @@ public class BombMovementData: MovementData {
     {
     }
 
-    public BombMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise): base(type, points, distances, speed, radius, isClockwise)
+    public BombMovementData(Constants.MovementTypes type, MyVector3[] points, List<float> distances, float speed, float radius, bool isClockwise, float initAngle): base(type, points, distances, speed, radius, isClockwise, initAngle)
     {
     }
 }
