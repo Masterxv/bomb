@@ -14,10 +14,6 @@ public class TargetExplode : Explode
         numPoints = numPoints + LevelUtil.getCurrentLevel().targetLevel * Constants.TARGET_BOMB_NUMPOINT_INC;
     }
 
-    public void Update()
-    {
-    }
-
     public override void DoExplode()
     {
         base.DoExplode();

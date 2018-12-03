@@ -5,6 +5,7 @@ public class Rotate : MonoBehaviour
 {
     public bool isClockwise = true;
     public float speed;
+    public float angleTraveled;
 
     public void SetRotateData(RotateData rotate)
     {
@@ -14,7 +15,7 @@ public class Rotate : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        angleTraveled = 0;
     }
 
     // Update is called once per frame
@@ -27,6 +28,6 @@ public class Rotate : MonoBehaviour
         {
             transform.Rotate(Vector3.forward * speed * Time.deltaTime);
         }
-        
+        angleTraveled += speed * Time.deltaTime;
     }
 }

@@ -146,6 +146,7 @@ public class Explode : MonoBehaviour
 
     void OnMouseDown()
     {
+        Debug.LogError("is locked" + isLocked);
         if (ControllerUtil.coreController.clickedNumber < ControllerUtil.coreController.numberOfClick && !isLocked)
         {
             ControllerUtil.coreController.UpdateClickedNumber();

@@ -42,22 +42,28 @@ public class WaveExplode : Explode
         base.DoExplode();
 
         Vector3 thisPosition = transform.position;
+        float angleTraveled = GetComponent<BombRotate>().angleTraveled;
         Destroy(gameObject); // Destroy this game object
+        float currentAngle = initAngle + angleTraveled;
+        Debug.LogError("current angle: " + currentAngle);
+        float diffAngle = diffAngleWavePoint + 360 / Constants.BULLET_WAVE_DECREASE_ANGLE;
 
         for (int pointNum = 0; pointNum < signs.Length; pointNum++)
         {
             GameObject tmpSign = signs[pointNum];
-            float diffAngle = 360 / Constants.BULLET_WAVE_DECREASE_ANGLE;
+        
             int from = (pointNum - 1)* bulletEachWave / 2;
             int to = pointNum * bulletEachWave / 2;
+
             for (int bulletCount = from; bulletCount < to ; bulletCount++)
             {
-                float rotateAngle = (initAngle + bulletCount * (diffAngleWavePoint + diffAngle)) * Mathf.Deg2Rad;
+                float rotateAngle = (currentAngle + bulletCount * diffAngle) * Mathf.Deg2Rad;
                 float x = Mathf.Sin(rotateAngle) * signRadius;
                 float y = Mathf.Cos(rotateAngle) * signRadius;
                 Vector3 targetPosition = new Vector3(x, y, 0) + transform.position;
-                GameObject newBullet = Instantiate(bulletPrefab, targetPosition, Quaternion.identity) as GameObject;
                 Vector3 velocity = (targetPosition - thisPosition).normalized * speed;
+
+                GameObject newBullet = Instantiate(bulletPrefab, thisPosition, Quaternion.identity) as GameObject;
                 newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, Constants.BULLET_MAX_DISTANCE, velocity, bulletDamage, bulletHealth);
             }
 

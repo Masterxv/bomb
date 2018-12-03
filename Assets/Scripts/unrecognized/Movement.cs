@@ -8,10 +8,10 @@ public class Movement : MonoBehaviour
     public List<float> distances;
 
     public Constants.MovementTypes type;
-    public float radius;
     public float speed;
 
     [Header("For Circle move type only!")]
+    public float radius;
     public float initAngle;
     public bool isClockwise = true;
 
@@ -82,7 +82,6 @@ public class Movement : MonoBehaviour
             }
             float x = Mathf.Cos(initAngle) * radius + points[0].x;
             float y = Mathf.Sin(initAngle) * radius + points[0].y;
-            Debug.LogError(initAngle + " - " + x + " - " + y);
             transform.position = new Vector3(x, y, 0);
         }
         else // Move in a polyline or polygon
