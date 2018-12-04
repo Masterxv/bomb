@@ -33,8 +33,7 @@ public class TargetExplode : Explode
             Vector3 targetPosition = allBombSorted[pointNum].transform.position;
             GameObject newBullet = Instantiate(bulletPrefab, thisPosition, Quaternion.identity) as GameObject;
             Vector3 velocity = (targetPosition - thisPosition).normalized*speed;
-            float distance = Vector3.Distance(thisPosition, targetPosition);
-            newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, distance, velocity, bulletDamage, bulletHealth);
+            newBullet.GetComponent<Bullet>().setData(thisPosition, targetPosition, Constants.BULLET_MAX_DISTANCE, velocity, bulletDamage, bulletHealth);
         }
         base.DoneExplode();
     }
