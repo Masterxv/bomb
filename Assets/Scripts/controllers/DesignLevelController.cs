@@ -163,7 +163,8 @@ public class DesignLevelController : CoreController
 
     public override void Refresh(bool withBackup)
     {
-        Debug.Log("refresh in design level controller");
+        AdsManager.Instance.ShowInterstitial();
+        //Debug.Log("refresh in design level controller");
         ended = false;
         active = true;
         eslapedTime = 0;
@@ -175,7 +176,7 @@ public class DesignLevelController : CoreController
 
         if (overrideLevelData)
         {
-            Debug.Log("Override level data");
+            //Debug.Log("Override level data");
             level = null;
         }
         else
@@ -186,12 +187,11 @@ public class DesignLevelController : CoreController
         // If this level is already has, then load level data
         if (level == null)
         {
-            Debug.Log("Level is NULL");
             GenerateLevelData(withBackup);
         }
         else
         {
-            Debug.Log("Level it not null");
+            //Debug.Log("Level it not null");
         }
 
         resultPanel.SetActive(false);
